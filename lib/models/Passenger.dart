@@ -28,5 +28,11 @@ class Passenger {
 
   }
 
-
+  String getUserName() {
+    
+    return userName!;
+  }
+  String getEmail() {
+    return email!;
+  }
 }
