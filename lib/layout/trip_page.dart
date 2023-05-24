@@ -1,27 +1,20 @@
-import 'package:drive_share/layout/trip_page.dart';
-import 'package:drive_share/models/components/components.dart';
+import 'package:drive_share/models/trip.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class TripCard extends StatefulWidget {
-  const TripCard({super.key});
+import '../models/components/components.dart';
 
-  @override
-  State<TripCard> createState() => _TripCardState();
-}
+class TripDetails extends StatelessWidget {
+  final Trip trip;
 
-class _TripCardState extends State<TripCard> {
+  TripDetails({super.key, required this.trip});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Trips'),
       ),
-      body: ListView.builder(
-        itemCount: listTrip.length,
-        itemBuilder: (BuildContext context, int index) {
-
-        return Column(
+      body: Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
@@ -73,7 +66,7 @@ class _TripCardState extends State<TripCard> {
                                         color: Colors.black54),
                                   ),
                                   Text(
-                                    listTrip[index].carOwnerName.toString(),
+                                    trip.carOwnerName.toString(),
                                     style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w800,
@@ -96,7 +89,7 @@ class _TripCardState extends State<TripCard> {
                                         color: Colors.black54),
                                   ),
                                    Text(
-                                   listTrip[index].seatNumber.toString(),
+                                   trip.seatNumber.toString(),
                                     style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w800,
@@ -123,7 +116,7 @@ class _TripCardState extends State<TripCard> {
                                         color: Colors.black54),
                                   ),
                                   Text(
-                                    listTrip[index].startPoint.toString(),
+                                    trip.startPoint.toString(),
                                     style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w800,
@@ -146,7 +139,7 @@ class _TripCardState extends State<TripCard> {
                                         color: Colors.black54),
                                   ),
                                   Text(
-                                    listTrip[index].endPoint.toString(),
+                                    trip.endPoint.toString(),
                                     style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w800,
@@ -173,7 +166,7 @@ class _TripCardState extends State<TripCard> {
                                         color: Colors.black54),
                                   ),
                                   Text(
-                                   listTrip[index].description.toString(),
+                                   trip.description.toString(),
                                     style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w800,
@@ -225,17 +218,9 @@ class _TripCardState extends State<TripCard> {
                                       borderRadius: BorderRadius.circular(30))),
                             ),*/
                             largeButton(
-                              text: 'Join in Trip',
+                              text: 'request',
                               onPressed: () {
-                                  Navigator.push(
-              
-              context,
-              MaterialPageRoute(
-                
-                builder: (context) => TripDetails(trip: listTrip[index]),
-              ),
-            );
-
+                                print('Join in Trip');
                               },
                             )
                           ],
@@ -249,10 +234,7 @@ class _TripCardState extends State<TripCard> {
 
            
           ],
-        );
-        },
-      ),
-
+        )
     );
   }
 }

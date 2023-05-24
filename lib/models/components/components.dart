@@ -1,7 +1,12 @@
+import 'package:drive_share/models/trip.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 Widget largeButton({
-    double width = 180, required String text, required Function() onPressed,}) {
+  double width = 180,
+  required String text,
+  required Function() onPressed,
+}) {
   return Container(
     width: width,
     child: ElevatedButton(
@@ -17,7 +22,10 @@ Widget largeButton({
 }
 
 Widget smallButton({
-    double width = 100, required String text, required Function() onPressed,}) {
+  double width = 100,
+  required String text,
+  required Function() onPressed,
+}) {
   return Container(
     width: width,
     child: ElevatedButton(
@@ -32,5 +40,76 @@ Widget smallButton({
   );
 }
 
+List<Trip> listTrip = [
+  Trip(
+      carOwnerName: "Eyass",
+      seatNumber: 4,
+      startPoint: "Al Jabber",
+      endPoint: "Boulevard",
+      description: "Any Pinot",
+      tripTime: DateTime.now()),
+  Trip(
+      carOwnerName: "Mohammad",
+      seatNumber: 3,
+      startPoint: "Zarqa",
+      endPoint: "Just",
+      description: "Any Pinot",
+      tripTime: DateTime.now()),
+  Trip(
+      carOwnerName: "Ahmed",
+      seatNumber: 4,
+      startPoint: "Amman",
+      endPoint: "Irbid",
+      description: "Any Pinot",
+      tripTime: DateTime.now()),
+  Trip(
+      carOwnerName: "Eyass",
+      seatNumber: 4,
+      startPoint: "Al Jabber",
+      endPoint: "Boulevard",
+      description: "Any Pinot",
+      tripTime: DateTime.now()),
+  Trip(
+      carOwnerName: "Mohammad",
+      seatNumber: 3,
+      startPoint: "Zarqa",
+      endPoint: "Just",
+      description: "Any Pinot",
+      tripTime: DateTime.now()),
+  Trip(
+      carOwnerName: "Ahmed",
+      seatNumber: 4,
+      startPoint: "Amman",
+      endPoint: "Irbid",
+      description: "Any Pinot",
+      tripTime: DateTime.now()),
+  Trip(
+      carOwnerName: "Eyass",
+      seatNumber: 4,
+      startPoint: "Al Jabber",
+      endPoint: "Boulevard",
+      description: "Any Pinot",
+      tripTime: DateTime.now()),
+  Trip(
+      carOwnerName: "Mohammad",
+      seatNumber: 3,
+      startPoint: "Zarqa",
+      endPoint: "Just",
+      description: "Any Pinot",
+      tripTime: DateTime.now()),
+  Trip(
+      carOwnerName: "Ahmed",
+      seatNumber: 4,
+      startPoint: "Amman",
+      endPoint: "Irbid",
+      description: "Any Pinot",
+      tripTime: DateTime.now()),
+];
 
+String formatDat() {
+  DateTime now = DateTime.now();
+  String formattedDate = DateFormat('MM-dd').format(now);
+  String formattedTime = DateFormat('hh:mm').format(now);
 
+  return '$formattedDate | $formattedTime';
+}
