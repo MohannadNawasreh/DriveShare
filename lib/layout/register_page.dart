@@ -83,7 +83,8 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty || value.length < 20) {
+                    if (value!.isEmpty ||
+                        (value.length > 20 && value.length < 3)) {
                       return "First Name cannot be empty";
                     }
                     return null;
@@ -109,7 +110,8 @@ class _RegisterState extends State<Register> {
                       hintText: "Last Name",
                     ),
                     validator: (value) {
-                      if (value!.isEmpty || value.length < 50) {
+                      if (value!.isEmpty ||
+                          (value.length > 20 && value.length < 3)) {
                         return "last name cannot be empty";
                       }
                       return null;
@@ -210,7 +212,7 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     validator: (value) {
-                      if (value!.isEmpty || value.length <= 12) {
+                      if (value!.isEmpty || value.length >= 12) {
                         return "mobile number cannot be empty";
                       }
                       return null;
