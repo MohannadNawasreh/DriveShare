@@ -5,6 +5,7 @@ class Trip {
   String? endPoint;
   String? description;
   DateTime? tripTime;
+  String? priceTrip;
 
   Trip(
       {required this.carOwnerName,
@@ -12,5 +13,7 @@ class Trip {
       required this.startPoint,
       required this.endPoint,
       required this.description,
-      required this.tripTime});
+      required this.tripTime,
+      required this.priceTrip,
+      });
 }
