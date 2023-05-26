@@ -1,4 +1,3 @@
-import 'package:drive_share/layout/plan_trip.dart';
 import 'package:drive_share/layout/profile.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
