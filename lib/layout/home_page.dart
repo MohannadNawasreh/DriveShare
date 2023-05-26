@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
     //final passengerProvider = Provider.of<PassengerProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 3, 184, 78),
         leading: IconButton(
           icon: const CircleAvatar(
             backgroundImage: AssetImage('images/Untitled-2.png'),
