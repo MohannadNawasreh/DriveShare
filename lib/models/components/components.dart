@@ -128,3 +128,5 @@ String formatDat() {
 
   return '$formattedDate | $formattedTime';
 }
+
+bool registerCars = false;

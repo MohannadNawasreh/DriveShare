@@ -10,6 +10,8 @@ class PlanTrip extends StatefulWidget {
 class _PlanTripState extends State<PlanTrip> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Center(
+      child: Text("dddddd"),
+    );
   }
 }

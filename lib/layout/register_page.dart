@@ -1,7 +1,6 @@
-import 'dart:io';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import '../models/components/components.dart';
 import 'home_page.dart';
 
@@ -36,7 +35,7 @@ class _RegisterState extends State<Register> {
           key: formKey,
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               SizedBox(
@@ -44,40 +43,40 @@ class _RegisterState extends State<Register> {
                     child: Image.asset("images/Untitled-2.png",
                         width: 100, height: 100)),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text("Let's Sign you in",
+              const Text("Let's Sign you in",
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w600,
                       color: Color.fromARGB(255, 3, 184, 78))),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 "Welcome back, you have been missed!",
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w300,
                     color: Colors.black),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: TextFormField(
                   keyboardType: TextInputType.name,
                   controller: fnameController,
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Color.fromARGB(255, 3, 184, 78)),
+                      borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 3, 184, 78)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     hintText: "First Name",
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.person,
                       size: 20,
                     ),
@@ -91,19 +90,19 @@ class _RegisterState extends State<Register> {
                   },
                 ),
               ),
-              SizedBox(height: 20),
-              Container(
+              const SizedBox(height: 20),
+              SizedBox(
                 width: double.infinity,
                 child: TextFormField(
                     keyboardType: TextInputType.name,
                     controller: lnameController,
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color.fromARGB(255, 3, 184, 78)),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 3, 184, 78)),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.person,
                         size: 20,
                       ),
@@ -117,20 +116,20 @@ class _RegisterState extends State<Register> {
                       return null;
                     }),
               ),
-              SizedBox(height: 20),
-              Container(
+              const SizedBox(height: 20),
+              SizedBox(
                 width: double.infinity,
                 child: TextFormField(
                     keyboardType: TextInputType.name,
                     controller: userNameController,
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color.fromARGB(255, 3, 184, 78)),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 3, 184, 78)),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: "username",
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.person,
                         size: 20,
                       ),
@@ -142,20 +141,20 @@ class _RegisterState extends State<Register> {
                       return null;
                     }),
               ),
-              SizedBox(height: 20),
-              Container(
+              const SizedBox(height: 20),
+              SizedBox(
                 width: double.infinity,
                 child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     controller: emailController,
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color.fromARGB(255, 3, 184, 78)),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 3, 184, 78)),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: "Email",
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.email,
                         size: 20,
                       ),
@@ -167,8 +166,8 @@ class _RegisterState extends State<Register> {
                       return null;
                     }),
               ),
-              SizedBox(height: 20),
-              Container(
+              const SizedBox(height: 20),
+              SizedBox(
                 width: double.infinity,
                 child: TextFormField(
                     keyboardType: TextInputType.visiblePassword,
@@ -176,12 +175,12 @@ class _RegisterState extends State<Register> {
                     obscureText: true,
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color.fromARGB(255, 3, 184, 78)),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 3, 184, 78)),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: "Password",
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.lock,
                         size: 20,
                       ),
@@ -193,20 +192,20 @@ class _RegisterState extends State<Register> {
                       return null;
                     }),
               ),
-              SizedBox(height: 20),
-              Container(
+              const SizedBox(height: 20),
+              SizedBox(
                 width: double.infinity,
                 child: TextFormField(
                     keyboardType: TextInputType.phone,
                     controller: phoneController,
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color.fromARGB(255, 3, 184, 78)),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 3, 184, 78)),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: "mobile number",
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.phone,
                         size: 20,
                       ),
@@ -218,26 +217,35 @@ class _RegisterState extends State<Register> {
                       return null;
                     }),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("already have an account? login",
+                  child: const Text("already have an account? login",
                       style:
                           TextStyle(color: Color.fromARGB(255, 3, 184, 78)))),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               largeButton(
-                  text: "Register",
-                  onPressed: () {
+                text: "Register",
+                /*  onPressed: () {
                     if (formKey.currentState!.validate()) {
                       print(emailController.text);
                       print(passwordController.text);
+
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomePage()));
+                          MaterialPageRoute(builder: (context) => const HomePage()));
                     }
-                  }),
+                  }),*/
+                onPressed: ()  {
+                  if (formKey.currentState!.validate()) {
+                    print(emailController.text);
+
+                  }
+                }
+              )
             ],
+          
           ),
         ),
       ),

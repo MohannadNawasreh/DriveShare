@@ -1,12 +1,8 @@
-import 'package:drive_share/layout/plan_trip.dart';
+import 'package:drive_share/layout/plan/plan_trip.dart';
+import 'package:drive_share/layout/plan/register_car_page.dart';
 import 'package:drive_share/layout/profile.dart';
-import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:provider/provider.dart';
 
-import '../providers/passanger_provider.dart';
 import 'find_trip.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,14 +15,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
   List<Widget> screens = [
-    FindTrip(),
-    PlanTrip(),
-    Profile(),
+    const FindTrip(),
+    const PlanTrip(),
+    const RegisterCar(),
   ];
   List<String> titles = [
     "Find a trip",
     "Plan a trip",
-    "Profile",
+    "Register a Car",
   ];
 
   @override
@@ -35,21 +31,18 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: CircleAvatar(
+          icon: const CircleAvatar(
             backgroundImage: AssetImage('images/Untitled-2.png'),
             radius: 15,
           ),
           onPressed: () {
             Navigator.push(
-              
               context,
               MaterialPageRoute(
-                
-                builder: (context) => Profile(),
+                builder: (context) => const Profile(),
               ),
             );
           },
-
         ),
         title: Text(titles[currentIndex]),
       ),
@@ -61,15 +54,15 @@ class _HomePageState extends State<HomePage> {
             currentIndex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.find_in_page_rounded),
             label: "Find a trip",
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_add_alt_rounded),
-              label: "plan a trip"),
-          
+              icon: Icon(Icons.person_add_alt_rounded), label: "plan a trip"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.car_crash), label: "Register a Car"),
         ],
       ),
     );

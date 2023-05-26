@@ -35,4 +35,16 @@ class Passenger {
   String getEmail() {
     return email!;
   }
+
+
+    factory Passenger.fromJson(Map<String, dynamic> json) {
+    return Passenger(
+      firstName: json['Fname'],
+      userName: json['username'],
+      email: json['email'],
+      lastName: json['Lname'],
+      phoneNumber: json['phoneNumber'],
+      password: json['password']
+    );
+  }
 }
