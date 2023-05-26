@@ -2,6 +2,9 @@ import 'package:drive_share/models/Passenger.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'edit_profile.dart';
+
+
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -17,18 +20,184 @@ class _ProfileState extends State<Profile> {
       phoneNumber: "0123456789",
       firstName: "eyass",
       lastName: "bdair");
-      String userName = "";
-      String mobileNumber = "";
-      String email = "";
+  String userName = "";
+  String mobileNumber = "";
+  String email = "";
   var _controller = TextEditingController();
   var _controller2 = TextEditingController();
   var _controller3 = TextEditingController();
-  
-  @override
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 3, 184, 78),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
+        title: Text(
+          "Profile",
+          style: TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  SizedBox(
+                    height: 120,
+                    width: 120,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.asset("images/Untitled-2.png")),
+                  ),
+              Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 3, 184, 78),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "${passenger.userName}",
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "${passenger.firstName} ${passenger.lastName}",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                  width: 200,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: (){
+                     Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfile(),
+                        ),
+                      );
+
+                    },
+                    child: const Text("Edit Profile"),
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(255, 3, 184, 78),
+                      onPrimary: Colors.white,
+                      shape: const StadiumBorder(),
+                    ),
+                  )),
+                  
+              const SizedBox(height: 20),
+              const Divider(),
+              const SizedBox(height: 20),
+              ProfileMenuWidget(
+                  passenger: passenger,
+                  icon: Icons.person,
+                  text: "${passenger.email}",
+                  textColor: Colors.black,
+                  onPressed: () {},
+                  icon2: null),
+              ProfileMenuWidget(
+                  passenger: passenger,
+                  icon: Icons.phone,
+                  text: "${passenger.phoneNumber}",
+                  textColor: Colors.black,
+                  onPressed: () {},
+                  icon2: null),
+              ProfileMenuWidget(
+                  passenger: passenger,
+                  icon: Icons.person,
+                  text: "${passenger.userName}",
+                  textColor: Colors.black,
+                  onPressed: () {},
+                  icon2: null),
+              const Divider(),
+              ProfileMenuWidget(
+                  passenger: passenger,
+                  icon: Icons.payment,
+                  text: "billing",
+                  textColor: Colors.black,
+                  onPressed: () {},
+                  icon2: Icons.edit),
+              ProfileMenuWidget(
+                  passenger: passenger,
+                  icon: Icons.logout,
+                  text: "Logout",
+                  textColor: Colors.black,
+                  onPressed: () {},
+                  icon2: null),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ProfileMenuWidget extends StatelessWidget {
+  const ProfileMenuWidget({
+    super.key,
+    required this.passenger,
+    required this.icon,
+    required this.text,
+    this.textColor,
+    required this.onPressed,
+    required this.icon2,
+  });
+
+  final Passenger passenger;
+
+  final IconData icon;
+  final String text;
+  final Color? textColor;
+  final VoidCallback? onPressed;
+  final IconData? icon2;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+        leading: Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              color: Colors.blueGrey.shade300,
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Icon(
+              icon,
+              color: Colors.white,
+            )),
+        title: Text(text, style: TextStyle(color: textColor)),
+        onTap: onPressed,
+        trailing: Icon(icon2));
+  }
+}
+/*       body: SafeArea(
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -145,7 +314,4 @@ class _ProfileState extends State<Profile> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
+      ), */
