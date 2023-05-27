@@ -3,12 +3,21 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../models/components/components.dart';
 import 'home_page.dart';
+import 'dart:io';
 
 class Register extends StatefulWidget {
   const Register({super.key});
 
   @override
   State<Register> createState() => _RegisterState();
+}
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
 
 class _RegisterState extends State<Register> {
