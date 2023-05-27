@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../models/components/components.dart';
@@ -227,8 +228,8 @@ class _RegisterState extends State<Register> {
                           TextStyle(color: Color.fromARGB(255, 3, 184, 78)))),
               const SizedBox(height: 20),
               largeButton(
-                text: "Register",
-                /*  onPressed: () {
+                  text: "Register",
+                  /*  onPressed: () {
                     if (formKey.currentState!.validate()) {
                       print(emailController.text);
                       print(passwordController.text);
@@ -237,15 +238,61 @@ class _RegisterState extends State<Register> {
                           MaterialPageRoute(builder: (context) => const HomePage()));
                     }
                   }),*/
-                onPressed: ()  {
-                  if (formKey.currentState!.validate()) {
-                    print(emailController.text);
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      try {
 
-                  }
-                }
-              )
+                        var url = Uri.parse(
+                            'https://10.0.2.2:44325/api/User/createuser');
+
+                        // Bypass certificate check
+                        HttpClient client = new HttpClient()
+                          ..badCertificateCallback =
+                              ((X509Certificate cert, String host, int port) =>
+                                  true);
+
+                        HttpClientRequest request = await client.postUrl(url);
+
+                        request.headers.set(
+                            'content-type', 'application/json; charset=UTF-8');
+
+                        // Define the data to be sent
+                        Map<String, String> data = {
+                          'fname': 'safffdsa',
+                          'lname': 'wyas333',
+                          'phonenumber': '5563333325',
+                          'username': 'mahmou1dddddd1155521',
+                          'imagefile': 'ddddddd',
+                          'useremail': 'mahmoudddhefaw0@gmasadadil.com',
+                          'userpass': '1234567dd89sadasda',
+                        };
+
+                        // Convert the data to JSON and add it to the body of the request
+                        String payload = jsonEncode(data);
+                        print('Payload: $payload');
+                        request.write(payload);
+
+                        // Send the request
+                        HttpClientResponse response = await request.close();
+
+                        // Get the response body
+                        var responseBody =
+                            await response.transform(utf8.decoder).join();
+
+                        print('Response status: ${response.statusCode}');
+                        print('Response body: $responseBody');
+
+                        if (response.statusCode == 200) {
+                          print('User created successfully');
+                        } else {
+                          print('Failed to create user');
+                        }
+                      } catch (e) {
+                        print('There was an error: $e');
+                      }
+                    }
+                  })
             ],
-          
           ),
         ),
       ),

@@ -130,3 +130,11 @@ String formatDat() {
 }
 
 bool registerCars = false;
+
+
+String format__Dat(DateTime d) {
+  String formattedDate = DateFormat('MM-dd').format(d);
+  String formattedTime = DateFormat('hh:mm a').format(d);
+
+  return '$formattedDate | $formattedTime';
+}

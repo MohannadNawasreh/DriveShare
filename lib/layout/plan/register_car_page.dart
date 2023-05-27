@@ -12,40 +12,23 @@ class RegisterCar extends StatefulWidget {
 }
 
 class _RegisterCarState extends State<RegisterCar> {
-  final TextEditingController carTypeController = TextEditingController();
-  final TextEditingController carYearController = TextEditingController();
-  final TextEditingController carModelController = TextEditingController();
-  final TextEditingController carNumberController = TextEditingController();
-  final TextEditingController imageLicenseController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
-  void registerCar() {
-    final Car newCar = Car(
-      CarType: carTypeController.text,
-      CarYear: double.parse(carYearController.text),
-      CarModel: carModelController.text,
-      CarNumber: carNumberController.text,
-      ImageLiecnse: imageLicenseController.text,
+
+  
+   final Car newCar = Car(
+      CarType: '',
+      CarYear: 0,
+      CarModel: '',
+      CarNumber: '',
+      ImageLiecnse: '',
     );
 
-    // Convert car object to JSON string
-    final jsonString = newCar.toJsonString();
-    print(
-        jsonString); // Replace with your logic to send the data to a server or store it locally
 
-    // Clear text fields
-    carTypeController.clear();
-    carYearController.clear();
-    carModelController.clear();
-    carNumberController.clear();
-    imageLicenseController.clear();
-  }
-
-  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(40.0),
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
       child: SingleChildScrollView(
         reverse: true,
         child: Form(
@@ -61,150 +44,173 @@ class _RegisterCarState extends State<RegisterCar> {
                         width: 100, height: 100)),
               ),
               const SizedBox(
-                height: 40,
+                height: 15,
               ),
               SizedBox(
                 width: double.infinity,
                 child: TextFormField(
-                    keyboardType: TextInputType.name,
-                    controller: carTypeController,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 3, 184, 78)),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.car_crash_rounded,
-                        size: 20,
-                      ),
-                      hintText: "Car Type",
+                  keyboardType: TextInputType.name,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 3, 184, 78)),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Car Type cannot be empty";
-                      }
-                      return null;
-                    }),
+                    prefixIcon: const Icon(
+                      Icons.car_crash_rounded,
+                      size: 20,
+                    ),
+                    hintText: "Car Type",
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter Car Type';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    newCar.CarType = value;
+                  },
+                ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 15,
+              ),
               SizedBox(
                 width: double.infinity,
                 child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: carYearController,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 3, 184, 78)),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      hintText: "Car Year",
-                      prefixIcon: const Icon(
-                        Icons.car_crash,
-                        size: 20,
-                      ),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 3, 184, 78)),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Car Year cannot be empty";
-                      }
-                      return null;
-                    }),
+                    prefixIcon: const Icon(
+                      Icons.car_crash,
+                      size: 20,
+                    ),
+                    hintText: "Car Year",
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter Car Year';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    newCar.CarYear = double.parse(value.toString());
+                  },
+                ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 15,
+              ),
               SizedBox(
                 width: double.infinity,
                 child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    controller: carModelController,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 3, 184, 78)),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      hintText: "Car Model",
-                      prefixIcon: const Icon(
-                        Icons.car_crash_rounded,
-                        size: 20,
-                      ),
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 3, 184, 78)),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Car Model cannot be empty";
-                      }
-                      return null;
-                    }),
+                    prefixIcon: const Icon(
+                      Icons.car_crash_rounded,
+                      size: 20,
+                    ),
+                    hintText: "Car Model",
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter Car Model';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    newCar.CarModel = value;
+                  },
+                ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 15,
+              ),
               SizedBox(
                 width: double.infinity,
                 child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: carNumberController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 3, 184, 78)),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      hintText: "Car Number",
-                      prefixIcon: const Icon(
-                        Icons.car_rental,
-                        size: 20,
-                      ),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 3, 184, 78)),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Car Number cannot be empty";
-                      }
-                      return null;
-                    }),
+                    prefixIcon: const Icon(
+                      Icons.description,
+                      size: 20,
+                    ),
+                    hintText: "Car Number",
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter Car Number';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    newCar.CarNumber = value;
+                  },
+                ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 15,
+              ),
+ 
               SizedBox(
                 width: double.infinity,
                 child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    controller: imageLicenseController,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 3, 184, 78)),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      hintText: "Image License",
-                      prefixIcon: const Icon(
-                        Icons.document_scanner_outlined,
-                        size: 20,
-                      ),
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 3, 184, 78)),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Image License cannot be empty";
-                      }
-                      return null;
-                    }),
+                    prefixIcon: const Icon(
+                      Icons.document_scanner_outlined,
+                      size: 20,
+                    ),
+                    hintText: "Image License",
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter Image License';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    newCar.ImageLiecnse = value;
+                  },
+                ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 20,
+              ),
               largeButton(
-                text: "Register Car",
+                text: 'Register Car',
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    Car car = Car(
-                        CarType: carTypeController.text,
-                        CarYear: double.parse(carYearController.text),
-                        CarModel: carModelController.text,
-                        CarNumber: carNumberController.text,
-                        ImageLiecnse: imageLicenseController.text);
+                    formKey.currentState!.save();
+                    //  createTrip();
+                    print(newCar.CarModel);
+                    print(newCar.CarNumber);
+                   
+                    print(newCar.CarType);
 
-                    //carList.add(car as Map<String, dynamic>);
-                       registerCars = true;
+                    print(newCar.CarYear);
+                    print(newCar.ImageLiecnse);
 
-
-                 
                   }
                 },
               ),
@@ -212,6 +218,6 @@ class _RegisterCarState extends State<RegisterCar> {
           ),
         ),
       ),
-    ));
+    );
   }
 }
