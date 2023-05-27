@@ -7,6 +7,7 @@ class Passenger {
   String ?phoneNumber;
   String ?firstName;
   String ?lastName;
+  XFile ?image;
 
 
   Passenger({required this.email, required this.password, this.userName, this.phoneNumber,this.firstName, this.lastName});
