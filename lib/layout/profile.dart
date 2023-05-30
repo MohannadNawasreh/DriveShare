@@ -27,21 +27,22 @@ class _ProfileState extends State<Profile> {
     firstName: "eyass",
     lastName: "bdair",
   );
+
   String userName = "";
   String mobileNumber = "";
   String email = "";
   var _controller = TextEditingController();
   var _controller2 = TextEditingController();
   var _controller3 = TextEditingController();
+  XFile? _image;
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      setState(() {
-        passenger.updateUserInfo(image: XFile(pickedImage.path));
-      });
-    }
+    setState(() {
+      _image = pickedImage;
+      passenger.updateUserInfo(image: pickedImage);
+    });
   }
 
   @override
@@ -73,9 +74,15 @@ class _ProfileState extends State<Profile> {
                     width: 120,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child: passenger.image != null
-                          ? Image.file(File(passenger.image!.path))
-                          : Image.asset("images/Untitled-2.png"),
+                      child: _image != null
+                          ? Image.file(
+                              File(_image!.path),
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              "images/Untitled-2.png",
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                   Positioned(
@@ -109,10 +116,7 @@ class _ProfileState extends State<Profile> {
               ),
               Text(
                 "${passenger.firstName} ${passenger.lastName}",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w300,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
               ),
               const SizedBox(height: 20),
               SizedBox(
@@ -189,14 +193,13 @@ class _ProfileState extends State<Profile> {
 
 class ProfileMenuWidget extends StatelessWidget {
   const ProfileMenuWidget({
-    Key? key,
     required this.passenger,
     required this.icon,
     required this.text,
     this.textColor,
     required this.onPressed,
     required this.icon2,
-  }) : super(key: key);
+  });
 
   final Passenger passenger;
   final IconData icon;
@@ -226,6 +229,7 @@ class ProfileMenuWidget extends StatelessWidget {
     );
   }
 }
+
 
 /*       body: SafeArea(
         child: Center(

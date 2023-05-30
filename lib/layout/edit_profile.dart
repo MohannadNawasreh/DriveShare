@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:drive_share/models/Passenger.dart';
+import 'profile.dart';
 
 import '../providers/passanger_provider.dart';
 import 'find_trip.dart';
@@ -24,11 +25,13 @@ class _EditProfileState extends State<EditProfile> {
     phoneNumber: "0123456789",
     firstName: "eyass",
     lastName: "bdair",
+    image: null,
   );
 
   var _controller = TextEditingController();
   var _controller2 = TextEditingController();
   var _controller3 = TextEditingController();
+ 
 
   @override
   void dispose() {
