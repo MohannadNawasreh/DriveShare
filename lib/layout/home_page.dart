@@ -1,7 +1,10 @@
 import 'package:drive_share/layout/plan/plan_trip.dart';
 import 'package:drive_share/layout/plan/register_car_page.dart';
 import 'package:drive_share/layout/profile.dart';
+import 'package:drive_share/models/Passenger.dart';
 import 'package:flutter/material.dart';
+
+
 
 import 'find_trip.dart';
 
@@ -40,7 +43,7 @@ class _HomePageState extends State<HomePage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const Profile(),
+              builder: (context) =>  Profile(passenger: Passenger( email: "eyass123@gmail.com", password: "jhnljkn123", userName: "eyassBdair123", phoneNumber: "0123456789", firstName: "eyass", lastName: "bdair"),),
               ),
             );
           },

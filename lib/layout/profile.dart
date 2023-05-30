@@ -1,12 +1,18 @@
+import 'dart:io';
+
 import 'package:drive_share/models/Passenger.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'edit_profile.dart';
 
-
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  final Passenger passenger;
+
+  const Profile({
+    required this.passenger,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -14,18 +20,30 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   Passenger passenger = Passenger(
-      email: "eyass123@gmail.com",
-      password: "jhnljkn123",
-      userName: "eyassBdair123",
-      phoneNumber: "0123456789",
-      firstName: "eyass",
-      lastName: "bdair");
+    email: "eyass123@gmail.com",
+    password: "jhnljkn123",
+    userName: "eyassBdair123",
+    phoneNumber: "0123456789",
+    firstName: "eyass",
+    lastName: "bdair",
+  );
+
   String userName = "";
   String mobileNumber = "";
   String email = "";
   var _controller = TextEditingController();
   var _controller2 = TextEditingController();
   var _controller3 = TextEditingController();
+  XFile? _image;
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = pickedImage;
+      passenger.updateUserInfo(image: pickedImage);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,27 +73,35 @@ class _ProfileState extends State<Profile> {
                     height: 120,
                     width: 120,
                     child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.asset("images/Untitled-2.png")),
+                      borderRadius: BorderRadius.circular(100),
+                      child: _image != null
+                          ? Image.file(
+                              File(_image!.path),
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              "images/Untitled-2.png",
+                              fit: BoxFit.cover,
+                            ),
+                    ),
                   ),
-              Positioned(
+                  Positioned(
                     bottom: 0,
                     right: 0,
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
+                      onTap: _pickImage,
                       child: Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 3, 184, 78),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                          )),
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 3, 184, 78),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -83,8 +109,10 @@ class _ProfileState extends State<Profile> {
               const SizedBox(height: 10),
               Text(
                 "${passenger.userName}",
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Text(
                 "${passenger.firstName} ${passenger.lastName}",
@@ -92,65 +120,69 @@ class _ProfileState extends State<Profile> {
               ),
               const SizedBox(height: 20),
               SizedBox(
-                  width: 200,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: (){
-                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditProfile(),
-                        ),
-                      );
-
-                    },
-                    child: const Text("Edit Profile"),
-                    style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(255, 3, 184, 78),
-                      onPrimary: Colors.white,
-                      shape: const StadiumBorder(),
-                    ),
-                  )),
-                  
+                width: 200,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditProfile(),
+                      ),
+                    );
+                  },
+                  child: const Text("Edit Profile"),
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color.fromARGB(255, 3, 184, 78),
+                    onPrimary: Colors.white,
+                    shape: const StadiumBorder(),
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
               const Divider(),
               const SizedBox(height: 20),
               ProfileMenuWidget(
-                  passenger: passenger,
-                  icon: Icons.person,
-                  text: "${passenger.email}",
-                  textColor: Colors.black,
-                  onPressed: () {},
-                  icon2: null),
+                passenger: passenger,
+                icon: Icons.person,
+                text: "${passenger.email}",
+                textColor: Colors.black,
+                onPressed: () {},
+                icon2: null,
+              ),
               ProfileMenuWidget(
-                  passenger: passenger,
-                  icon: Icons.phone,
-                  text: "${passenger.phoneNumber}",
-                  textColor: Colors.black,
-                  onPressed: () {},
-                  icon2: null),
+                passenger: passenger,
+                icon: Icons.phone,
+                text: "${passenger.phoneNumber}",
+                textColor: Colors.black,
+                onPressed: () {},
+                icon2: null,
+              ),
               ProfileMenuWidget(
-                  passenger: passenger,
-                  icon: Icons.person,
-                  text: "${passenger.userName}",
-                  textColor: Colors.black,
-                  onPressed: () {},
-                  icon2: null),
+                passenger: passenger,
+                icon: Icons.person,
+                text: "${passenger.userName}",
+                textColor: Colors.black,
+                onPressed: () {},
+                icon2: null,
+              ),
               const Divider(),
               ProfileMenuWidget(
-                  passenger: passenger,
-                  icon: Icons.payment,
-                  text: "billing",
-                  textColor: Colors.black,
-                  onPressed: () {},
-                  icon2: Icons.edit),
+                passenger: passenger,
+                icon: Icons.payment,
+                text: "billing",
+                textColor: Colors.black,
+                onPressed: () {},
+                icon2: Icons.edit,
+              ),
               ProfileMenuWidget(
-                  passenger: passenger,
-                  icon: Icons.logout,
-                  text: "Logout",
-                  textColor: Colors.black,
-                  onPressed: () {},
-                  icon2: null),
+                passenger: passenger,
+                icon: Icons.logout,
+                text: "Logout",
+                textColor: Colors.black,
+                onPressed: () {},
+                icon2: null,
+              ),
             ],
           ),
         ),
@@ -161,7 +193,6 @@ class _ProfileState extends State<Profile> {
 
 class ProfileMenuWidget extends StatelessWidget {
   const ProfileMenuWidget({
-    super.key,
     required this.passenger,
     required this.icon,
     required this.text,
@@ -171,7 +202,6 @@ class ProfileMenuWidget extends StatelessWidget {
   });
 
   final Passenger passenger;
-
   final IconData icon;
   final String text;
   final Color? textColor;
@@ -181,22 +211,26 @@ class ProfileMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        leading: Container(
-            width: 30,
-            height: 30,
-            decoration: BoxDecoration(
-              color: Colors.blueGrey.shade300,
-              borderRadius: BorderRadius.circular(100),
-            ),
-            child: Icon(
-              icon,
-              color: Colors.white,
-            )),
-        title: Text(text, style: TextStyle(color: textColor)),
-        onTap: onPressed,
-        trailing: Icon(icon2));
+      leading: Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          color: Colors.blueGrey.shade300,
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: Icon(
+          icon,
+          color: Colors.white,
+        ),
+      ),
+      title: Text(text, style: TextStyle(color: textColor)),
+      onTap: onPressed,
+      trailing: Icon(icon2),
+    );
   }
 }
+
+
 /*       body: SafeArea(
         child: Center(
           child: Padding(
