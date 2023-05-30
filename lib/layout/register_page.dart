@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/components/components.dart';
 import 'home_page.dart';
 import 'dart:io';
@@ -12,6 +13,7 @@ class Register extends StatefulWidget {
   @override
   State<Register> createState() => _RegisterState();
 }
+
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -249,23 +251,58 @@ class _RegisterState extends State<Register> {
                   }),*/
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      try {
+                      var url = Uri.parse(
+                          'https://10.0.2.2:44325/api/User/createuser/');
+                      var headers = Map<String, String>();
 
+
+                      //headers['Authorization'] = 'Bearer $token';
+                      headers['Content-Type'] = 'application/json';
+                      headers['Accept'] = 'application/json';
+
+                      Map<String, String> data = {
+                        'fname': 'safffdsa',
+                        'lname': 'wyas333',
+                        'phonenumber': '5563333325',
+                        'username': 'mahmou1dddddd1155521',
+                        'imagefile': 'ddddddd',
+                        'useremail': 'mahmoudddhefaw0@gmasadadil.com',
+                        'userpass': '1234567dd89sadasda',
+                      };
+
+                      try {
+                        var response = await http.post(
+                          url,
+                          headers: headers,
+                          body: data != null ? jsonEncode(data) : null,
+                        );
+                        /*  final result = jsonDecode(response.body);
+                        if (result == null) {
+                          throw const HttpException('Something went wrong');
+                        }*/
+
+                        if (response.statusCode == 200) {
+                          final result = jsonDecode(response.body);
+                          if (result == null) {
+                            throw Exception('Something went wrong');
+                          }
+                          // Handle successful response
+                        } else {
+                          throw Exception(
+                              'Request failed with status: ${response.statusCode}');
+                        }
+                      } catch (e) {
+                        print('object : $e');
+                      }
+                      /*  try {
                         var url = Uri.parse(
                             'https://10.0.2.2:44325/api/User/createuser');
-
-                        // Bypass certificate check
-                        HttpClient client = new HttpClient()
+                        HttpClient client = HttpClient()
                           ..badCertificateCallback =
-                              ((X509Certificate cert, String host, int port) =>
-                                  true);
-
+                              ((X509Certificate cert, String host, int port) => true);
                         HttpClientRequest request = await client.postUrl(url);
-
                         request.headers.set(
                             'content-type', 'application/json; charset=UTF-8');
-
-                        // Define the data to be sent
                         Map<String, String> data = {
                           'fname': 'safffdsa',
                           'lname': 'wyas333',
@@ -275,16 +312,11 @@ class _RegisterState extends State<Register> {
                           'useremail': 'mahmoudddhefaw0@gmasadadil.com',
                           'userpass': '1234567dd89sadasda',
                         };
-
-                        // Convert the data to JSON and add it to the body of the request
                         String payload = jsonEncode(data);
                         print('Payload: $payload');
+
                         request.write(payload);
-
-                        // Send the request
                         HttpClientResponse response = await request.close();
-
-                        // Get the response body
                         var responseBody =
                             await response.transform(utf8.decoder).join();
 
@@ -298,7 +330,7 @@ class _RegisterState extends State<Register> {
                         }
                       } catch (e) {
                         print('There was an error: $e');
-                      }
+                      }*/
                     }
                   })
             ],

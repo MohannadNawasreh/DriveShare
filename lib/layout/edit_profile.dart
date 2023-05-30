@@ -5,7 +5,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/passanger_provider.dart';
 import 'find_trip.dart';
 
 class EditProfile extends StatefulWidget {
