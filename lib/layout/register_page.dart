@@ -250,87 +250,30 @@ class _RegisterState extends State<Register> {
                     }
                   }),*/
                   onPressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      var url = Uri.parse(
-                          'https://10.0.2.2:44325/api/User/createuser/');
-                      var headers = Map<String, String>();
+                    try {
+                        var url = Uri.http(
+                          '192.168.1.4:44325' , 'api/User/createuser' );
+                      var response = await http.post(
+                        url,
+                     
+                        body: jsonEncode(<String, String>{
+                          'fname': 'ddddddf',
+                          'lname': 'dddd',
+                          'phonenumber': '07774752156',
+                          'username': 'mahmouff111',
+                          'imagefile': 'awdsfsdfgsfdgsdfgdfgdfh',
+                          'email': 'mahmoudhffefaw0@gmail.com',
+                          'password': '1234ff56789',
+                        }),
+                      );
 
-
-                      //headers['Authorization'] = 'Bearer $token';
-                      headers['Content-Type'] = 'application/json';
-                      headers['Accept'] = 'application/json';
-
-                      Map<String, String> data = {
-                        'fname': 'safffdsa',
-                        'lname': 'wyas333',
-                        'phonenumber': '5563333325',
-                        'username': 'mahmou1dddddd1155521',
-                        'imagefile': 'ddddddd',
-                        'useremail': 'mahmoudddhefaw0@gmasadadil.com',
-                        'userpass': '1234567dd89sadasda',
-                      };
-
-                      try {
-                        var response = await http.post(
-                          url,
-                          headers: headers,
-                          body: data != null ? jsonEncode(data) : null,
-                        );
-                        /*  final result = jsonDecode(response.body);
-                        if (result == null) {
-                          throw const HttpException('Something went wrong');
-                        }*/
-
-                        if (response.statusCode == 200) {
-                          final result = jsonDecode(response.body);
-                          if (result == null) {
-                            throw Exception('Something went wrong');
-                          }
-                          // Handle successful response
-                        } else {
-                          throw Exception(
-                              'Request failed with status: ${response.statusCode}');
-                        }
-                      } catch (e) {
-                        print('object : $e');
+                      if (response.statusCode == 200) {
+                        print('User created successfully');
+                      } else {
+                        print('Failed to create user');
                       }
-                      /*  try {
-                        var url = Uri.parse(
-                            'https://10.0.2.2:44325/api/User/createuser');
-                        HttpClient client = HttpClient()
-                          ..badCertificateCallback =
-                              ((X509Certificate cert, String host, int port) => true);
-                        HttpClientRequest request = await client.postUrl(url);
-                        request.headers.set(
-                            'content-type', 'application/json; charset=UTF-8');
-                        Map<String, String> data = {
-                          'fname': 'safffdsa',
-                          'lname': 'wyas333',
-                          'phonenumber': '5563333325',
-                          'username': 'mahmou1dddddd1155521',
-                          'imagefile': 'ddddddd',
-                          'useremail': 'mahmoudddhefaw0@gmasadadil.com',
-                          'userpass': '1234567dd89sadasda',
-                        };
-                        String payload = jsonEncode(data);
-                        print('Payload: $payload');
-
-                        request.write(payload);
-                        HttpClientResponse response = await request.close();
-                        var responseBody =
-                            await response.transform(utf8.decoder).join();
-
-                        print('Response status: ${response.statusCode}');
-                        print('Response body: $responseBody');
-
-                        if (response.statusCode == 200) {
-                          print('User created successfully');
-                        } else {
-                          print('Failed to create user');
-                        }
-                      } catch (e) {
-                        print('There was an error: $e');
-                      }*/
+                    } catch (e) {
+                      print('There was an error: $e');
                     }
                   })
             ],

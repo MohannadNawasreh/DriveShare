@@ -182,9 +182,9 @@ class _LoginLayoutState extends State<LoginLayout> {
                 ),
                 const SizedBox(height: 20),
                 largeButton(
-                  text: 'LOGIN',
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
+                    text: 'LOGIN',
+                    onPressed: () async {
+                     if (formKey.currentState!.validate()) {
                       print(emailController.text);
                       print(passwordController.text);
 
@@ -193,10 +193,28 @@ class _LoginLayoutState extends State<LoginLayout> {
                         MaterialPageRoute(
                             builder: (context) => const HomePage()),
                       );
-                      //  loginUser();
-                    }
-                  },
+                     }}
                 ),
+                      //  loginUser();
+
+                      /*  var headers = {'Content-Type': 'application/json'};
+                      var request = http.Request('POST',
+                          Uri.parse('https://localhost:44325/api/User/login'));
+                      request.body = json.encode({
+                        "email": "moayadmohammad2001@gmail.com",
+                        "password": "123456789"
+                      });
+                      request.headers.addAll(headers);
+
+                      http.StreamedResponse response = await request.send();
+
+                      if (response.statusCode == 200) {
+                        print(await response.stream.bytesToString());
+                      } else {
+                        print(response.reasonPhrase);
+                      }*/
+                  
+                    
               ],
             ),
           ),

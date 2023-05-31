@@ -1,6 +1,7 @@
-import 'package:drive_share/layout/plan/plan_trip.dart';
+import 'package:drive_share/layout/plan/car_details.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../models/Car.dart';
 
@@ -14,16 +15,31 @@ class RegisterCar extends StatefulWidget {
 class _RegisterCarState extends State<RegisterCar> {
   final formKey = GlobalKey<FormState>();
 
+  XFile? _selectedImage;
+  bool _isImageSelected = false;
+  bool isRegister = false;
 
-  
-   final Car newCar = Car(
-      CarType: '',
-      CarYear: 0,
-      CarModel: '',
-      CarNumber: '',
-      ImageLiecnse: '',
-    );
+  void _selectImage() async {
+    if (_isImageSelected == true) {
+      setState(() {
+        _selectedImage = null;
+        _isImageSelected = false;
+        newCar.ImageLicense = null;
+        isRegister = false;
+      });
+    } else {
+      final ImagePicker _picker = ImagePicker();
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      setState(() {
+        _selectedImage = image;
+        _isImageSelected = true;
+        newCar.ImageLicense = _selectedImage;
+        isRegister = true;
+      });
+    }
+  }
 
+  final Car newCar = Car(CarType: '', CarYear: 0, CarModel: '', CarNumber: '');
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +115,7 @@ class _RegisterCarState extends State<RegisterCar> {
                     return null;
                   },
                   onSaved: (value) {
-                    newCar.CarYear = double.parse(value.toString());
+                    newCar.CarYear = int.parse(value.toString());
                   },
                 ),
               ),
@@ -166,33 +182,14 @@ class _RegisterCarState extends State<RegisterCar> {
               const SizedBox(
                 height: 15,
               ),
- 
-              SizedBox(
-                width: double.infinity,
-                child: TextFormField(
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    border: UnderlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 3, 184, 78)),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.document_scanner_outlined,
-                      size: 20,
-                    ),
-                    hintText: "Image License",
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter Image License';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    newCar.ImageLiecnse = value;
-                  },
+              ElevatedButton(
+                onPressed: _selectImage,
+                style: ElevatedButton.styleFrom(
+                  primary: _isImageSelected
+                      ? Color.fromARGB(255, 175, 210, 176)
+                      : Colors.red,
                 ),
+                child: Text('Select Image License'),
               ),
               const SizedBox(
                 height: 20,
@@ -200,17 +197,23 @@ class _RegisterCarState extends State<RegisterCar> {
               largeButton(
                 text: 'Register Car',
                 onPressed: () {
-                  if (formKey.currentState!.validate()) {
+                  if (formKey.currentState!.validate() &&
+                      _selectedImage != null) {
                     formKey.currentState!.save();
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CarDetails(
+                                  car: newCar,
+                                )));
                     //  createTrip();
                     print(newCar.CarModel);
                     print(newCar.CarNumber);
-                   
+
                     print(newCar.CarType);
 
                     print(newCar.CarYear);
-                    print(newCar.ImageLiecnse);
-
                   }
                 },
               ),
