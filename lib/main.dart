@@ -4,7 +4,9 @@ import 'layout/login_layout.dart';
 import 'layout/register_page.dart';
 
 
-import 'layout/profile.dart';void main() {
+import 'layout/profile.dart';
+
+void main() {
   
   runApp(const MyApp());
 }
