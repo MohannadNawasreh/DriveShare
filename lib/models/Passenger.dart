@@ -54,3 +54,58 @@ class Passenger {
     );
   }
 }
+
+class AutoGenerate {
+  late final int passengerid;
+  late final String fname;
+  late final String lname;
+  late final String phonenumber;
+  late final String username;
+  late final String imagefile;
+  late final int? carownerid;
+  late final String? carowner;
+  late final List<dynamic>? logingps;
+  late final List<dynamic>? trippassengergps;
+
+  AutoGenerate({
+    required this.passengerid,
+    required this.fname,
+    required this.lname,
+    required this.phonenumber,
+    required this.username,
+    required this.imagefile,
+    this.carownerid,
+    this.carowner,
+    required this.logingps,
+    required this.trippassengergps,
+  });
+
+  AutoGenerate.fromJson(Map<String, dynamic> json) {
+    passengerid = json['passengerid'];
+    fname = json['fname'];
+    lname = json['lname'];
+    phonenumber = json['phonenumber'];
+    username = json['username'];
+    imagefile = json['imagefile'];
+    carownerid = json['carownerid'];;
+    carowner = json['carowner'];;
+    logingps = List.castFrom<dynamic, dynamic>(json['logingps']);
+    trippassengergps =
+        List.castFrom<dynamic, dynamic>(json['trippassengergps']);
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['passengerid'] = passengerid;
+    _data['fname'] = fname;
+    _data['lname'] = lname;
+    _data['phonenumber'] = phonenumber;
+    _data['username'] = username;
+    _data['imagefile'] = imagefile;
+    _data['carownerid'] = carownerid;
+    _data['carowner'] = carowner;
+    _data['logingps'] = logingps;
+    _data['trippassengergps'] = trippassengergps;
+    return _data;
+  }
+}

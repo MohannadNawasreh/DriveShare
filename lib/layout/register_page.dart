@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:drive_share/layout/Log/login_layout.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,8 @@ class _RegisterState extends State<Register> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController imageController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
+
+  String _errorMessage = '';
 
   var formKey = GlobalKey<FormState>();
   @override
@@ -240,42 +243,55 @@ class _RegisterState extends State<Register> {
               const SizedBox(height: 20),
               largeButton(
                   text: "Register",
-                  /*  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      print(emailController.text);
-                      print(passwordController.text);
-
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const HomePage()));
-                    }
-                  }),*/
                   onPressed: () async {
-                    try {
-                        var url = Uri.http(
-                          '192.168.1.4:44325' , 'api/User/createuser' );
-                      var response = await http.post(
-                        url,
-                     
-                        body: jsonEncode(<String, String>{
-                          'fname': 'ddddddf',
-                          'lname': 'dddd',
-                          'phonenumber': '07774752156',
-                          'username': 'mahmouff111',
-                          'imagefile': 'awdsfsdfgsfdgsdfgdfgdfh',
-                          'email': 'mahmoudhffefaw0@gmail.com',
-                          'password': '1234ff56789',
-                        }),
-                      );
+                    if (formKey.currentState!.validate()) {
+                      var headers = {
+                        'Content-Type': 'application/json',
+                        'Cookie':
+                            'ARRAffinity=db7caaae5eca3babc5f5f4457fe724cbbbf257aeb4789bd12dc6351f9c66004b; ARRAffinitySameSite=db7caaae5eca3babc5f5f4457fe724cbbbf257aeb4789bd12dc6351f9c66004b'
+                      };
+                      
+                      var request = http.Request(
+                          'POST',
+                          Uri.parse(
+                              'https://driveshare.azurewebsites.net/api/User/createuser'));
+                      request.body = json.encode({
+                        "fname": fnameController.text,
+                        "lname": lnameController.text,
+                        "PHONENUMBER": phoneController.text,
+                        "USERNAME": emailController.text,
+                        "IMAGEFILE": imageController.text,
+                        "email": emailController.text,
+                        "password": passwordController.text,
+                      });
+                      request.headers.addAll(headers);
+
+                      http.StreamedResponse response = await request.send();
+                      print(await response.statusCode);
 
                       if (response.statusCode == 200) {
-                        print('User created successfully');
+                        print(await response.stream.bytesToString());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginLayout()),
+                        );
                       } else {
-                        print('Failed to create user');
+                        var errorMessage =
+                            'Register is Failed , Your Information Already Exists ';
+                        setState(() {
+                          _errorMessage = errorMessage;
+                        });
                       }
-                    } catch (e) {
-                      print('There was an error: $e');
                     }
-                  })
+                  }),
+              SizedBox(height: 10.0),
+              Text(
+                _errorMessage,
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              )
             ],
           ),
         ),

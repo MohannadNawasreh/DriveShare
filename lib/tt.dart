@@ -1,17 +1,15 @@
 import 'package:drive_share/layout/home_page.dart';
-import 'package:drive_share/layout/trips/plan/tripPlan/plan_trip.dart';
-import 'package:drive_share/layout/trip_post.dart';
+
 import 'package:drive_share/models/trip.dart';
 import 'package:flutter/material.dart';
 
 import '../models/components/components.dart';
-import 'trips/t1.dart';
 
-class TripDetails extends StatelessWidget {
+class CopeTripDetails extends StatelessWidget {
   final TripGp trip;
   final int index;
 
-  TripDetails({super.key, required this.trip, required this.index});
+  CopeTripDetails({super.key, required this.trip, required this.index});
 
   @override
   Widget build(BuildContext context) {

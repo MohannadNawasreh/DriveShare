@@ -1,11 +1,11 @@
 import 'dart:ffi';
 
 import 'package:drive_share/layout/home_page.dart';
-import 'package:drive_share/layout/plan/register_car_page.dart';
+import 'package:drive_share/layout/trips/plan/car/register_car_page.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/Car.dart';
-import '../../models/components/components.dart';
+import '../../../../models/Car.dart';
+import '../../../../models/components/components.dart';
 
 class CarDetails extends StatelessWidget {
   final Car car;

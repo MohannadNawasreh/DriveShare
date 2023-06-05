@@ -1,5 +1,5 @@
-import 'package:drive_share/layout/plan/plan_trip.dart';
-import 'package:drive_share/layout/plan/register_car_page.dart';
+import 'package:drive_share/layout/trips/plan/tripPlan/plan_trip.dart';
+import 'package:drive_share/layout/trips/plan/car/register_car_page.dart';
 import 'package:drive_share/layout/profile.dart';
 import 'package:drive_share/models/Passenger.dart';
 import 'package:flutter/material.dart';
