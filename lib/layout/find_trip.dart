@@ -143,6 +143,8 @@ class _FindTripState extends State<FindTrip> {
             left: 0,
             right: 0,
             child: Container(
+              
+              padding: const EdgeInsets.all(20),
               color: Colors.white,
               child: Column(
                 children: [
