@@ -1,5 +1,5 @@
 import 'package:image_picker/image_picker.dart';
-
+/*
 class Passenger {
   String? email;
   String? password;
@@ -54,9 +54,9 @@ class Passenger {
     );
   }
 }
-
-class AutoGenerate {
-  late final int passengerid;
+*/
+class PassengerGp {
+  late final int? passengerid;
   late final String fname;
   late final String lname;
   late final String phonenumber;
@@ -67,8 +67,7 @@ class AutoGenerate {
   late final List<dynamic>? logingps;
   late final List<dynamic>? trippassengergps;
 
-  AutoGenerate({
-    required this.passengerid,
+  PassengerGp({
     required this.fname,
     required this.lname,
     required this.phonenumber,
@@ -76,11 +75,13 @@ class AutoGenerate {
     required this.imagefile,
     this.carownerid,
     this.carowner,
-    required this.logingps,
-    required this.trippassengergps,
+     this.logingps,
+    this.trippassengergps,
+    this.passengerid,
+
   });
 
-  AutoGenerate.fromJson(Map<String, dynamic> json) {
+  PassengerGp.fromJson(Map<String, dynamic> json) {
     passengerid = json['passengerid'];
     fname = json['fname'];
     lname = json['lname'];

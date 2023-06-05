@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'edit_profile.dart';
 
 class Profile extends StatefulWidget {
-  final Passenger passenger;
+  final PassengerGp passenger;
 
   const Profile({
     required this.passenger,
@@ -19,14 +19,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Passenger passenger = Passenger(
-    email: "eyass123@gmail.com",
-    password: "jhnljkn123",
-    userName: "eyassBdair123",
-    phoneNumber: "0123456789",
-    firstName: "eyass",
-    lastName: "bdair",
-  );
+  PassengerGp passenger = PassengerGp(
+      fname: 'fname',
+      lname: 'lname',
+      phonenumber: 'phonenumber',
+      username: 'username',
+      imagefile: 'imagefile');
 
   String userName = "";
   String mobileNumber = "";
@@ -41,7 +39,7 @@ class _ProfileState extends State<Profile> {
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       _image = pickedImage;
-      passenger.updateUserInfo(image: pickedImage);
+//passenger.updateUserInfo(image: pickedImage);
     });
   }
 
@@ -108,14 +106,14 @@ class _ProfileState extends State<Profile> {
               ),
               const SizedBox(height: 10),
               Text(
-                "${passenger.userName}",
+                "${passenger.username}",
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                "${passenger.firstName} ${passenger.lastName}",
+                "${passenger.fname} ${passenger.lname}",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
               ),
               const SizedBox(height: 20),
@@ -145,7 +143,7 @@ class _ProfileState extends State<Profile> {
               ProfileMenuWidget(
                 passenger: passenger,
                 icon: Icons.person,
-                text: "${passenger.email}",
+                text: "${passenger.username}",
                 textColor: Colors.black,
                 onPressed: () {},
                 icon2: null,
@@ -153,7 +151,7 @@ class _ProfileState extends State<Profile> {
               ProfileMenuWidget(
                 passenger: passenger,
                 icon: Icons.phone,
-                text: "${passenger.phoneNumber}",
+                text: "${passenger.phonenumber}",
                 textColor: Colors.black,
                 onPressed: () {},
                 icon2: null,
@@ -161,7 +159,7 @@ class _ProfileState extends State<Profile> {
               ProfileMenuWidget(
                 passenger: passenger,
                 icon: Icons.person,
-                text: "${passenger.userName}",
+                text: "${passenger.username}",
                 textColor: Colors.black,
                 onPressed: () {},
                 icon2: null,
@@ -201,7 +199,7 @@ class ProfileMenuWidget extends StatelessWidget {
     required this.icon2,
   });
 
-  final Passenger passenger;
+  final PassengerGp passenger;
   final IconData icon;
   final String text;
   final Color? textColor;

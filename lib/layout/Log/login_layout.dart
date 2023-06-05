@@ -1,4 +1,3 @@
-
 import 'package:drive_share/layout/Log/cubit/cubit.dart';
 import 'package:drive_share/layout/Log/cubit/states.dart';
 import 'package:drive_share/models/components/components.dart';
@@ -27,10 +26,8 @@ class _LoginLayoutState extends State<LoginLayout> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => LoginCubit(),
-      child: BlocConsumer<LoginCubit, LoginState>(
-        listener: (context, state) {
+      child: BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
         if (state is LoginSuccessState) {
-          
           if (LoginCubit.get(context).TokenLogin[0] != "\"token\":\"0\"") {
             Navigator.push(
               context,
@@ -44,8 +41,7 @@ class _LoginLayoutState extends State<LoginLayout> {
           }
           print(LoginCubit.get(context).TokenLogin[0]);
         }
-      },
-       builder: (context, state) {
+      }, builder: (context, state) {
         return Scaffold(
           body: Padding(
             padding: const EdgeInsets.all(40.0),

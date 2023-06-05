@@ -1,5 +1,4 @@
 import 'package:drive_share/layout/home_page.dart';
-import 'package:drive_share/layout/trips/plan/tripPlan/plan_trip.dart';
 import 'package:drive_share/layout/trip_post.dart';
 import 'package:drive_share/models/trip.dart';
 import 'package:flutter/material.dart';

@@ -1,14 +1,10 @@
 import 'package:drive_share/layout/Log/login_layout.dart';
-import 'package:drive_share/layout/home_page.dart';
+import 'package:drive_share/network/remote/dio_helper.dart';
 import 'package:flutter/material.dart';
-import 'layout/register_page.dart';
-
-
-import 'layout/profile.dart';
 
 void main() {
-  
-  runApp(const MyApp());
+  DioHelper.init();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,19 +17,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.green,
-        
       ),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home:const LoginLayout(),
+      home: const LoginLayout(),
       //initialRoute: '/',
       /*routes: {
         '/': (context) => const LoginLayout(),
         '/home': (context) => const HomePage(),
         '/profile': (context) => const Profile(),
       },*/
-      
     );
-    
   }
 }

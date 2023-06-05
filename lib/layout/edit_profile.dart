@@ -17,15 +17,12 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  Passenger passenger = Passenger(
-    email: "eyass123@gmail.com",
-    password: "jhnljkn123",
-    userName: "eyassBdair123",
-    phoneNumber: "0123456789",
-    firstName: "eyass",
-    lastName: "bdair",
-    image: null,
-  );
+    PassengerGp passenger = PassengerGp(
+      fname: 'fname',
+      lname: 'lname',
+      phonenumber: 'phonenumber',
+      username: 'username',
+      imagefile: 'imagefile');
 
   var _controller = TextEditingController();
   var _controller2 = TextEditingController();
@@ -62,7 +59,7 @@ class _EditProfileState extends State<EditProfile> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      passenger.userName!,
+                      passenger.username!,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -85,7 +82,7 @@ class _EditProfileState extends State<EditProfile> {
                   ],
                 ),
                 SizedBox(height: 10),
-                Text("${passenger.firstName} ${passenger.lastName}"),
+                Text("${passenger.fname} ${passenger.lname}"),
                 SizedBox(height: 10),
                 Padding(
                   padding:
@@ -96,8 +93,7 @@ class _EditProfileState extends State<EditProfile> {
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
-                            passenger.updateUserInfo(
-                                userName: _controller.text);
+                         
                           });
                         },
                         icon: Icon(Icons.done),
@@ -114,8 +110,7 @@ class _EditProfileState extends State<EditProfile> {
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
-                            passenger.updateUserInfo(
-                                phoneNumber: _controller2.text);
+                         
                           });
                         },
                         icon: Icon(Icons.done),
@@ -132,8 +127,7 @@ class _EditProfileState extends State<EditProfile> {
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
-                            passenger.updateUserInfo(
-                                userName: _controller3.text);
+                            
                           });
                         },
                         icon: Icon(Icons.done),

@@ -1,10 +1,9 @@
-import 'package:drive_share/layout/trips/plan/tripPlan/plan_trip.dart';
 import 'package:drive_share/layout/trips/plan/car/register_car_page.dart';
 import 'package:drive_share/layout/profile.dart';
 import 'package:drive_share/models/Passenger.dart';
 import 'package:flutter/material.dart';
 
-
+import 'package:drive_share/layout/trips/plan/tripPlan/planD/plan_trip.dart';
 
 import 'find_trip.dart';
 
@@ -43,7 +42,7 @@ class _HomePageState extends State<HomePage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-              builder: (context) =>  Profile(passenger: Passenger( email: "eyass123@gmail.com", password: "jhnljkn123", userName: "eyassBdair123", phoneNumber: "0123456789", firstName: "eyass", lastName: "bdair"),),
+              builder: (context) =>  Profile(passenger:PassengerGp(fname: 'fname', lname: 'lname', phonenumber: 'phonenumber', username: 'username', imagefile: 'imagefile') ),
               ),
             );
           },
