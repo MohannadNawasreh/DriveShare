@@ -32,7 +32,7 @@ class _FindTripState extends State<FindTrip> {
   Set<Marker> _markers = {};
 
   // The initial camera position for the map, centered on Amman, Jordan
-  static final CameraPosition _amman = const CameraPosition(
+  static final CameraPosition _amman = CameraPosition(
     target: LatLng(31.9539, 35.9106),
     zoom: 14.4746,
   );
@@ -153,7 +153,7 @@ class _FindTripState extends State<FindTrip> {
                     textEditingController: _startingPointController,
                     googleAPIKey: "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
                     inputDecoration:
-                        const InputDecoration(hintText: "Starting Point"),
+                        InputDecoration(hintText: "Starting Point"),
                     itmClick: (prediction) =>
                         onPlaceSelected(prediction, _startingPointController),
                     getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
@@ -162,7 +162,7 @@ class _FindTripState extends State<FindTrip> {
                   GooglePlaceAutoCompleteTextField(
                     textEditingController: _endingPointController,
                     googleAPIKey: "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                    inputDecoration: const InputDecoration(hintText: "Ending Point"),
+                    inputDecoration: InputDecoration(hintText: "Ending Point"),
                     itmClick: (prediction) =>
                         onPlaceSelected(prediction, _endingPointController),
                     getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
@@ -171,24 +171,24 @@ class _FindTripState extends State<FindTrip> {
                   TextFormField(
                     controller: _dateController,
                     decoration:
-                        const InputDecoration(icon: Icon(Icons.calendar_today)),
+                        InputDecoration(icon: Icon(Icons.calendar_today)),
                     onTap: () => _selectDate(context),
                   ),
                   // TextFormField to display and select the time of the trip
                   TextFormField(
                     controller: _timeController,
-                    decoration: const InputDecoration(icon: Icon(Icons.access_time)),
+                    decoration: InputDecoration(icon: Icon(Icons.access_time)),
                     onTap: () => _selectTime(context),
                   ),
                   // ElevatedButton to submit trip details
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const TripCard()));
+                          MaterialPageRoute(builder: (context) => TripCard()));
                       // Submit trip details
                     },
                     child:
-                        const Text("Related Trips", style: TextStyle(fontSize: 12)),
+                        Text("Related Trips", style: TextStyle(fontSize: 12)),
                   ),
                 ],
               ),

@@ -33,25 +33,26 @@ class _TTripCState extends State<TTripC> {
             builder: (context) => ListView.separated(
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 15, right: 15, top: 15),
-                          child: SizedBox(
-                            height: 220,
-                            width: double.infinity,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              color: Colors.white,
-                              shadowColor: Colors.black54,
-                              elevation: 10,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Row(
+                       return Column(
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 15, right: 15, top: 15),
+                        child: SizedBox(
+                          height: 220,
+                          width: double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            color: Colors.white,
+                            shadowColor: Colors.black54,
+                            elevation: 10,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Row(
                                       children: [
                                         const CircleAvatar(
                                           backgroundImage:
@@ -72,10 +73,12 @@ class _TTripCState extends State<TTripC> {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Row(
+                                  ),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                  Expanded(
+                                    child: Row(
                                       children: [
                                         Expanded(
                                           child: Row(
@@ -87,14 +90,16 @@ class _TTripCState extends State<TTripC> {
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.black54),
                                               ),
-                                              Text(
-                                                trips[index]
-                                                    .carownerid
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w800,
-                                                    color: Colors.black38),
+                                              Expanded(
+                                                child: Text(
+                                                  trips[index]
+                                                      .carownerid
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w800,
+                                                      color: Colors.black38),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -112,24 +117,28 @@ class _TTripCState extends State<TTripC> {
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.black54),
                                               ),
-                                              Text(
-                                                trips[index]
-                                                    .seatnumber
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w800,
-                                                    color: Colors.black38),
+                                              Expanded(
+                                                child: Text(
+                                                  trips[index]
+                                                      .seatnumber
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w800,
+                                                      color: Colors.black38),
+                                                ),
                                               ),
                                             ],
                                           ),
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Expanded(
+                                    child: Row(
                                       children: [
                                         Expanded(
                                           child: Row(
@@ -141,14 +150,16 @@ class _TTripCState extends State<TTripC> {
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.black54),
                                               ),
-                                              Text(
-                                                trips[index]
-                                                    .startpoint
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w800,
-                                                    color: Colors.black38),
+                                              Expanded(
+                                                child: Text(
+                                                  trips[index]
+                                                      .startpoint
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w800,
+                                                      color: Colors.black38),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -166,22 +177,26 @@ class _TTripCState extends State<TTripC> {
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.black54),
                                               ),
-                                              Text(
-                                                trips[index].endpoint.toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w800,
-                                                    color: Colors.black38),
+                                              Expanded(
+                                                child: Text(
+                                                  trips[index].endpoint.toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w800,
+                                                      color: Colors.black38),
+                                                ),
                                               ),
                                             ],
                                           ),
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Expanded(
+                                    child: Row(
                                       children: [
                                         Expanded(
                                           child: Row(
@@ -193,14 +208,16 @@ class _TTripCState extends State<TTripC> {
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.black54),
                                               ),
-                                              Text(
-                                                (trips[index].rideprice != 0)
-                                                    ? '${trips[index].rideprice} JD'
-                                                    : 'Free',
-                                                style: const TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.green),
+                                              Expanded(
+                                                child: Text(
+                                                  (trips[index].rideprice != 0)
+                                                      ? '${trips[index].rideprice} JD'
+                                                      : 'Free',
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.green),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -218,60 +235,67 @@ class _TTripCState extends State<TTripC> {
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.black54),
                                               ),
-                                              Text(
-                                                format__Dat(DateTime.parse(
-                                                    trips[index]
-                                                        .triptime
-                                                        .toString())),
-                                                style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w800,
-                                                    color: Colors.black38),
+                                              Expanded(
+                                                child: Text(
+                                                  format__Dat(DateTime.parse(
+                                                      trips[index]
+                                                          .triptime
+                                                          .toString())),
+                                                  style: const TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w800,
+                                                      color: Colors.black38),
+                                                ),
                                               ),
                                             ],
                                           ),
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    Row(
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Expanded(
+                                    child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         /*  TextButton(
-                                onPressed: () {},
-                                child: Text('Join in Trip'),
-                                style: TextButton.styleFrom(
+                                                                onPressed: () {},
+                                                                child: Text('Join in Trip'),
+                                                                style: TextButton.styleFrom(
                                     backgroundColor:
                                         Color.fromARGB(255, 3, 184, 78),
                                     foregroundColor: Colors.white,
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(30))),
-                              ),*/
-                                        largeButton(
-                                          text: 'Join in Trip',
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => TripDetails(
-                                                    trip: trips[index],
-                                                    index: 1 + index),
-                                              ),
-                                            );
-                                          },
+                                                              ),*/
+                                        Expanded(
+                                          child: largeButton(
+                                            text: 'Join in Trip',
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => TripDetails(
+                                                      trip: trips[index],
+                                                      index: 1 + index),
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         )
                                       ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    );
+                      ),
+                    ],
+                  );
                   },
               itemCount: trips.length,
               separatorBuilder: (BuildContext context, int index) {

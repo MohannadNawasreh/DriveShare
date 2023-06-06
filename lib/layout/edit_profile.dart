@@ -1,8 +1,6 @@
 import 'package:drive_share/layout/profile.dart';
 import 'package:flutter/material.dart';
-
 import 'package:drive_share/models/Passenger.dart';
-
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -12,7 +10,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-    PassengerGp passenger = PassengerGp(
+  PassengerGp passenger = PassengerGp(
       fname: 'fname',
       lname: 'lname',
       phonenumber: 'phonenumber',
@@ -22,7 +20,6 @@ class _EditProfileState extends State<EditProfile> {
   var _controller = TextEditingController();
   var _controller2 = TextEditingController();
   var _controller3 = TextEditingController();
- 
 
   @override
   void dispose() {
@@ -87,9 +84,7 @@ class _EditProfileState extends State<EditProfile> {
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
                         onPressed: () {
-                          setState(() {
-                         
-                          });
+                          setState(() {});
                         },
                         icon: const Icon(Icons.done),
                       ),
@@ -104,9 +99,7 @@ class _EditProfileState extends State<EditProfile> {
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
                         onPressed: () {
-                          setState(() {
-                         
-                          });
+                          setState(() {});
                         },
                         icon: const Icon(Icons.done),
                       ),
@@ -121,9 +114,7 @@ class _EditProfileState extends State<EditProfile> {
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
                         onPressed: () {
-                          setState(() {
-                            
-                          });
+                          setState(() {});
                         },
                         icon: const Icon(Icons.done),
                       ),
