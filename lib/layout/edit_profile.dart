@@ -1,13 +1,8 @@
 import 'package:drive_share/layout/profile.dart';
-import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:provider/provider.dart';
-import 'package:drive_share/models/Passenger.dart';
-import 'profile.dart';
 
-import 'find_trip.dart';
+import 'package:drive_share/models/Passenger.dart';
+
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -50,23 +45,23 @@ class _EditProfileState extends State<EditProfile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 50,
                   backgroundImage: AssetImage("images/Untitled-2.png"),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       passenger.username!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: const Color.fromARGB(255, 3, 184, 78),
+                        color: Color.fromARGB(255, 3, 184, 78),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(
                       "4.5",
                       style: TextStyle(
@@ -81,9 +76,9 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text("${passenger.fname} ${passenger.lname}"),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
@@ -96,7 +91,7 @@ class _EditProfileState extends State<EditProfile> {
                          
                           });
                         },
-                        icon: Icon(Icons.done),
+                        icon: const Icon(Icons.done),
                       ),
                     ),
                   ),
@@ -113,7 +108,7 @@ class _EditProfileState extends State<EditProfile> {
                          
                           });
                         },
-                        icon: Icon(Icons.done),
+                        icon: const Icon(Icons.done),
                       ),
                     ),
                   ),
@@ -130,7 +125,7 @@ class _EditProfileState extends State<EditProfile> {
                             
                           });
                         },
-                        icon: Icon(Icons.done),
+                        icon: const Icon(Icons.done),
                       ),
                     ),
                   ),

@@ -32,12 +32,11 @@ class _FindTripState extends State<FindTrip> {
   Set<Marker> _markers = {};
 
   // The initial camera position for the map, centered on Amman, Jordan
-  static final CameraPosition _amman = CameraPosition(
+  static final CameraPosition _amman = const CameraPosition(
     target: LatLng(31.9539, 35.9106),
     zoom: 14.4746,
   );
 
-  
   // Function to display a DatePicker and update the selected date
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -52,7 +51,8 @@ class _FindTripState extends State<FindTrip> {
         _dateController.text = DateFormat.yMd().format(_selectedDate);
       });
   }
-   // Function to display a TimePicker and update the selected time
+
+  // Function to display a TimePicker and update the selected time
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
@@ -65,11 +65,12 @@ class _FindTripState extends State<FindTrip> {
         _timeController.text = picked.format(context);
       });
   }
+
   // Function to handle place selection from the GooglePlaceAutoCompleteTextField
   void onPlaceSelected(
       Prediction prediction, TextEditingController controller) async {
     if (prediction.placeId != null) {
-       // Make a request to the Google Places API to retrieve place details
+      // Make a request to the Google Places API to retrieve place details
       final response = await http.get(Uri.parse(
           "https://maps.googleapis.com/maps/api/place/details/json?place_id=${prediction.placeId}&key=AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo"));
       if (response.statusCode == 200) {
@@ -81,13 +82,13 @@ class _FindTripState extends State<FindTrip> {
             final position = LatLng(detail["geometry"]["location"]["lat"],
                 detail["geometry"]["location"]["lng"]);
             setState(() {
-                 // Add a Marker to the map at the selected location
+              // Add a Marker to the map at the selected location
               _markers.add(Marker(
                 markerId: MarkerId(prediction.placeId!),
                 position: position,
               ));
             });
-             // Move the map camera to the selected location
+            // Move the map camera to the selected location
             final GoogleMapController mapController = await _controller.future;
             mapController.animateCamera(CameraUpdate.newCameraPosition(
               CameraPosition(target: position, zoom: 15),
@@ -143,27 +144,25 @@ class _FindTripState extends State<FindTrip> {
             left: 0,
             right: 0,
             child: Container(
-              
               padding: const EdgeInsets.all(20),
               color: Colors.white,
               child: Column(
                 children: [
-                   // GooglePlaceAutoCompleteTextField for the starting point of the trip
+                  // GooglePlaceAutoCompleteTextField for the starting point of the trip
                   GooglePlaceAutoCompleteTextField(
                     textEditingController: _startingPointController,
                     googleAPIKey: "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
                     inputDecoration:
-                        InputDecoration(hintText: "Starting Point"),
+                        const InputDecoration(hintText: "Starting Point"),
                     itmClick: (prediction) =>
                         onPlaceSelected(prediction, _startingPointController),
                     getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
-                    
                   ),
                   //GooglePlaceAutoCompleteTextField for the ending point of the trip
                   GooglePlaceAutoCompleteTextField(
                     textEditingController: _endingPointController,
                     googleAPIKey: "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                    inputDecoration: InputDecoration(hintText: "Ending Point"),
+                    inputDecoration: const InputDecoration(hintText: "Ending Point"),
                     itmClick: (prediction) =>
                         onPlaceSelected(prediction, _endingPointController),
                     getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
@@ -172,22 +171,24 @@ class _FindTripState extends State<FindTrip> {
                   TextFormField(
                     controller: _dateController,
                     decoration:
-                        InputDecoration(icon: Icon(Icons.calendar_today)),
+                        const InputDecoration(icon: Icon(Icons.calendar_today)),
                     onTap: () => _selectDate(context),
                   ),
                   // TextFormField to display and select the time of the trip
                   TextFormField(
                     controller: _timeController,
-                    decoration: InputDecoration(icon: Icon(Icons.access_time)),
+                    decoration: const InputDecoration(icon: Icon(Icons.access_time)),
                     onTap: () => _selectTime(context),
                   ),
-                   // ElevatedButton to submit trip details
+                  // ElevatedButton to submit trip details
                   ElevatedButton(
                     onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => const TripCard()));
                       // Submit trip details
                     },
-                    child: Text("Related Trips",
-                        style: TextStyle(fontSize: 12)),
+                    child:
+                        const Text("Related Trips", style: TextStyle(fontSize: 12)),
                   ),
                 ],
               ),

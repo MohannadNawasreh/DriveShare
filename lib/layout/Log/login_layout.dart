@@ -1,11 +1,13 @@
 import 'package:drive_share/layout/Log/cubit/cubit.dart';
 import 'package:drive_share/layout/Log/cubit/states.dart';
 import 'package:drive_share/models/components/components.dart';
+import 'package:drive_share/network/remote/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:drive_share/layout/home_page.dart';
 import 'package:drive_share/layout/register_page.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginLayout extends StatefulWidget {
   const LoginLayout({Key? key}) : super(key: key);
@@ -25,21 +27,43 @@ class _LoginLayoutState extends State<LoginLayout> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => LoginCubit(),
-      child: BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
-        if (state is LoginSuccessState) {
-          if (LoginCubit.get(context).TokenLogin[0] != "\"token\":\"0\"") {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
+      create: (BuildContext context) => DSLoginCubit(),
+      child:
+          BlocConsumer<DSLoginCubit, DSLoginState>(listener: (context, state) {
+        if (state is DSLoginSuccessState) {
+          print("2");
+          if (state.T.token == "0") {
+            Fluttertoast.showToast(
+                msg: "خطأ في الايميل او الباسورد",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 5,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
           } else {
-            var errorMessage = 'Email Or Password is Failed';
-            setState(() {
-              _errorMessage = errorMessage;
+            print("3");
+            print(state.T.token);
+            CacheHelper.saveData(key: 'token', value: state.T.token)
+                .then((value) {
+              print("4");
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
+              /* Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));*/
+            }).catchError((error) {
+              print("Error saving data: $error");
+              // Handle the error gracefully, e.g., show an error message to the user
             });
+            Fluttertoast.showToast(
+                msg: "تم تسجيل الدخول ",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 5,
+                backgroundColor: Color.fromARGB(255, 3, 184, 78),
+                textColor: Colors.white,
+                fontSize: 16.0);
           }
-          print(LoginCubit.get(context).TokenLogin[0]);
         }
       }, builder: (context, state) {
         return Scaffold(
@@ -153,12 +177,14 @@ class _LoginLayoutState extends State<LoginLayout> {
                     ),
                     const SizedBox(height: 20),
                     ConditionalBuilder(
-                      condition: state is! LoginLoadingState,
+                      condition: state is! DSLoginLoadingState,
                       builder: (context) => largeButton(
                           text: 'LOGIN',
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              LoginCubit.get(context).PassengerLogin(
+                              print(emailController.text);
+                              print(passwordController.text);
+                              DSLoginCubit.get(context).userLogin(
                                   email: emailController.text,
                                   password: passwordController.text);
                             }
