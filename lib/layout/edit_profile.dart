@@ -51,7 +51,7 @@ class _EditProfileState extends State<EditProfile> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      passenger.username!,
+                      passenger.username,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
