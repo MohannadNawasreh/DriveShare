@@ -1,8 +1,8 @@
 abstract class TripState {}
 
-class TripInitial extends TripState {}
+class PageeInitial extends TripState {}
 
-class TripBottomNav extends TripState {}
+class PageBottomNav extends TripState {}
 
 class TripGetSuccessState extends TripState {}
 
@@ -13,10 +13,7 @@ class TripGetErrorState extends TripState {
 
 class TripLoadingState extends TripState {}
 
-
-
 class TripPlanInitialState extends TripState {}
-
 
 class TripPlanSuccessState extends TripState {}
 
@@ -27,10 +24,7 @@ class TripPlanErrorState extends TripState {
 
 class TripPlanLoadingState extends TripState {}
 
-
-
 class CarInitialState extends TripState {}
-
 
 class CarSuccessState extends TripState {}
 

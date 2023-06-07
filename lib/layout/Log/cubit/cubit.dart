@@ -13,26 +13,31 @@ class LoginCubit extends Cubit<LoginState> {
 
   static LoginCubit get(context) => BlocProvider.of(context);
 
-      String TokenLogin ='';
+  String TokenLogin = '';
 
-
-  void PassengerLogin({
+  void CreateUser({
     required String email,
     required String password,
+    required String fname,
+    required String lname,
+    required String phone,
+    required String username,
   }) {
     emit(LoginLoadingState());
     DioHelper.PostDioLogin(
-            url: 'https://driveshare.azurewebsites.net/api/User/login',
+            url: 'https://driveshare.azurewebsites.net/api/User/createuser',
             data: {
+          'fname': fname,
+          'lname': lname,
+          'PHONENUMBER': phone,
+          'USERNAME': username,
+          'IMAGEFILE': 'zz',
           'email': email,
           'password': password,
         })
         .then((value) => {
-              TokenLogin = value.data,
-
-              print(value.data.toString()),
+              print('aa'),
               emit(LoginSuccessState()),
-                
             })
         .catchError((onError) {
       print(onError.toString());
@@ -40,7 +45,6 @@ class LoginCubit extends Cubit<LoginState> {
     });
   }
 }
-
 
 /********************************* */
 
@@ -67,13 +71,14 @@ class DSLoginCubit extends Cubit<DSLoginState> {
         Map<String, dynamic> decodedToken = JwtDecoder.decode(T.token);
         print(decodedToken);
         if (decodedToken != null && decodedToken.containsKey('claims')) {
-        Map<String, dynamic> claims = decodedToken['claims'];
-        CacheHelper.saveData(key: 'Passengerid', value: claims['Passengerid']);
-        CacheHelper.saveData(key: 'carownerid', value: claims['carownerid']);
-        print(claims['carownerid']);
+          Map<String, dynamic> claims = decodedToken['claims'];
+          CacheHelper.saveData(
+              key: 'Passengerid', value: claims['Passengerid']);
+          CacheHelper.saveData(key: 'carownerid', value: claims['carownerid']);
+          print(claims['carownerid']);
         } else {
-        emit(DSLoginErrorState('Invalid token format'));
-        } 
+          emit(DSLoginErrorState('Invalid token format'));
+        }
         emit(DSLoginSuccessState(T));
         print("1");
       } else {

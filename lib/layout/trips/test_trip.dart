@@ -9,18 +9,18 @@ class Test_Dio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TripsCubit()..getListTrips(),
+      create: (context) => TripsCubit()..getAllListTrips(),
       child: BlocConsumer<TripsCubit, TripState>(
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = TripsCubit.get(context);
           return Scaffold(
-      /*      appBar: AppBar(
+            /*      appBar: AppBar(
               title: const Text('Test Trip'),
             ),
         */
-           body: cubit.screens[cubit.currentIndex],
-      /*    bottomNavigationBar: BottomNavigationBar(
+            body: cubit.screens[cubit.currentIndex],
+            /*    bottomNavigationBar: BottomNavigationBar(
                 currentIndex: cubit.currentIndex,
                 onTap: (value) {
                   cubit.changeBottomNavBar(value);

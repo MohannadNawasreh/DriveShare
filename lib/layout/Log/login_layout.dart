@@ -29,10 +29,12 @@ class _LoginLayoutState extends State<LoginLayout> {
     return BlocProvider(
       create: (BuildContext context) => DSLoginCubit(),
       child:
-          BlocConsumer<DSLoginCubit, DSLoginState>(listener: (context, state) {
+          BlocConsumer<DSLoginCubit, DSLoginState>(
+            listener: (context, state) {
         if (state is DSLoginSuccessState) {
           print("2");
           if (state.T.token == "0") {
+            print('object');
             Fluttertoast.showToast(
                 msg: "خطأ في الايميل او الباسورد",
                 toastLength: Toast.LENGTH_LONG,

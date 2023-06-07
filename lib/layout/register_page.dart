@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:drive_share/layout/Log/login_layout.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -35,6 +36,8 @@ class _RegisterState extends State<Register> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController imageController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
+
+  bool flag = true;
 
   String _errorMessage = '';
 
@@ -241,20 +244,29 @@ class _RegisterState extends State<Register> {
                       style:
                           TextStyle(color: Color.fromARGB(255, 3, 184, 78)))),
               const SizedBox(height: 20),
-              largeButton(
+              ConditionalBuilder(
+                condition: flag,
+                builder: (context) => largeButton(
                   text: "Register",
                   onPressed: () async {
+                    setState(() {
+                      _errorMessage = '';
+                      flag = false;
+                    });
+
                     if (formKey.currentState!.validate()) {
                       var headers = {
                         'Content-Type': 'application/json',
                         'Cookie':
                             'ARRAffinity=db7caaae5eca3babc5f5f4457fe724cbbbf257aeb4789bd12dc6351f9c66004b; ARRAffinitySameSite=db7caaae5eca3babc5f5f4457fe724cbbbf257aeb4789bd12dc6351f9c66004b'
                       };
-                      
+
                       var request = http.Request(
-                          'POST',
-                          Uri.parse(
-                              'https://driveshare.azurewebsites.net/api/User/createuser'));
+                        'POST',
+                        Uri.parse(
+                          'https://driveshare.azurewebsites.net/api/User/createuser',
+                        ),
+                      );
                       request.body = json.encode({
                         "fname": fnameController.text,
                         "lname": lnameController.text,
@@ -267,24 +279,35 @@ class _RegisterState extends State<Register> {
                       request.headers.addAll(headers);
 
                       http.StreamedResponse response = await request.send();
-                      print(await response.statusCode);
 
                       if (response.statusCode == 200) {
                         print(await response.stream.bytesToString());
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const LoginLayout()),
+                            builder: (context) => const LoginLayout(),
+                          ),
                         );
                       } else {
                         var errorMessage =
-                            'Register is Failed , Your Information Already Exists ';
+                            'Register is Failed, Your Information Already Exists';
+
+                        print(response.statusCode);
                         setState(() {
                           _errorMessage = errorMessage;
+                          flag = true;
                         });
                       }
+                    } else {
+                      setState(() {
+                        flag = true;
+                      });
                     }
-                  }),
+                  },
+                ),
+                fallback: (context) =>
+                    const Center(child: CircularProgressIndicator()),
+              ),
               SizedBox(height: 10.0),
               Text(
                 _errorMessage,
