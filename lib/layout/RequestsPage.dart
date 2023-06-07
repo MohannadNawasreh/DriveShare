@@ -1,4 +1,5 @@
 import 'package:drive_share/layout/trip_details_page.dart';
+import 'package:drive_share/models/Passenger.dart';
 import 'package:drive_share/models/trip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,13 +15,15 @@ class RequestsPage extends StatefulWidget {
 
 class _RequestsPageState extends State<RequestsPage> {
   late List<bool> isButtonDisabled;
-  List<TripGp> listTrip = [];
+  List<PassengerGp> listPassenger = [
+    PassengerGp(fname: 'fname', lname: 'lname', phonenumber: 'phonenumber', username: 'username', imagefile: 'imagefile')
+  ];
   
   @override
   void initState() {
     super.initState();
     
-    isButtonDisabled = List<bool>.generate(listTrip.length, (_) => false);
+    isButtonDisabled = List<bool>.generate(listPassenger.length, (_) => false);
   }
 
   @override
@@ -30,7 +33,7 @@ class _RequestsPageState extends State<RequestsPage> {
         title: const Text('Ride Requests'),
       ),
       body: ListView.builder(
-        itemCount: listTrip.length,
+        itemCount: listPassenger.length,
         itemBuilder: (BuildContext context, int index) {
           return Column(
             children: [
@@ -90,8 +93,7 @@ class _RequestsPageState extends State<RequestsPage> {
                                         ),
                                       ),
                                       Text(
-                                        "lorem ipsum",
-                                        //listTrip[index].carOwnerName.toString(),
+                                        listPassenger[index].fname.toString(),
                                         style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w800,
@@ -115,8 +117,8 @@ class _RequestsPageState extends State<RequestsPage> {
                                           color: Colors.black54,
                                         ),
                                       ),
-                                      Text("lorem ipusm",
-                                        //listTrip[index].seatNumber.toString(),
+                                      Text(
+                                        listPassenger[index].phonenumber.toString(),
                                         style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w800,
@@ -169,8 +171,8 @@ class _RequestsPageState extends State<RequestsPage> {
                                           color: Colors.black54,
                                         ),
                                       ),
-                                      Text("lorem ipsum",
-                                        //listTrip[index].endPoint.toString(),
+                                      Text(
+                                        listPassenger[index].passengerid.toString(),
                                         style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w800,
