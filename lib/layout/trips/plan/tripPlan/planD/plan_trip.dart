@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:drive_share/layout/RequestsPage.dart';
 import 'package:drive_share/layout/trip_post.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
@@ -288,33 +289,43 @@ class _PlanTripState extends State<PlanTrip> {
                           keyboardType: TextInputType.number,
                         ),
                         // ElevatedButton to submit trip details
-                         ConditionalBuilder(
-                        condition: state is! TripPlanLoadingState,
-                        builder: (context) => largeButton(
-                            text: 'Create Trip',
-                            onPressed: () async {
-                        //      if (formKey.currentState!.validate()) {
-                                TripsCubit.get(context).CreateTripPlan(
-                                    startpoint: _startingPointController.text,
-                                    endpoint: _endingPointController.text,
-                                    descreption: _descriptionController.text,
-                                    seatnumber:
-                                        int.parse(_seatController.text),
-                                    triptime: tripTimeD,
-                                    rideprice:
-                                        int.parse(_priceController.text),
-                                    isactive: 1,
-                                    carownerid: 2,
-                                    sp1: 'ss',
-                                    sp2: '',
-                                    sp3: '',
-                                    sp4: '',
-                                    trippassengergps: []);
-                              }
-                            ),
-                        fallback: (context) =>
-                            const Center(child: CircularProgressIndicator()),
-                      ),
+                         Row(
+                           children: [
+                             Expanded(
+                               child: ConditionalBuilder(
+                                                     condition: state is! TripPlanLoadingState,
+                                                     builder: (context) => largeButton(
+                                  text: 'Create Trip',
+                                  onPressed: () async {
+                                                     //      if (formKey.currentState!.validate()) {
+                                      TripsCubit.get(context).CreateTripPlan(
+                                          startpoint: _startingPointController.text,
+                                          endpoint: _endingPointController.text,
+                                          descreption: _descriptionController.text,
+                                          seatnumber:
+                                              int.parse(_seatController.text),
+                                          triptime: tripTimeD,
+                                          rideprice:
+                                              int.parse(_priceController.text),
+                                          isactive: 1,
+                                          carownerid: 2,
+                                          sp1: 'ss',
+                                          sp2: '',
+                                          sp3: '',
+                                          sp4: '',
+                                          trippassengergps: []);
+                                    }
+                                  ),
+                                                     fallback: (context) =>
+                                  const Center(child: CircularProgressIndicator()),
+                                                   ),
+                             ),
+                             SizedBox(width: 30,),
+                              ElevatedButton(onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const RequestsPage()));
+                              }, child: const Text("my trip requests"), )
+                           ],
+                         ),
                       ],
                     ),
                   ),
