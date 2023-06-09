@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:drive_share/models/trip.dart';
 
 import '../../../network/remote/dio_helper.dart';
-import '../t1.dart';
+import '../tripCard-Cubit.dart';
 
 class TripsCubit extends Cubit<TripState> {
   TripsCubit() : super(PageeInitial());
@@ -31,7 +31,7 @@ class TripsCubit extends Cubit<TripState> {
 //TripCard(),
   ];
 
-  List<dynamic> LiistTripsCub = [];
+ List<dynamic> LiistTripsJson = [];
   List<TripGp> ListtTrips = [];
 
   List<dynamic> ListPassengerJson = [];
@@ -44,11 +44,11 @@ class TripsCubit extends Cubit<TripState> {
                 'https://driveshare.azurewebsites.net/api/Passenger/getalltrip')
         .then((value) => {
               //print(value.data.toString()),
-              LiistTripsCub = value.data,
+              LiistTripsJson = value.data,
               // ListtTrips = json.decode(value.data.toString()),
 
               ListtTrips =
-                  LiistTripsCub.map((data) => TripGp.fromJson(data)).toList(),
+                  LiistTripsJson.map((data) => TripGp.fromJson(data)).toList(),
 
               print(ListtTrips[0].descreption),
 
@@ -87,7 +87,7 @@ class TripsCubit extends Cubit<TripState> {
           'triptime': triptime.toIso8601String(),
           'seatnumber': seatnumber,
           'descreption': descreption,
-          'isactive': 1,
+          'isactive': 0,
           'carownerid': 81,
           'sp1': sp1,
           'sp2': '',
@@ -154,11 +154,11 @@ class TripsCubit extends Cubit<TripState> {
         })
         .then((value) => {
               //print(value.data.toString()),
-              LiistTripsCub = value.data,
+              LiistTripsJson = value.data,
               // ListtTrips = json.decode(value.data.toString()),
 
               ListtTrips =
-                  LiistTripsCub.map((data) => TripGp.fromJson(data)).toList(),
+                  LiistTripsJson.map((data) => TripGp.fromJson(data)).toList(),
 
               print(ListtTrips[0].descreption),
 
