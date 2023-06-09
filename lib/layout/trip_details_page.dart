@@ -4,7 +4,7 @@ import 'package:drive_share/models/trip.dart';
 import 'package:flutter/material.dart';
 
 import '../models/components/components.dart';
-import 'trips/t1.dart';
+import 'trips/tripCard-Cubit.dart';
 
 class TripDetails extends StatelessWidget {
   final TripGp trip;
