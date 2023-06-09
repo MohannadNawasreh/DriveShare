@@ -180,15 +180,33 @@ class _FindTripState extends State<FindTrip> {
                     decoration: InputDecoration(icon: Icon(Icons.access_time)),
                     onTap: () => _selectTime(context),
                   ),
+                  SizedBox(height: 20),
                   // ElevatedButton to submit trip details
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => TripCard()));
-                      // Submit trip details
-                    },
-                    child:
-                        Text("Related Trips", style: TextStyle(fontSize: 12)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => TripCard()));
+                          // Submit trip details
+                        },
+                        child:
+                            Text("Related Trips", style: TextStyle(fontSize: 12)),
+                      ),
+                      SizedBox(width: 30),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TripCard()));
+                          // Submit trip details
+                        },
+                        child: Text("Related Trips",
+                            style: TextStyle(fontSize: 12)),
+                      ),
+                    ],
                   ),
                 ],
               ),

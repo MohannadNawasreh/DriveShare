@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:drive_share/layout/trips/plan/car/register_car_page.dart';
 import 'package:drive_share/models/Passenger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'edit_profile.dart';
@@ -24,7 +26,8 @@ class _ProfileState extends State<Profile> {
       lname: 'lname',
       phonenumber: 'phonenumber',
       username: 'username',
-      imagefile: 'imagefile');
+      imagefile: 'imagefile',
+      email: 'email');
 
   String userName = "";
   String mobileNumber = "";
@@ -159,7 +162,7 @@ class _ProfileState extends State<Profile> {
               ProfileMenuWidget(
                 passenger: passenger,
                 icon: Icons.person,
-                text: "${passenger.username}",
+                text: "${passenger.email}",
                 textColor: Colors.black,
                 onPressed: () {},
                 icon2: null,
@@ -168,10 +171,14 @@ class _ProfileState extends State<Profile> {
               ProfileMenuWidget(
                 passenger: passenger,
                 icon: Icons.payment,
-                text: "billing",
+                text: "Become a Driver",
                 textColor: Colors.black,
-                onPressed: () {},
-                icon2: Icons.edit,
+                onPressed: () {
+                  Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => RegisterCar()),
+                  );
+                },
+                icon2: null,
               ),
               ProfileMenuWidget(
                 passenger: passenger,

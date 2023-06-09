@@ -65,203 +65,209 @@ class _RegisterCarState extends State<RegisterCar> {
                                         )));
         }
       }, builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: SingleChildScrollView(
-            reverse: true,
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    child: Center(
-                        child: Image.asset("images/Untitled-2.png",
-                            width: 100, height: 100)),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      controller: carTypeController,
-                      decoration: InputDecoration(
-                        border: UnderlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 3, 184, 78)),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.car_crash_rounded,
-                          size: 20,
-                        ),
-                        hintText: "Car Type",
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Car Type';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                         carTypeController = value as TextEditingController;
-                      },
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color.fromARGB(255, 3, 184, 78),
+            title: const Text("Register Car"),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: SingleChildScrollView(
+              reverse: true,
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      controller: carYearController,
-                      decoration: InputDecoration(
-                        border: UnderlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 3, 184, 78)),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.car_crash,
-                          size: 20,
-                        ),
-                        hintText: "Car Year",
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Car Year';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                            newCar.CarYear = int.parse(value.toString());
-                      },
+                    SizedBox(
+                      child: Center(
+                          child: Image.asset("images/Untitled-2.png",
+                              width: 100, height: 100)),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextFormField(
-                      controller: carModelController,
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                        border: UnderlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 3, 184, 78)),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.car_crash_rounded,
-                          size: 20,
-                        ),
-                        hintText: "Car Model",
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Car Model';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                            newCar.CarModel = value;
-                      },
+                    const SizedBox(
+                      height: 15,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextFormField(
-                      controller: carNumberController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: UnderlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 3, 184, 78)),
-                          borderRadius: BorderRadius.circular(10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        controller: carTypeController,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 3, 184, 78)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.car_crash_rounded,
+                            size: 20,
+                          ),
+                          hintText: "Car Type",
                         ),
-                        prefixIcon: const Icon(
-                          Icons.description,
-                          size: 20,
-                        ),
-                        hintText: "Car Number",
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Car Number';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                            newCar.CarNumber = value;
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ElevatedButton(
-                    onPressed: _selectImage,
-                    style: ElevatedButton.styleFrom(
-                      primary: _isImageSelected
-                          ? Color.fromARGB(255, 175, 210, 176)
-                          : Colors.red,
-                    ),
-                    child: Text('Select Image License'),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ConditionalBuilder(
-                    condition: state is! CarLoadingState,
-                    builder: (context) => largeButton(
-                        text: 'Register Car',
-                        onPressed: () async {
-                          print('object');
-
-                          if (formKey.currentState!.validate()) {
-                            TripsCubit.get(context).CarRegister(
-                                cartype: carTypeController.text,
-                                carYearmodel: int.parse(carYearController.text),
-                                carmmodel: carModelController.text,
-                                carnumber: carNumberController.text);
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Car Type';
                           }
-                        }),
-                    fallback: (context) =>
-                        const Center(child: CircularProgressIndicator()),
-                  ),
-                  /*    largeButton(
-                        text: 'Register Car',
-                        onPressed: () {
-                          if (formKey.currentState!.validate() &&
-                              _selectedImage != null) {
-                            formKey.currentState!.save();
-
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CarDetails(
-                                          car: newCar,
-                                        )));
-                            //  createTrip();
-                            print(newCar.CarModel);
-                            print(newCar.CarNumber);
-
-                            print(newCar.CarType);
-
-                            print(newCar.CarYear);
-                          }
+                          return null;
                         },
-                      ),*/
-                ],
+                        onSaved: (value) {
+                           carTypeController = value as TextEditingController;
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: carYearController,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 3, 184, 78)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.car_crash,
+                            size: 20,
+                          ),
+                          hintText: "Car Year",
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Car Year';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                              newCar.CarYear = int.parse(value.toString());
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextFormField(
+                        controller: carModelController,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 3, 184, 78)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.car_crash_rounded,
+                            size: 20,
+                          ),
+                          hintText: "Car Model",
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Car Model';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                              newCar.CarModel = value;
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextFormField(
+                        controller: carNumberController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 3, 184, 78)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.description,
+                            size: 20,
+                          ),
+                          hintText: "Car Number",
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Car Number';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                              newCar.CarNumber = value;
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    ElevatedButton(
+                      onPressed: _selectImage,
+                      style: ElevatedButton.styleFrom(
+                        primary: _isImageSelected
+                            ? Color.fromARGB(255, 175, 210, 176)
+                            : Colors.red,
+                      ),
+                      child: Text('Select Image License'),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ConditionalBuilder(
+                      condition: state is! CarLoadingState,
+                      builder: (context) => largeButton(
+                          text: 'Register Car',
+                          onPressed: () async {
+                            print('object');
+        
+                            if (formKey.currentState!.validate()) {
+                              TripsCubit.get(context).CarRegister(
+                                  cartype: carTypeController.text,
+                                  carYearmodel: int.parse(carYearController.text),
+                                  carmmodel: carModelController.text,
+                                  carnumber: carNumberController.text);
+                            }
+                          }),
+                      fallback: (context) =>
+                          const Center(child: CircularProgressIndicator()),
+                    ),
+                    /*    largeButton(
+                          text: 'Register Car',
+                          onPressed: () {
+                            if (formKey.currentState!.validate() &&
+                                _selectedImage != null) {
+                              formKey.currentState!.save();
+        
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CarDetails(
+                                            car: newCar,
+                                          )));
+                              //  createTrip();
+                              print(newCar.CarModel);
+                              print(newCar.CarNumber);
+        
+                              print(newCar.CarType);
+        
+                              print(newCar.CarYear);
+                            }
+                          },
+                        ),*/
+                  ],
+                ),
               ),
             ),
           ),

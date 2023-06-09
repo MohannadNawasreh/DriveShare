@@ -66,6 +66,7 @@ class PassengerGp {
   late final String? carowner;
   late final List<dynamic>? logingps;
   late final List<dynamic>? trippassengergps;
+  late final String? email;
 
   PassengerGp({
     required this.fname,
@@ -78,6 +79,7 @@ class PassengerGp {
      this.logingps,
     this.trippassengergps,
     this.passengerid,
+    this.email,
 
   });
 

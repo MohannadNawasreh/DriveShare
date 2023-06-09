@@ -84,6 +84,7 @@ class _PlanTripState extends State<PlanTrip> {
 
   // Function to handle place selection from the GooglePlaceAutoCompleteTextField
   void onPlaceSelected(
+    
       Prediction prediction, TextEditingController controller) async {
     if (prediction.placeId != null) {
       // Make a request to the Google Places API to retrieve place details
@@ -98,6 +99,7 @@ class _PlanTripState extends State<PlanTrip> {
             final position = LatLng(
               detail["geometry"]["location"]["lat"],
               detail["geometry"]["location"]["lng"],
+              
             );
             setState(() {
               // Add a Marker to the map at the selected location
@@ -122,6 +124,7 @@ class _PlanTripState extends State<PlanTrip> {
   }
 
   void getPlaceDetailWithLatLng(Prediction prediction) async {
+    
     if (prediction.placeId != null) {
       final response = await http.get(Uri.parse(
           "https://maps.googleapis.com/maps/api/place/details/json?place_id=${prediction.placeId}&key=AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo"));

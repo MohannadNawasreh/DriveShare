@@ -19,12 +19,12 @@ class _HomePageState extends State<HomePage> {
   List<Widget> screens = [
     const FindTrip(),
     const PlanTrip(),
-    const RegisterCar(),
+    //const RegisterCar(),
   ];
   List<String> titles = [
     "Find a trip",
     "Plan a trip",
-    "Register a Car",
+    //"Register a Car",
   ];
 
   @override
@@ -64,8 +64,8 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.person_add_alt_rounded), label: "plan a trip"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.car_crash), label: "Register a Car"),
+          //BottomNavigationBarItem(
+              //icon: Icon(Icons.car_crash), label: "Register a Car"),
         ],
       ),
     );
