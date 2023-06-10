@@ -197,6 +197,7 @@ class _FindTripState extends State<FindTrip> {
                       ),
                       SizedBox(width: 30),
                       ElevatedButton(
+                        
                         onPressed: () {
                           Navigator.push(
                               context,
@@ -204,7 +205,7 @@ class _FindTripState extends State<FindTrip> {
                                   builder: (context) => Test_Dio()));
                           // Submit trip details
                         },
-                        child: Text("Related Trips",
+                        child: Text("All trips",
                             style: TextStyle(fontSize: 12)),
                       ),
                     ],

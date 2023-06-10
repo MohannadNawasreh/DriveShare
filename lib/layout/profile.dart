@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:drive_share/layout/my_ride.dart';
+import 'package:drive_share/layout/trip_details_page.dart';
 import 'package:drive_share/layout/trips/plan/car/register_car_page.dart';
 import 'package:drive_share/models/Passenger.dart';
+import 'package:drive_share/models/trip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,6 +39,7 @@ class _ProfileState extends State<Profile> {
   var _controller2 = TextEditingController();
   var _controller3 = TextEditingController();
   XFile? _image;
+
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
@@ -167,6 +171,18 @@ class _ProfileState extends State<Profile> {
                 onPressed: () {},
                 icon2: null,
               ),
+              ProfileMenuWidget(
+                passenger: passenger,
+                icon: Icons.start_rounded,
+                text: "My Ride",
+                textColor: Colors.black,
+                onPressed: () {
+                  Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => MyRide( trip: TripGp(tripid: 12314123, startpoint: "شارع الأردن", endpoint: "endpoint", rideprice: 200 , triptime: "10:00:00", seatnumber: 3 , isactive: 0, carownerid: 1234), index: 1,)),
+                  );
+                },
+                icon2: null,
+              ),
               const Divider(),
               ProfileMenuWidget(
                 passenger: passenger,
@@ -185,7 +201,9 @@ class _ProfileState extends State<Profile> {
                 icon: Icons.logout,
                 text: "Logout",
                 textColor: Colors.black,
-                onPressed: () {},
+                onPressed: () {
+
+                },
                 icon2: null,
               ),
             ],

@@ -28,6 +28,10 @@ class _PlanTripState extends State<PlanTrip> {
   // TextEditingControllers for the starting and ending points of the trip
   TextEditingController _startingPointController = TextEditingController();
   TextEditingController _endingPointController = TextEditingController();
+    TextEditingController _checkPointController1 = TextEditingController();
+  TextEditingController _checkPointController2 = TextEditingController();
+    TextEditingController _checkPointController3 = TextEditingController();
+  TextEditingController _checkPointController4 = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
@@ -185,151 +189,198 @@ class _PlanTripState extends State<PlanTrip> {
                 right: 0,
                 child: SingleChildScrollView(
                   child: Container(
-                    padding: const EdgeInsets.all(20),
+                    width: double.infinity,
+                    height: 350,
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     color: Colors.white,
-                    child: Column(
-                      children: [
-                        // GooglePlaceAutoCompleteTextField for the starting point of the trip
-                        GooglePlaceAutoCompleteTextField(
-                          textEditingController: _startingPointController,
-                          googleAPIKey:
-                              "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                          inputDecoration:
-                              InputDecoration(hintText: "Starting Point"),
-                          itmClick: (prediction) => onPlaceSelected(
-                              prediction, _startingPointController),
-                          getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
-                        ),
-                        // GooglePlaceAutoCompleteTextField for the ending point of the trip
-                        GooglePlaceAutoCompleteTextField(
-                          textEditingController: _endingPointController,
-                          googleAPIKey:
-                              "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                          inputDecoration:
-                              InputDecoration(hintText: "Ending Point"),
-                          itmClick: (prediction) => onPlaceSelected(
-                              prediction, _endingPointController),
-                          getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
-                        ),
-                        // TextFormField to display and select the date of the trip
-                      TextFormField(
-                        keyboardType: TextInputType.datetime,
-                        decoration: InputDecoration(
-                          border: UnderlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 3, 184, 78)),
-                            borderRadius: BorderRadius.circular(10),
+                  child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          // GooglePlaceAutoCompleteTextField for the starting point of the trip
+                          GooglePlaceAutoCompleteTextField(
+                            textEditingController: _startingPointController,
+                            googleAPIKey:
+                                "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
+                            inputDecoration:
+                                InputDecoration(hintText: "Starting Point"),
+                            itmClick: (prediction) => onPlaceSelected(
+                                prediction, _startingPointController),
+                            getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
                           ),
-                          prefixIcon: const Icon(
-                            Icons.access_time,
-                            size: 20,
+                          GooglePlaceAutoCompleteTextField(
+                            textEditingController: _checkPointController1,
+                            googleAPIKey:
+                                "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
+                            inputDecoration:
+                                InputDecoration(hintText: "First checkpoint"),
+                            itmClick: (prediction) => onPlaceSelected(
+                                prediction, _checkPointController1),
+                            getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
                           ),
-                          hintText: "Trip Time",
-                        ),
-                        onTap: () async {
-                          // Show date picker
-                          DateTime? selectedDate = await showDatePicker(
-                            // ...
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime.now().add(Duration(days: 365)),
-                          );
+                          // GooglePlaceAutoCompleteTextField for the ending point of the trip
+                          GooglePlaceAutoCompleteTextField(
+                            textEditingController: _checkPointController2,
+                            googleAPIKey:
+                                "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
+                            inputDecoration:
+                                InputDecoration(hintText: "Second checkpoint"),
+                            itmClick: (prediction) => onPlaceSelected(
+                                prediction, _checkPointController2),
+                            getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
+                          ),
+                          GooglePlaceAutoCompleteTextField(
+                            textEditingController: _checkPointController3,
+                            googleAPIKey:
+                                "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
+                            inputDecoration:
+                                InputDecoration(hintText: "Third checkpoint"),
+                            itmClick: (prediction) => onPlaceSelected(
+                                prediction, _checkPointController3),
+                            getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
+                          ),
+                          // GooglePlaceAutoCompleteTextField for the ending point of the trip
+                          GooglePlaceAutoCompleteTextField(
+                            textEditingController: _checkPointController4,
+                            googleAPIKey:
+                                "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
+                            inputDecoration:
+                                InputDecoration(hintText: "Fourth checkpoint"),
+                            itmClick: (prediction) => onPlaceSelected(
+                                prediction, _checkPointController4),
+                            getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
+                          ),
+                          // GooglePlaceAutoCompleteTextField for the ending point of the trip
+                          GooglePlaceAutoCompleteTextField(
+                            textEditingController: _endingPointController,
+                            googleAPIKey:
+                                "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
+                            inputDecoration:
+                                InputDecoration(hintText: "Ending Point"),
+                            itmClick: (prediction) => onPlaceSelected(
+                                prediction, _endingPointController),
+                            getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
+                          ),
 
-                          if (selectedDate != null) {
-                            // Show time picker
-                            TimeOfDay? selectedTime = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
+                          // TextFormField to display and select the date of the trip
+                        TextFormField(
+                          keyboardType: TextInputType.datetime,
+                          decoration: InputDecoration(
+                            border: UnderlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 3, 184, 78)),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.access_time,
+                              size: 20,
+                            ),
+                            hintText: "Trip Time",
+                          ),
+                          onTap: () async {
+                            // Show date picker
+                            DateTime? selectedDate = await showDatePicker(
                               // ...
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime.now().add(Duration(days: 365)),
                             );
-
-                            if (selectedTime != null) {
-                              setState(() {
-                                tripTimeD = DateTime(
-                                  selectedDate.year,
-                                  selectedDate.month,
-                                  selectedDate.day,
-                                  selectedTime.hour,
-                                  selectedTime.minute,
-                                );
-                                // tripTimeController = selectedDateTime
-                              });
+                    
+                            if (selectedDate != null) {
+                              // Show time picker
+                              TimeOfDay? selectedTime = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                                // ...
+                              );
+                    
+                              if (selectedTime != null) {
+                                setState(() {
+                                  tripTimeD = DateTime(
+                                    selectedDate.year,
+                                    selectedDate.month,
+                                    selectedDate.day,
+                                    selectedTime.hour,
+                                    selectedTime.minute,
+                                  );
+                                  // tripTimeController = selectedDateTime
+                                });
+                              }
                             }
-                          }
-                        },
-                        readOnly: true,
-                        validator: (value) {
-                          if (tripTimeD == null) {
-                            return 'Please select trip time';
-                          }
-                          return null;
-                        },
-                        controller: TextEditingController(
-                          text: tripTimeD != null
-                              ? DateFormat('hh:mm a | d-M-yyyy')
-                                  .format(
-                                      DateTime.parse(tripTimeD.toString()))
-                                  .toString()
-                              : '',
+                          },
+                          readOnly: true,
+                          validator: (value) {
+                            if (tripTimeD == null) {
+                              return 'Please select trip time';
+                            }
+                            return null;
+                          },
+                          controller: TextEditingController(
+                            text: tripTimeD != null
+                                ? DateFormat('hh:mm a | d-M-yyyy')
+                                    .format(
+                                        DateTime.parse(tripTimeD.toString()))
+                                    .toString()
+                                : '',
+                          ),
                         ),
+                          // TextFormField for the description of the trip
+                          TextFormField(
+                            controller: _descriptionController,
+                            decoration: InputDecoration(hintText: "Description"),
+                          ),
+                          // TextFormField for the seat number of the trip
+                          TextFormField(
+                            controller: _seatController,
+                            decoration: InputDecoration(hintText: "Seat Number"),
+                            keyboardType: TextInputType.number,
+                          ),
+                          // TextFormField for the price tag of the trip
+                          TextFormField(
+                            controller: _priceController,
+                            decoration: InputDecoration(hintText: "Price Tag"),
+                            keyboardType: TextInputType.number,
+                          ),
+                          // ElevatedButton to submit trip details
+                           Row(
+                             children: [
+                               Expanded(
+                                 child: ConditionalBuilder(
+                                                       condition: state is! TripPlanLoadingState,
+                                                       builder: (context) => largeButton(
+                                    text: 'Create Trip',
+                                    onPressed: () async {
+                                                       //      if (formKey.currentState!.validate()) {
+                                        TripsCubit.get(context).CreateTripPlan(
+                                            startpoint: _startingPointController.text,
+                                            endpoint: _endingPointController.text,
+                                            descreption: _descriptionController.text,
+                                            seatnumber:
+                                                int.parse(_seatController.text),
+                                            triptime: tripTimeD,
+                                            rideprice:
+                                                int.parse(_priceController.text),
+                                            isactive: 1,
+                                            carownerid: 2,
+                                            sp1: 'ss',
+                                            sp2: '',
+                                            sp3: '',
+                                            sp4: '',
+                                            trippassengergps: []);
+                                      }
+                                    ),
+                                                       fallback: (context) =>
+                                    const Center(child: CircularProgressIndicator()),
+                                                     ),
+                               ),
+                               SizedBox(width: 30,),
+                                ElevatedButton(onPressed: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const RequestsPage()));
+                                }, child: const Text("my trip requests"), )
+                             ],
+                           ),
+                        ],
                       ),
-                        // TextFormField for the description of the trip
-                        TextFormField(
-                          controller: _descriptionController,
-                          decoration: InputDecoration(hintText: "Description"),
-                        ),
-                        // TextFormField for the seat number of the trip
-                        TextFormField(
-                          controller: _seatController,
-                          decoration: InputDecoration(hintText: "Seat Number"),
-                          keyboardType: TextInputType.number,
-                        ),
-                        // TextFormField for the price tag of the trip
-                        TextFormField(
-                          controller: _priceController,
-                          decoration: InputDecoration(hintText: "Price Tag"),
-                          keyboardType: TextInputType.number,
-                        ),
-                        // ElevatedButton to submit trip details
-                         Row(
-                           children: [
-                             Expanded(
-                               child: ConditionalBuilder(
-                                                     condition: state is! TripPlanLoadingState,
-                                                     builder: (context) => largeButton(
-                                  text: 'Create Trip',
-                                  onPressed: () async {
-                                                     //      if (formKey.currentState!.validate()) {
-                                      TripsCubit.get(context).CreateTripPlan(
-                                          startpoint: _startingPointController.text,
-                                          endpoint: _endingPointController.text,
-                                          descreption: _descriptionController.text,
-                                          seatnumber:
-                                              int.parse(_seatController.text),
-                                          triptime: tripTimeD,
-                                          rideprice:
-                                              int.parse(_priceController.text),
-                                          isactive: 1,
-                                          carownerid: 2,
-                                          sp1: 'ss',
-                                          sp2: '',
-                                          sp3: '',
-                                          sp4: '',
-                                          trippassengergps: []);
-                                    }
-                                  ),
-                                                     fallback: (context) =>
-                                  const Center(child: CircularProgressIndicator()),
-                                                   ),
-                             ),
-                             SizedBox(width: 30,),
-                              ElevatedButton(onPressed: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const RequestsPage()));
-                              }, child: const Text("my trip requests"), )
-                           ],
-                         ),
-                      ],
                     ),
                   ),
                 ),
