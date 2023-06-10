@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:drive_share/layout/trip_post.dart';
+import 'package:drive_share/layout/trips/search_trip.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:google_places_flutter/model/prediction.dart';
@@ -188,7 +189,7 @@ class _FindTripState extends State<FindTrip> {
                       ElevatedButton(
                         onPressed: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => TripCard()));
+                              MaterialPageRoute(builder: (context) => Test_Dio()));
                           // Submit trip details
                         },
                         child:
@@ -200,7 +201,7 @@ class _FindTripState extends State<FindTrip> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => TripCard()));
+                                  builder: (context) => Test_Dio()));
                           // Submit trip details
                         },
                         child: Text("Related Trips",

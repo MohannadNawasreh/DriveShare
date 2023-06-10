@@ -29,7 +29,7 @@ class _TTripCState extends State<TTripC> {
           ),
 
           body: ConditionalBuilder(
-            condition: state is! TripLoadingState,
+            condition: state is! TripPlanLoadingState,
             builder: (context) => ListView.separated(
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {

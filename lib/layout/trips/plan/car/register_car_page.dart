@@ -56,7 +56,7 @@ class _RegisterCarState extends State<RegisterCar> {
     return BlocProvider(
       create: (BuildContext context) => TripsCubit(),
       child: BlocConsumer<TripsCubit, TripState>(listener: (context, state) {
-        if (state is CarSuccessState) {
+        if (state is TripPlanSuccessState) {
             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -226,7 +226,7 @@ class _RegisterCarState extends State<RegisterCar> {
                       height: 20,
                     ),
                     ConditionalBuilder(
-                      condition: state is! CarLoadingState,
+                      condition: state is! TripPlanLoadingState,
                       builder: (context) => largeButton(
                           text: 'Register Car',
                           onPressed: () async {
