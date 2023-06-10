@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:drive_share/layout/home_page.dart';
 import 'package:drive_share/layout/trip_post.dart';
 import 'package:drive_share/models/trip.dart';
@@ -7,11 +10,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../models/components/components.dart';
 import 'trips/tripCard-Cubit.dart';
 
-class TripDetails extends StatelessWidget {
+class MyRide extends StatelessWidget {
   final TripGp trip;
   final int index;
 
-  TripDetails({super.key, required this.trip, required this.index});
+  MyRide({super.key, required this.trip, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -279,8 +282,9 @@ class TripDetails extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
                 child: Expanded(
-                child: Text("Pending",
-                       style: TextStyle(
+                  child: Text(
+                    "Pending",
+                    style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w800,
                         color: Colors.black38),
@@ -304,27 +308,6 @@ class TripDetails extends StatelessWidget {
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(30))),
                                 ),*/
-                      Expanded(
-                        child: largeButton(
-                          text: 'Request to join the trip',
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePage()
-                              ),
-                              
-                            );
-                            Fluttertoast.showToast(msg: 'Request Sent successfully',
-                                toastLength: Toast.LENGTH_LONG,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 5,
-                                backgroundColor:Color.fromARGB(255, 3, 184, 78),
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                          },
-                        ),
-                      )
                     ],
                   ),
                 ),
