@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 Widget largeButton({
   double width = 180,
+    Color back =const Color.fromARGB(255, 3, 184, 78) ,
   required String text,
   required Function() onPressed,
 }) {
@@ -14,7 +15,7 @@ Widget largeButton({
       onPressed: onPressed,
       child: Text(text),
       style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 3, 184, 78),
+          backgroundColor: back,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -24,6 +25,7 @@ Widget largeButton({
 
 Widget smallButton({
   double width = 100,
+  Color back =const Color.fromARGB(255, 3, 184, 78) ,
   required String text,
   required Function() onPressed,
 }) {
@@ -33,7 +35,7 @@ Widget smallButton({
       onPressed: onPressed,
       child: Text(text),
       style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 3, 184, 78),
+          backgroundColor: back,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -52,7 +54,6 @@ String formatDat() {
   return '$formattedDate | $formattedTime';
 }
 
-bool registerCars = false;
 
 String format__Dat(DateTime d) {
   String formattedDate = DateFormat('MM-dd').format(d);

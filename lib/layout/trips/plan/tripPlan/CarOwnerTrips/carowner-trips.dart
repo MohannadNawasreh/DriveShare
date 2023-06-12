@@ -28,7 +28,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 5,
-              backgroundColor: Color.fromARGB(255, 218, 10, 10),
+              backgroundColor: const Color.fromARGB(255, 218, 10, 10),
               textColor: Colors.white,
               fontSize: 16.0);
         }
@@ -290,10 +290,8 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                     children: [
                                       Expanded(
                                         child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
                                           children: [
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 10,
                                             ),
                                             Expanded(
@@ -301,6 +299,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                 condition: state
                                                     is! TripPlanLoadingState,
                                                 builder: (context) => smallButton(
+                                                  back: Color.fromARGB(255, 117, 123, 125),
                                                     text: 'All Requests of Trip',
                                                     onPressed: () async {
                                                       print('object');
@@ -322,7 +321,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                         CircularProgressIndicator()),
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 20,
                                             ),
                                             Expanded(
@@ -351,7 +350,62 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                         CircularProgressIndicator()),
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                      const SizedBox(
+                                  height: 15,
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                              child: ConditionalBuilder(
+                                                condition: state
+                                                    is! TripPlanLoadingState,
+                                                builder: (context) => smallButton(
+                                                back: Colors.red,
+                                                    text: 'Delete Trip',
+                                                    onPressed: () async {
+                                                   
+                                                    }),
+                                                fallback: (context) => const Center(
+                                                    child:
+                                                        CircularProgressIndicator()),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                            Expanded(
+                                              child: ConditionalBuilder(
+                                                condition: state
+                                                    is! TripPlanLoadingState,
+                                                builder: (context) => smallButton(
+                                                  back: Colors.orange,
+                                                    text: 'Edit Trip',
+                                                    onPressed: () async {
+                                                    
+                                                    }),
+                                                fallback: (context) => const Center(
+                                                    child:
+                                                        CircularProgressIndicator()),
+                                              ),
+                                            ),
+                                            const SizedBox(
                                               width: 10,
                                             ),
                                           ],

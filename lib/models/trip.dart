@@ -24,14 +24,14 @@ class Trip {
 
 class TripGp {
   late final int tripid;
-  late final String startpoint;
-  late final String endpoint;
-  late final int rideprice;
+  late final String? startpoint;
+  late final String? endpoint;
+  late final int? rideprice;
   late final String triptime;
-  late final int seatnumber;
+  late final int? seatnumber;
   late final String? descreption;
-  late final int isactive;
-  late final int carownerid;
+  late final int? isactive;
+  late final int? carownerid;
   late final String? sp1;
   late final String? sp2;
   late final String? sp3;

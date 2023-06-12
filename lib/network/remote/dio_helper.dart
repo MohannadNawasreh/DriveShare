@@ -32,4 +32,12 @@ class DioHelper {
   }) async {
     return dio.put(url, data: data);
   }
+
+      static Future<Response> deleteData({
+    required String url,
+    required Map<String, dynamic> data,
+  }) async {
+    return dio.delete(url, data: data);
+  }
 }
+

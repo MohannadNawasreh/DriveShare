@@ -12,6 +12,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:http/http.dart' as http;
 
+import 'Find/Search/search-sp-ep.dart';
+
 class FindTrip extends StatefulWidget {
   const FindTrip({Key? key}) : super(key: key);
 
@@ -188,25 +190,32 @@ class _FindTripState extends State<FindTrip> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Test_Dio()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AllTripsPassenger()));
                           // Submit trip details
                         },
-                        child:
-                            Text("Related Trips", style: TextStyle(fontSize: 12)),
+                        child: Text("Related Trips",
+                            style: TextStyle(fontSize: 12)),
                       ),
+
+
+                      
                       SizedBox(width: 30),
                       ElevatedButton(
-                        
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Test_Dio()));
+                                  builder: (context) => SearchBySpEpTrip(
+                                        startP: _startingPointController.text,
+                                        endP: _endingPointController.text,
+                                      )));
                           // Submit trip details
                         },
-                        child: Text("All trips",
-                            style: TextStyle(fontSize: 12)),
+                        child:
+                            Text("All trips", style: TextStyle(fontSize: 12)),
                       ),
                     ],
                   ),

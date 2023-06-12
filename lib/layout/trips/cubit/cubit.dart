@@ -31,7 +31,7 @@ class TripsCubit extends Cubit<TripState> {
   }*/
 
   List<Widget> screens = [
-    TTripC(),
+    AllTripsCards(),
 //TripCard(),
   ];
 
@@ -107,7 +107,6 @@ class TripsCubit extends Cubit<TripState> {
   List<TripGp> CarOwnerTrips = [];
   List<dynamic> CarOwnerTripsJson = [];
 
-  
   List<dynamic> RequestsPassengerJson = [];
   List<RequestsPassenger> ListRequestsPassenger = [];
 
@@ -187,7 +186,8 @@ class TripsCubit extends Cubit<TripState> {
     required List<dynamic> trippassengergps,
   }) {
     emit(TripPlanLoadingState());
-        int CarOwnerId = int.parse(CacheHelper.getData(key: 'carownerid').toString());
+    int CarOwnerId =
+        int.parse(CacheHelper.getData(key: 'carownerid').toString());
 
     DioHelper.postData(
             url: 'https://driveshare.azurewebsites.net/api/CarOwner/createtrip',
@@ -199,7 +199,7 @@ class TripsCubit extends Cubit<TripState> {
           'seatnumber': seatnumber,
           'descreption': descreption,
           'isactive': 0,
-          'carownerid':CarOwnerId ,
+          'carownerid': CarOwnerId,
           'sp1': sp1,
           'sp2': sp2,
           'sp3': sp3,
@@ -233,8 +233,7 @@ class TripsCubit extends Cubit<TripState> {
         .then((value) => {
               //ListPassengerJson = value.data,
 
-             
-               print('aaaaaaaaaaa'),
+              print('aaaaaaaaaaa'),
               emit(CarOwnerTripsSuccessState())
             })
         .catchError((onError) {
@@ -253,9 +252,9 @@ class TripsCubit extends Cubit<TripState> {
             data: {'tripid': tripid})
         .then((value) => {
               //ListPassengerJson = value.data,
-RequestsPassengerJson = value.data,
-             ListRequestsPassenger =
-                  RequestsPassengerJson.map((data) => RequestsPassenger.fromJson(data)).toList(),
+              RequestsPassengerJson = value.data,
+              ListRequestsPassenger = RequestsPassengerJson.map(
+                  (data) => RequestsPassenger.fromJson(data)).toList(),
 
 //print(ListPassenger[0].fname),
 
@@ -272,23 +271,21 @@ RequestsPassengerJson = value.data,
     required int tripid,
   }) {
     emit(TripPlanLoadingState());
+    print(tripid.toString() + ' 999999gggggggggg ');
     DioHelper.postData(
             url:
                 'https://driveshare.azurewebsites.net/api/CarOwner/gettallaccept',
-            data: {'tripid': 122})
+            data: {'tripid': tripid})
         .then((value) => {
               //ListPassengerJson = value.data,
               RequestsPassengerJson = value.data,
-             ListRequestsPassenger =
-                  RequestsPassengerJson.map((data) => RequestsPassenger.fromJson(data)).toList(),
+              ListRequestsPassenger = RequestsPassengerJson.map(
+                  (data) => RequestsPassenger.fromJson(data)).toList(),
 
 //print(ListPassenger[0].fname),
 
               print(value.data),
 
-              print('acceptpassenger'),
-
-              print(value.data.toString()),
               emit(TripPlanSuccessState())
             })
         .catchError((error) {

@@ -95,7 +95,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                         child: Row(
                                           children: [
                                             const Text(
-                                              'Car Owner:',
+                                              'First Name:',
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold,
@@ -104,7 +104,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                             Expanded(
                                               child: Text(
                                                 requestsPassenger[index]
-                                                    .carownerid
+                                                    .fname
                                                     .toString(),
                                                 style: const TextStyle(
                                                     fontSize: 12,
@@ -122,7 +122,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                         child: Row(
                                           children: [
                                             const Text(
-                                              'Seat Number :',
+                                              'Last Name :',
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold,
@@ -131,7 +131,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                             Expanded(
                                               child: Text(
                                                 requestsPassenger[index]
-                                                    .fname
+                                                    .lname
                                                     .toString(),
                                                 style: const TextStyle(
                                                     fontSize: 12,
@@ -155,7 +155,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                         child: Row(
                                           children: [
                                             const Text(
-                                              'Start Point  :',
+                                              'Phone Number : ',
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold,
@@ -178,11 +178,11 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                       const SizedBox(
                                         width: 5,
                                       ),
-                                      Expanded(
+                                    /*  Expanded(
                                         child: Row(
                                           children: [
                                             const Text(
-                                              'End Point :',
+                                              'User Name :',
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold,
@@ -191,7 +191,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                             Expanded(
                                               child: Text(
                                                 requestsPassenger[index]
-                                                    .lname
+                                                    .username
                                                     .toString(),
                                                 style: const TextStyle(
                                                     fontSize: 12,
@@ -201,7 +201,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                             ),
                                           ],
                                         ),
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                 ),
