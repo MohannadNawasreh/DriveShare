@@ -2,18 +2,24 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:drive_share/layout/RequestsPage.dart';
+import 'package:drive_share/layout/home_page.dart';
 import 'package:drive_share/layout/trip_post.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl/intl.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../../../network/remote/cache_helper.dart';
+import '../../car/register_car_page.dart';
+import '../CarOwnerTrips/search-carowner-trip.dart';
 
 class PlanTrip extends StatefulWidget {
   const PlanTrip({Key? key}) : super(key: key);
@@ -28,18 +34,17 @@ class _PlanTripState extends State<PlanTrip> {
   // TextEditingControllers for the starting and ending points of the trip
   TextEditingController _startingPointController = TextEditingController();
   TextEditingController _endingPointController = TextEditingController();
-    TextEditingController _checkPointController1 = TextEditingController();
-  TextEditingController _checkPointController2 = TextEditingController();
-    TextEditingController _checkPointController3 = TextEditingController();
-  TextEditingController _checkPointController4 = TextEditingController();
+  TextEditingController _stopPointController1 = TextEditingController();
+  TextEditingController _stopPointController2 = TextEditingController();
+  TextEditingController _stopPointController3 = TextEditingController();
+  TextEditingController _stopPointController4 = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _seatController = TextEditingController();
   TextEditingController _priceController = TextEditingController();
 
-    DateTime tripTimeD = DateTime.now();
-
+  DateTime tripTimeD = DateTime.now();
 
   // TextEditingControllers for the date and time of the trip
   DateTime _selectedDate = DateTime.now();
@@ -60,11 +65,12 @@ class _PlanTripState extends State<PlanTrip> {
       firstDate: DateTime(2015, 8),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != _selectedDate)
+    if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
         _dateController.text = DateFormat.yMd().format(_selectedDate);
       });
+    }
   }
 
   // Function to display a TimePicker and update the selected time
@@ -73,7 +79,7 @@ class _PlanTripState extends State<PlanTrip> {
       context: context,
       initialTime: TimeOfDay.fromDateTime(_selectedDate),
     );
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         _selectedDate = DateTime(
           _selectedDate.year,
@@ -84,11 +90,11 @@ class _PlanTripState extends State<PlanTrip> {
         );
         _timeController.text = picked.format(context);
       });
+    }
   }
 
   // Function to handle place selection from the GooglePlaceAutoCompleteTextField
   void onPlaceSelected(
-    
       Prediction prediction, TextEditingController controller) async {
     if (prediction.placeId != null) {
       // Make a request to the Google Places API to retrieve place details
@@ -103,7 +109,6 @@ class _PlanTripState extends State<PlanTrip> {
             final position = LatLng(
               detail["geometry"]["location"]["lat"],
               detail["geometry"]["location"]["lng"],
-              
             );
             setState(() {
               // Add a Marker to the map at the selected location
@@ -128,7 +133,6 @@ class _PlanTripState extends State<PlanTrip> {
   }
 
   void getPlaceDetailWithLatLng(Prediction prediction) async {
-    
     if (prediction.placeId != null) {
       final response = await http.get(Uri.parse(
           "https://maps.googleapis.com/maps/api/place/details/json?place_id=${prediction.placeId}&key=AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo"));
@@ -161,6 +165,12 @@ class _PlanTripState extends State<PlanTrip> {
     }
   }
 
+  Future<void> CheckC() async {
+    TripsCubit.get(context).CheckCarowner();
+
+    print(CacheHelper.getData(key: 'carownerid').toString() + '   CheckC    ');
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -173,6 +183,17 @@ class _PlanTripState extends State<PlanTrip> {
         }
       }, builder: (context, state) {
         return Scaffold(
+          appBar: AppBar(
+              leading: IconButton(
+                icon: Icon(Icons.home),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
+                },
+              ),
+              title: Text('Plan a trip')),
           body: Stack(
             children: [
               GoogleMap(
@@ -193,7 +214,7 @@ class _PlanTripState extends State<PlanTrip> {
                     height: 350,
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     color: Colors.white,
-                  child: SingleChildScrollView(
+                    child: SingleChildScrollView(
                       child: Column(
                         children: [
                           // GooglePlaceAutoCompleteTextField for the starting point of the trip
@@ -208,45 +229,45 @@ class _PlanTripState extends State<PlanTrip> {
                             getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
                           ),
                           GooglePlaceAutoCompleteTextField(
-                            textEditingController: _checkPointController1,
+                            textEditingController: _stopPointController1,
                             googleAPIKey:
                                 "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
                             inputDecoration:
                                 InputDecoration(hintText: "First checkpoint"),
                             itmClick: (prediction) => onPlaceSelected(
-                                prediction, _checkPointController1),
+                                prediction, _stopPointController1),
                             getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
                           ),
                           // GooglePlaceAutoCompleteTextField for the ending point of the trip
                           GooglePlaceAutoCompleteTextField(
-                            textEditingController: _checkPointController2,
+                            textEditingController: _stopPointController2,
                             googleAPIKey:
                                 "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
                             inputDecoration:
                                 InputDecoration(hintText: "Second checkpoint"),
                             itmClick: (prediction) => onPlaceSelected(
-                                prediction, _checkPointController2),
+                                prediction, _stopPointController2),
                             getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
                           ),
                           GooglePlaceAutoCompleteTextField(
-                            textEditingController: _checkPointController3,
+                            textEditingController: _stopPointController3,
                             googleAPIKey:
                                 "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
                             inputDecoration:
                                 InputDecoration(hintText: "Third checkpoint"),
                             itmClick: (prediction) => onPlaceSelected(
-                                prediction, _checkPointController3),
+                                prediction, _stopPointController3),
                             getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
                           ),
                           // GooglePlaceAutoCompleteTextField for the ending point of the trip
                           GooglePlaceAutoCompleteTextField(
-                            textEditingController: _checkPointController4,
+                            textEditingController: _stopPointController4,
                             googleAPIKey:
                                 "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
                             inputDecoration:
                                 InputDecoration(hintText: "Fourth checkpoint"),
                             itmClick: (prediction) => onPlaceSelected(
-                                prediction, _checkPointController4),
+                                prediction, _stopPointController4),
                             getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
                           ),
                           // GooglePlaceAutoCompleteTextField for the ending point of the trip
@@ -262,77 +283,80 @@ class _PlanTripState extends State<PlanTrip> {
                           ),
 
                           // TextFormField to display and select the date of the trip
-                        TextFormField(
-                          keyboardType: TextInputType.datetime,
-                          decoration: InputDecoration(
-                            border: UnderlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 3, 184, 78)),
-                              borderRadius: BorderRadius.circular(10),
+                          TextFormField(
+                            keyboardType: TextInputType.datetime,
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 3, 184, 78)),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              prefixIcon: const Icon(
+                                Icons.access_time,
+                                size: 20,
+                              ),
+                              hintText: "Trip Time",
                             ),
-                            prefixIcon: const Icon(
-                              Icons.access_time,
-                              size: 20,
-                            ),
-                            hintText: "Trip Time",
-                          ),
-                          onTap: () async {
-                            // Show date picker
-                            DateTime? selectedDate = await showDatePicker(
-                              // ...
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime.now().add(Duration(days: 365)),
-                            );
-                    
-                            if (selectedDate != null) {
-                              // Show time picker
-                              TimeOfDay? selectedTime = await showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay.now(),
+                            onTap: () async {
+                              // Show date picker
+                              DateTime? selectedDate = await showDatePicker(
                                 // ...
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate:
+                                    DateTime.now().add(Duration(days: 365)),
                               );
-                    
-                              if (selectedTime != null) {
-                                setState(() {
-                                  tripTimeD = DateTime(
-                                    selectedDate.year,
-                                    selectedDate.month,
-                                    selectedDate.day,
-                                    selectedTime.hour,
-                                    selectedTime.minute,
-                                  );
-                                  // tripTimeController = selectedDateTime
-                                });
+
+                              if (selectedDate != null) {
+                                // Show time picker
+                                TimeOfDay? selectedTime = await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now(),
+                                  // ...
+                                );
+
+                                if (selectedTime != null) {
+                                  setState(() {
+                                    tripTimeD = DateTime(
+                                      selectedDate.year,
+                                      selectedDate.month,
+                                      selectedDate.day,
+                                      selectedTime.hour,
+                                      selectedTime.minute,
+                                    );
+                                    // tripTimeController = selectedDateTime
+                                  });
+                                }
                               }
-                            }
-                          },
-                          readOnly: true,
-                          validator: (value) {
-                            if (tripTimeD == null) {
-                              return 'Please select trip time';
-                            }
-                            return null;
-                          },
-                          controller: TextEditingController(
-                            text: tripTimeD != null
-                                ? DateFormat('hh:mm a | d-M-yyyy')
-                                    .format(
-                                        DateTime.parse(tripTimeD.toString()))
-                                    .toString()
-                                : '',
+                            },
+                            readOnly: true,
+                            validator: (value) {
+                              if (tripTimeD == null) {
+                                return 'Please select trip time';
+                              }
+                              return null;
+                            },
+                            controller: TextEditingController(
+                              text: tripTimeD != null
+                                  ? DateFormat('hh:mm a | d-M-yyyy')
+                                      .format(
+                                          DateTime.parse(tripTimeD.toString()))
+                                      .toString()
+                                  : '',
+                            ),
                           ),
-                        ),
                           // TextFormField for the description of the trip
                           TextFormField(
                             controller: _descriptionController,
-                            decoration: InputDecoration(hintText: "Description"),
+                            decoration:
+                                InputDecoration(hintText: "Description"),
                           ),
                           // TextFormField for the seat number of the trip
                           TextFormField(
                             controller: _seatController,
-                            decoration: InputDecoration(hintText: "Seat Number"),
+                            decoration:
+                                InputDecoration(hintText: "Seat Number"),
                             keyboardType: TextInputType.number,
                           ),
                           // TextFormField for the price tag of the trip
@@ -342,43 +366,87 @@ class _PlanTripState extends State<PlanTrip> {
                             keyboardType: TextInputType.number,
                           ),
                           // ElevatedButton to submit trip details
-                           Row(
-                             children: [
-                               Expanded(
-                                 child: ConditionalBuilder(
-                                                       condition: state is! TripPlanLoadingState,
-                                                       builder: (context) => largeButton(
-                                    text: 'Create Trip',
-                                    onPressed: () async {
-                                                       //      if (formKey.currentState!.validate()) {
-                                        TripsCubit.get(context).CreateTripPlan(
-                                            startpoint: _startingPointController.text,
-                                            endpoint: _endingPointController.text,
-                                            descreption: _descriptionController.text,
-                                            seatnumber:
-                                                int.parse(_seatController.text),
-                                            triptime: tripTimeD,
-                                            rideprice:
-                                                int.parse(_priceController.text),
-                                            isactive: 1,
-                                            carownerid: 2,
-                                            sp1: 'ss',
-                                            sp2: '',
-                                            sp3: '',
-                                            sp4: '',
-                                            trippassengergps: []);
-                                      }
-                                    ),
-                                                       fallback: (context) =>
-                                    const Center(child: CircularProgressIndicator()),
-                                                     ),
-                               ),
-                               SizedBox(width: 30,),
-                                ElevatedButton(onPressed: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const RequestsPage()));
-                                }, child: const Text("my trip requests"), )
-                             ],
-                           ),
+                          Row(
+                            children: [
+                              SizedBox(width: 10,),
+                              Expanded(
+                                child: ConditionalBuilder(
+                                  condition: state is! TripPlanLoadingState,
+                                  builder: (context) => smallButton(
+                                      text: 'Create Trip',
+                                      onPressed: () async {
+                                        //      if (formKey.currentState!.validate()) {
+                                        print(await CacheHelper.getData(
+                                                    key: 'carownerid')
+                                                .toString() +
+                                            '999999');
+
+                                        if (CacheHelper.getData(
+                                                key: 'carownerid') ==
+                                            '0') {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "يجب عليك تسجيل السيارة السائق اولاً",
+                                              toastLength: Toast.LENGTH_LONG,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 5,
+                                              backgroundColor: Colors.red,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
+
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    RegisterCar()),
+                                          );
+                                        } else {
+                                          TripsCubit.get(context)
+                                              .CreateTripPlan(
+                                                  startpoint:
+                                                      _startingPointController
+                                                          .text,
+                                                  endpoint:
+                                                      _endingPointController
+                                                          .text,
+                                                  descreption:
+                                                      _descriptionController
+                                                          .text,
+                                                  seatnumber: int.parse(
+                                                      _seatController.text),
+                                                  triptime: tripTimeD,
+                                                  rideprice: int.parse(
+                                                      _priceController.text),
+                                                  sp1: _stopPointController1.text,
+                                                  sp2: _stopPointController2.text,
+                                                  sp3: _stopPointController3.text,
+                                                  sp4: _stopPointController4.text,
+                                                  trippassengergps: []);
+                                        }
+                                      }),
+                                  fallback: (context) => const Center(
+                                      child: CircularProgressIndicator()),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 30,
+                              ),
+                       
+                                 Expanded(
+                                   child: smallButton(text: 'My TRips', onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SearchCarOwnerTrips()));
+                                                                 },),
+                                 ),
+                                                            SizedBox(width: 10,),
+
+                            ],
+
+                            
+                          ),
                         ],
                       ),
                     ),

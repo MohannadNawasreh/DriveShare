@@ -1,5 +1,6 @@
 import 'package:drive_share/layout/trips/plan/car/register_car_page.dart';
 import 'package:drive_share/layout/profile.dart';
+import 'package:drive_share/layout/trips/plan/car/loading-page.dart';
 import 'package:drive_share/models/Passenger.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
   List<Widget> screens = [
     const FindTrip(),
-    const PlanTrip(),
+     LoadingPage(),
     //const RegisterCar(),
   ];
   List<String> titles = [

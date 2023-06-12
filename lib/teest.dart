@@ -36,11 +36,16 @@ class _tessstState extends State<tessst> {
                     text: 'Create Trip',
                     onPressed: () async {
                       //      if (formKey.currentState!.validate()) {
-                      TripsCubit.get(context).ActiveTrip(tripid: 82);
+/*int id =
+                          int.parse(CacheHelper.getData(key: 'Passengerid'));
 
-                      print(await CacheHelper.getData(key: 'Passengerid')
-                              .toString() +
-                          '*******************************qqq');
+                      print(id);*/
+                     TripsCubit.get(context).GetPassengerById();
+/*
+                      print(TripsCubit.get(context)
+                          .passengerById
+                          .carownerid
+                          .toString());*/
                     }),
                 fallback: (context) =>
                     const Center(child: CircularProgressIndicator()),

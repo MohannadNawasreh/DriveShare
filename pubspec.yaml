@@ -51,6 +51,8 @@ dependencies:
   location: ^4.4.0
   geolocator: ^9.0.2
   conditional_builder_null_safety: ^0.0.6
+  url_launcher: ^6.1.11
+
   
   dio: ^4.0.0
   google_places_flutter: ^2.0.5

@@ -3,12 +3,15 @@ import 'package:drive_share/layout/trips/plan/car/car_details.dart';
 
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
+import 'package:drive_share/layout/trips/plan/tripPlan/planD/plan_trip.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../models/Car.dart';
+import '../../../home_page.dart';
 
 class RegisterCar extends StatefulWidget {
   const RegisterCar({super.key});
@@ -57,17 +60,30 @@ class _RegisterCarState extends State<RegisterCar> {
       create: (BuildContext context) => TripsCubit(),
       child: BlocConsumer<TripsCubit, TripState>(listener: (context, state) {
         if (state is TripPlanSuccessState) {
-            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CarDetails(
-                                          car: newCar,
-                                        )));
+           Fluttertoast.showToast(
+                msg: " تم تسجيل المركبة بنجاح ",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 5,
+                backgroundColor: Color.fromARGB(255, 3, 184, 78),
+                textColor: Colors.white,
+                fontSize: 16.0);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const PlanTrip()));
         }
       }, builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 3, 184, 78),
+            leading: IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                );
+              },
+            ),
+            backgroundColor: const Color.fromARGB(255, 3, 184, 78),
             title: const Text("Register Car"),
           ),
           body: Padding(
@@ -113,7 +129,7 @@ class _RegisterCarState extends State<RegisterCar> {
                           return null;
                         },
                         onSaved: (value) {
-                           carTypeController = value as TextEditingController;
+                          carTypeController = value as TextEditingController;
                         },
                       ),
                     ),
@@ -144,7 +160,7 @@ class _RegisterCarState extends State<RegisterCar> {
                           return null;
                         },
                         onSaved: (value) {
-                              newCar.CarYear = int.parse(value.toString());
+                          newCar.CarYear = int.parse(value.toString());
                         },
                       ),
                     ),
@@ -175,7 +191,7 @@ class _RegisterCarState extends State<RegisterCar> {
                           return null;
                         },
                         onSaved: (value) {
-                              newCar.CarModel = value;
+                          newCar.CarModel = value;
                         },
                       ),
                     ),
@@ -206,7 +222,7 @@ class _RegisterCarState extends State<RegisterCar> {
                           return null;
                         },
                         onSaved: (value) {
-                              newCar.CarNumber = value;
+                          newCar.CarNumber = value;
                         },
                       ),
                     ),
@@ -217,10 +233,10 @@ class _RegisterCarState extends State<RegisterCar> {
                       onPressed: _selectImage,
                       style: ElevatedButton.styleFrom(
                         primary: _isImageSelected
-                            ? Color.fromARGB(255, 175, 210, 176)
+                            ? const Color.fromARGB(255, 175, 210, 176)
                             : Colors.red,
                       ),
-                      child: Text('Select Image License'),
+                      child: const Text('Select Image License'),
                     ),
                     const SizedBox(
                       height: 20,
@@ -231,11 +247,12 @@ class _RegisterCarState extends State<RegisterCar> {
                           text: 'Register Car',
                           onPressed: () async {
                             print('object');
-        
+
                             if (formKey.currentState!.validate()) {
                               TripsCubit.get(context).CarRegister(
                                   cartype: carTypeController.text,
-                                  carYearmodel: int.parse(carYearController.text),
+                                  carYearmodel:
+                                      int.parse(carYearController.text),
                                   carmmodel: carModelController.text,
                                   carnumber: carNumberController.text);
                             }
