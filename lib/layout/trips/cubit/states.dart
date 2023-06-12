@@ -23,3 +23,15 @@ class CarOwnerTripsErrorState extends TripState {
 }
 
 class CarOwnerTripsLoadingState extends TripState {}
+
+class RequestLoadingState extends TripState {}
+
+class RequestInitialState extends TripState {}
+
+class RequestSuccessState extends TripState {
+}
+
+class RequestErrorState extends TripState {
+  late String error;
+  RequestErrorState(this.error);
+}

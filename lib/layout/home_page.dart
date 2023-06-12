@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:drive_share/layout/trips/plan/tripPlan/planD/plan_trip.dart';
 
-import 'find_trip.dart';
+import 'Find/find_trip.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

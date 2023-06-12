@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:drive_share/layout/my_ride.dart';
-import 'package:drive_share/layout/trip_details_page.dart';
+import 'package:drive_share/layout/Find/trip_details_page.dart';
 import 'package:drive_share/layout/trips/plan/car/register_car_page.dart';
 import 'package:drive_share/models/Passenger.dart';
 import 'package:drive_share/models/trip.dart';

@@ -6,13 +6,13 @@ import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl/intl.dart';
-import '../models/trip.dart';
+import '../../models/trip.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:http/http.dart' as http;
 
-import 'Find/Search/search-sp-ep.dart';
+import 'Search/search-sp-ep.dart';
 
 class FindTrip extends StatefulWidget {
   const FindTrip({Key? key}) : super(key: key);
@@ -196,7 +196,7 @@ class _FindTripState extends State<FindTrip> {
                                   builder: (context) => AllTripsPassenger()));
                           // Submit trip details
                         },
-                        child: Text("Related Trips",
+                        child: Text("All Trips",
                             style: TextStyle(fontSize: 12)),
                       ),
 
@@ -215,7 +215,7 @@ class _FindTripState extends State<FindTrip> {
                           // Submit trip details
                         },
                         child:
-                            Text("All trips", style: TextStyle(fontSize: 12)),
+                            Text("Search", style: TextStyle(fontSize: 12)),
                       ),
                     ],
                   ),

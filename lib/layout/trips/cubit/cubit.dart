@@ -34,76 +34,12 @@ class TripsCubit extends Cubit<TripState> {
     AllTripsCards(),
 //TripCard(),
   ];
-
   List<dynamic> LiistTripsJson = [];
   List<TripGp> ListtTrips = [];
-
   List<dynamic> ListPassengerJson = [];
   List<PassengerGp> ListPassenger = [];
 
-  void getAllListTrips() {
-    emit(TripPlanLoadingState());
-    DioHelper.getData(
-            url:
-                'https://driveshare.azurewebsites.net/api/Passenger/getalltrip')
-        .then((value) => {
-              //print(value.data.toString()),
-              LiistTripsJson = value.data,
-              // ListtTrips = json.decode(value.data.toString()),
-
-              ListtTrips =
-                  LiistTripsJson.map((data) => TripGp.fromJson(data)).toList(),
-
-              print(ListtTrips[0].descreption),
-
-              // print(LiistTripsCub[0]),
-              emit(TripPlanSuccessState())
-            })
-        .catchError((onError) {
-      print(onError.toString());
-      emit(TripPlanErrorState(onError.toString()));
-    });
-  }
-
-  void Searchbylocation({
-    required String startpoint,
-    required String endpoint,
-  }) {
-    emit(TripPlanLoadingState());
-    DioHelper.postData(
-            url:
-                'https://driveshare.azurewebsites.net/api/Passenger/searchbylocation',
-            data: {
-          'startpoint': startpoint,
-          'endpoint': endpoint,
-        })
-        .then((value) => {
-              //print(value.data.toString()),
-              LiistTripsJson = value.data,
-              // ListtTrips = json.decode(value.data.toString()),
-
-              ListtTrips =
-                  LiistTripsJson.map((data) => TripGp.fromJson(data)).toList(),
-
-              print(ListtTrips[0].descreption),
-
-              // print(LiistTripsCub[0]),
-              emit(TripPlanSuccessState())
-            })
-        .catchError((onError) {
-      print(onError.toString());
-      emit(TripPlanErrorState(onError.toString()));
-    });
-  }
-
-/*
-
-
-
-
-*/
-
-  // Car Owner Controller
+//--------------------------------------------------- Car Owner Controller------------------------------------------------------------------------------------
   List<TripGp> CarOwnerTrips = [];
   List<dynamic> CarOwnerTripsJson = [];
 
@@ -364,6 +300,82 @@ class TripsCubit extends Cubit<TripState> {
     }).catchError((error) {
       print('CarownerId = 0 ');
       emit(TripPlanErrorState(error.toString()));
+    });
+  }
+
+//-------------------------------------------Passenger-------------------------------------------------------------------------------
+//-------------------------------------------Passenger-------------------------------------------------------------------------------
+//-------------------------------------------Passenger-------------------------------------------------------------------------------
+//-------------------------------------------Passenger-------------------------------------------------------------------------------
+
+  void RequestTrip({required int tripid, required int passengerid}) {
+    emit(RequestInitialState());
+    DioHelper.postData(
+            url:
+                'https://driveshare.azurewebsites.net/api/Passenger/requesttrip',
+            data: {'tripid': tripid, 'passengerid': passengerid})
+        .then((value) => {
+              print(value.statusCode),
+              emit(RequestSuccessState()),
+            })
+        .catchError((onError) {
+      print(onError.toString());
+      emit(RequestErrorState(onError.toString()));
+    });
+  }
+
+   void getAllListTrips() {
+    emit(TripPlanLoadingState());
+    DioHelper.getData(
+            url:
+                'https://driveshare.azurewebsites.net/api/Passenger/getalltrip')
+        .then((value) => {
+              //print(value.data.toString()),
+              LiistTripsJson = value.data,
+              // ListtTrips = json.decode(value.data.toString()),
+
+              ListtTrips =
+                  LiistTripsJson.map((data) => TripGp.fromJson(data)).toList(),
+
+              print(ListtTrips[0].descreption),
+
+              // print(LiistTripsCub[0]),
+              emit(TripPlanSuccessState())
+            })
+        .catchError((onError) {
+      print(onError.toString());
+      emit(TripPlanErrorState(onError.toString()));
+    });
+  }
+
+  void Searchbylocation({
+    required String startpoint,
+    required String endpoint,
+  }) {
+    emit(TripPlanLoadingState());
+    DioHelper.postData(
+            url:
+                'https://driveshare.azurewebsites.net/api/Passenger/searchbylocation',
+            data: {
+          'startpoint': startpoint,
+          'endpoint': endpoint,
+        })
+        .then((value) => {
+              //print(value.data.toString()),
+              LiistTripsJson = value.data,
+              // ListtTrips = json.decode(value.data.toString()),
+
+              ListtTrips =
+                  LiistTripsJson.map((data) => TripGp.fromJson(data)).toList(),
+
+              print(ListtTrips[0].descreption),
+
+              // print(LiistTripsCub[0]),
+              emit(TripPlanSuccessState())
+            })
+        .catchError((onError) {
+      print(onError.toString());
+      emit(TripPlanErrorState(onError.toString()));
     });
   }
 }

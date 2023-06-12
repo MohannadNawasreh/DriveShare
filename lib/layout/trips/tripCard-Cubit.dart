@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../trip_details_page.dart';
+import '../Find/trip_details_page.dart';
 import '../../models/components/components.dart';
 
 class AllTripsCards extends StatefulWidget {

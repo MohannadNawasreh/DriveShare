@@ -8,7 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../../models/components/components.dart';
-import '../../trip_details_page.dart';
+import '../trip_details_page.dart';
 
 class AllBySpEpTrips extends StatefulWidget {
   const AllBySpEpTrips({super.key});
@@ -38,7 +38,7 @@ class _AllBySpEpTripsState extends State<AllBySpEpTrips> {
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Accepts Trip'),
+            title: const Text('Related Trip'),
           ),
           body: ConditionalBuilder(
             condition: state is! TripPlanLoadingState,

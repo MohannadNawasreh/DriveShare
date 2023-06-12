@@ -1,4 +1,4 @@
-import 'package:drive_share/layout/trip_details_page.dart';
+import 'package:drive_share/layout/Find/trip_details_page.dart';
 import 'package:drive_share/models/trip.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
