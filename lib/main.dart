@@ -1,4 +1,5 @@
 import 'package:drive_share/layout/Log/login_layout.dart';
+import 'package:drive_share/layout/rating.dart';
 import 'package:drive_share/network/remote/cache_helper.dart';
 import 'package:drive_share/network/remote/dio_helper.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: const LoginLayout(),
+      home: const CarOwnerRating(),
       //initialRoute: '/',
       /*routes: {
         '/': (context) => const LoginLayout(),
