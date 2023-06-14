@@ -5,8 +5,8 @@ import 'package:drive_share/layout/Log/login_layout.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/components/components.dart';
-import 'home_page.dart';
+import '../../models/components/components.dart';
+import '../home_page.dart';
 import 'dart:io';
 
 class Register extends StatefulWidget {

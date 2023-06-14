@@ -1,26 +1,28 @@
+import 'package:drive_share/layout/Profile/edit/edit_profile.dart';
+import 'package:drive_share/layout/Profile/profile.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
-import 'package:drive_share/layout/trips/tripCard-Cubit.dart';
+import 'package:drive_share/layout/Profile/car/car_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AllTripsPassenger extends StatelessWidget {
-  const AllTripsPassenger({super.key});
+class SearchProfile extends StatelessWidget {
+  SearchProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TripsCubit()..getAllListTrips(),
+      create: (context) => TripsCubit()..GetCarInfo()..GetPassengerById(),
       child: BlocConsumer<TripsCubit, TripState>(
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = TripsCubit.get(context);
-          return const Scaffold(
+          return  const Scaffold(
             /*      appBar: AppBar(
               title: const Text('Test Trip'),
             ),
         */
-            body: AllTripsCards(),
+            body: Profile(),
             /*    bottomNavigationBar: BottomNavigationBar(
                 currentIndex: cubit.currentIndex,
                 onTap: (value) {

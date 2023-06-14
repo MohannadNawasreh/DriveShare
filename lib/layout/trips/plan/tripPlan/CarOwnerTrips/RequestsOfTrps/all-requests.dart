@@ -96,7 +96,7 @@ class _AllRequestsTripsState extends State<AllRequestsTrips> {
                                       ),
                                       Text(
                                         // ignore: prefer_interpolation_to_compose_strings
-                                        'Requests Details #' +
+                                        'Request #' +
                                             (index + 1).toString(),
                                         style: const TextStyle(
                                             fontSize: 20,
@@ -199,11 +199,11 @@ class _AllRequestsTripsState extends State<AllRequestsTrips> {
                                       const SizedBox(
                                         width: 5,
                                       ),
-                                  /*    Expanded(
+                                     Expanded(
                                         child: Row(
                                           children: [
                                             const Text(
-                                              'User Name :',
+                                              'Gender :',
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold,
@@ -212,7 +212,7 @@ class _AllRequestsTripsState extends State<AllRequestsTrips> {
                                             Expanded(
                                               child: Text(
                                                 requestsPassenger[index]
-                                                    .username
+                                                    .gender
                                                     .toString(),
                                                 style: const TextStyle(
                                                     fontSize: 12,
@@ -222,7 +222,7 @@ class _AllRequestsTripsState extends State<AllRequestsTrips> {
                                             ),
                                           ],
                                         ),
-                                      ),*/
+                                      ),
                                     ],
                                   ),
                                 ),

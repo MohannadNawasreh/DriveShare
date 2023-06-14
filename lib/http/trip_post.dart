@@ -1,51 +1,47 @@
-import 'package:drive_share/layout/home_page.dart';
-import 'package:drive_share/layout/trips/cubit/cubit.dart';
-import 'package:drive_share/layout/trips/cubit/states.dart';
+import 'package:drive_share/layout/trips/Find/trip_details_page.dart';
+import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'trip_http.dart';
+import '../models/trip.dart';
+import '../layout/trips/Find/details/search-derails.dart';
 
-import '../../../../../../models/components/components.dart';
-import '../trip_details_page.dart';
-
-class AllBySpEpTrips extends StatefulWidget {
-  const AllBySpEpTrips({super.key});
+class TripCard extends StatefulWidget {
+  const TripCard({super.key});
 
   @override
-  State<AllBySpEpTrips> createState() => _AllBySpEpTripsState();
+  State<TripCard> createState() => _TripCardState();
 }
 
-class _AllBySpEpTripsState extends State<AllBySpEpTrips> {
+class _TripCardState extends State<TripCard> {
+  @override
+  void initState() {
+    super.initState();
+    /* DioHelper.getData(url: 'api/Passenger/getalltrip').then((value) => {
+          setState(() {
+            print('ggggggggggg'+value.data.toString());
+          }) 
+  }).catchError(
+    (e){
+      print(e.toString());
+    }
+  );*/
+    // trips= fetchTripData() as List<TripGp>;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TripsCubit, TripState>(
-      listener: (context, state) {
-        if (TripsCubit.get(context).ListtTrips.isEmpty) {
-          Fluttertoast.showToast(
-              msg: "لا يوجد اي رحلة ",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 5,
-              backgroundColor: Color.fromARGB(255, 218, 10, 10),
-              textColor: Colors.white,
-              fontSize: 16.0);
-        }
-      },
-      builder: (context, state) {
-        var trips = TripsCubit.get(context).ListtTrips;
-
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Related Trip'),
-          ),
-          body: ConditionalBuilder(
-            condition: state is! TripPlanLoadingState,
-            builder: (context) => ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                        return Column(
+    return Scaffold(
+      appBar: AppBar(title: Text('All Trip')),
+      body: FutureBuilder<List<TripGp>>(
+          future: fetchTrips(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final trips = snapshot.data!;
+              return ListView.builder(
+                physics: BouncingScrollPhysics(),
+                itemCount: trips.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(
                     children: [
                       Padding(
                         padding:
@@ -289,7 +285,8 @@ class _AllBySpEpTripsState extends State<AllBySpEpTrips> {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => TripDetails(
+                                                  builder: (context) => SearchDetails(
+                                                    carownerid: int.parse(trips[index].carownerid.toString()),
                                                       trip: trips[index],
                                                       index: 1 + index),
                                                 ),
@@ -308,30 +305,18 @@ class _AllBySpEpTripsState extends State<AllBySpEpTrips> {
                       ),
                     ],
                   );
-              },
-              itemCount: trips.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return const Divider(
-                  color: Color.fromARGB(255, 3, 184, 78),
-                  thickness: 0,
-                  height: 0,
-                );
-              },
-            ),
-            fallback: (context) =>
-                const Center(child: CircularProgressIndicator()),
-          ),
-        );
-      },
-    );
-  }
-}
+                },
+              );
+            } else if (snapshot.hasError) {
+              return const Center(
+                child: Text('Failed to fetch trips'),
+              );
+            }
 
-void openWhatsAppChat(String phoneNumber) async {
-  final url = 'https://wa.me/$phoneNumber';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }),
+    );
   }
 }

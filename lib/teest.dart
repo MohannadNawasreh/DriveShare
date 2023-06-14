@@ -35,17 +35,14 @@ class _tessstState extends State<tessst> {
                 builder: (context) => largeButton(
                     text: 'Create Trip',
                     onPressed: () async {
-                      //      if (formKey.currentState!.validate()) {
-/*int id =
-                          int.parse(CacheHelper.getData(key: 'Passengerid'));
-
-                      print(id);*/
-                     TripsCubit.get(context).GetPassengerById();
-/*
-                      print(TripsCubit.get(context)
-                          .passengerById
-                          .carownerid
-                          .toString());*/
+                      TripsCubit.get(context).GetPassengerById();
+                      /*UpdateUser(
+                          phoneNumber: '44444444',
+                          email: 'a',
+                          userName: 'a@gmail.com',
+                          fName: 'fName',
+                          lName: 'lName',
+                          imageFile: 'imageFile');*/
                     }),
                 fallback: (context) =>
                     const Center(child: CircularProgressIndicator()),

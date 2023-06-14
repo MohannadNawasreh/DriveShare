@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: const CarOwnerRating(),
+      home: const LoginLayout(),
       //initialRoute: '/',
       /*routes: {
         '/': (context) => const LoginLayout(),

@@ -18,7 +18,6 @@ class DioHelper {
     return await dio.get(url);
   }
 
-
   static Future<Response> postData({
     required String url,
     required Map<String, dynamic> data,
@@ -26,18 +25,25 @@ class DioHelper {
     return dio.post(url, data: data);
   }
 
-    static Future<Response> putData({
+  static Future<Response> putData({
     required String url,
     required Map<String, dynamic> data,
   }) async {
     return dio.put(url, data: data);
   }
 
-      static Future<Response> deleteData({
+  static Future<Response> deleteData({
     required String url,
     required Map<String, dynamic> data,
   }) async {
-    return dio.delete(url, data: data);
+    return dio.delete(
+      url,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ),
+      data: data,
+    );
   }
 }
-

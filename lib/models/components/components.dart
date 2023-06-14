@@ -1,11 +1,13 @@
-import 'package:drive_share/layout/Find/trip_details_page.dart';
+import 'package:drive_share/layout/trips/Find/trip_details_page.dart';
+import 'package:drive_share/layout/Log/login_layout.dart';
 import 'package:drive_share/models/trip.dart';
+import 'package:drive_share/network/remote/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 Widget largeButton({
   double width = 180,
-    Color back =const Color.fromARGB(255, 3, 184, 78) ,
+  Color back = const Color.fromARGB(255, 3, 184, 78),
   required String text,
   required Function() onPressed,
 }) {
@@ -25,7 +27,7 @@ Widget largeButton({
 
 Widget smallButton({
   double width = 100,
-  Color back =const Color.fromARGB(255, 3, 184, 78) ,
+  Color back = const Color.fromARGB(255, 3, 184, 78),
   required String text,
   required Function() onPressed,
 }) {
@@ -43,9 +45,6 @@ Widget smallButton({
   );
 }
 
- 
-
-
 String formatDat() {
   DateTime now = DateTime.now();
   String formattedDate = DateFormat('MM-dd').format(now);
@@ -54,27 +53,27 @@ String formatDat() {
   return '$formattedDate | $formattedTime';
 }
 
-
 String format__Dat(DateTime d) {
   String formattedDate = DateFormat('MM-dd').format(d);
   String formattedTime = DateFormat('hh:mm a').format(d);
 
   return '$formattedDate | $formattedTime';
 }
-
-Widget buildTripPostList(BuildContext context, trips , index) =>
-GestureDetector(
-  onTap: () {
-    // Navigate to a new page with the card information
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) =>  TripDetails(trip: trips, index: index,),
-      ),
-    );
-  },
-   child:
-   Column(
+/*
+Widget buildTripPostList(BuildContext context, trips, index) => GestureDetector(
+    onTap: () {
+      // Navigate to a new page with the card information
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TripDetails(
+            trip: trips,
+            index: index,
+          ),
+        ),
+      );
+    },
+    child: Column(
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
@@ -92,7 +91,7 @@ GestureDetector(
                 child: Column(
                   children: [
                     Row(
-                      children:  [
+                      children: [
                         const CircleAvatar(
                           backgroundImage: AssetImage('images/Untitled-2.png'),
                           radius: 20,
@@ -102,8 +101,7 @@ GestureDetector(
                         ),
                         Text(
                           // ignore: prefer_interpolation_to_compose_strings
-                          'Trip Details #' +
-                           (index + 1).toString(),
+                          'Trip Details #' + (index + 1).toString(),
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -252,7 +250,8 @@ GestureDetector(
                                     color: Colors.black54),
                               ),
                               Text(
-                                format__Dat(DateTime.parse(trips['triptime'].toString())),
+                                format__Dat(DateTime.parse(
+                                    trips['triptime'].toString())),
                                 style: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w800,
@@ -288,5 +287,18 @@ GestureDetector(
           ),
         ),
       ],
-    )
-);
+    ));
+*/
+void SignOut(context) {
+  CacheHelper.clearData(key: 'carownerid');
+  CacheHelper.clearData(key: 'Passengerid').then((value) {
+    if (value) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginLayout()),
+      );
+    }
+  });
+}
+
+

@@ -6,7 +6,7 @@ import 'package:drive_share/teest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:drive_share/layout/home_page.dart';
-import 'package:drive_share/layout/register_page.dart';
+import 'package:drive_share/layout/Log/register_page.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

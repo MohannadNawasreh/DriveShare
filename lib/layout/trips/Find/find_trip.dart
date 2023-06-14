@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:drive_share/layout/trip_post.dart';
-import 'package:drive_share/layout/trips/search_trip.dart';
+import 'package:drive_share/layout/trips/Find/SearchALLTrips/search_trip.dart';
+import 'package:drive_share/http/trip_post.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl/intl.dart';
-import '../../models/trip.dart';
+import '../../../models/trip.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:http/http.dart' as http;
 
-import 'Search/search-sp-ep.dart';
+import 'SearchSpEp/search-sp-ep.dart';
 
 class FindTrip extends StatefulWidget {
   const FindTrip({Key? key}) : super(key: key);

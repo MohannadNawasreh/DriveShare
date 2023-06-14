@@ -1,33 +1,48 @@
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
+import 'package:drive_share/layout/trips/plan/tripPlan/CarOwnerTrips/AllAcceptPassenger/search-accept.dart';
+import 'package:drive_share/layout/trips/plan/tripPlan/planD/plan_trip.dart';
+import 'package:drive_share/teest.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-import '../Find/trip_details_page.dart';
-import '../../models/components/components.dart';
+import '../../../../../models/components/components.dart';
 
-class AllTripsCards extends StatefulWidget {
-  const AllTripsCards({super.key});
+class MyRidee extends StatefulWidget {
+  const MyRidee({super.key});
 
   @override
-  State<AllTripsCards> createState() => _AllTripsCardsState();
+  State<MyRidee> createState() => _MyRideeState();
 }
 
-class _AllTripsCardsState extends State<AllTripsCards> {
+class _MyRideeState extends State<MyRidee> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TripsCubit, TripState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (TripsCubit.get(context).myRide.isEmpty) {
+          Fluttertoast.showToast(
+              msg: " لا يوجد اي رحلة لك ",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 5,
+              backgroundColor: const Color.fromARGB(255, 218, 10, 10),
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
+      },
       builder: (context, state) {
-        var trips = TripsCubit.get(context).ListtTrips;
-
+        var rides = TripsCubit.get(context).myRide;
+     
+      
         return Scaffold(
           appBar: AppBar(
-            title: Text('All Trip'),
+            title: const Text('My Ride'),
           ),
           body: ConditionalBuilder(
-            condition: state is! TripPlanLoadingState,
+            condition: state is! UserInfoLoadingState,
             builder: (context) => ListView.separated(
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
@@ -37,7 +52,7 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                       padding:
                           const EdgeInsets.only(left: 15, right: 15, top: 15),
                       child: SizedBox(
-                        height: 220,
+                        height: 250,
                         width: double.infinity,
                         child: Card(
                           shape: RoundedRectangleBorder(
@@ -90,7 +105,7 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                trips[index]
+                                                rides[index]
                                                     .carownerid
                                                     .toString(),
                                                 style: const TextStyle(
@@ -117,7 +132,7 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                trips[index]
+                                                rides[index]
                                                     .seatnumber
                                                     .toString(),
                                                 style: const TextStyle(
@@ -150,7 +165,7 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                trips[index]
+                                                rides[index]
                                                     .startpoint
                                                     .toString(),
                                                 style: const TextStyle(
@@ -177,7 +192,7 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                trips[index]
+                                                rides[index]
                                                     .endpoint
                                                     .toString(),
                                                 style: const TextStyle(
@@ -210,8 +225,8 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                (trips[index].rideprice != 0)
-                                                    ? '${trips[index].rideprice} JD'
+                                                (rides[index].rideprice != 0)
+                                                    ? '${rides[index].rideprice} JD'
                                                     : 'Free',
                                                 style: const TextStyle(
                                                     fontSize: 15,
@@ -238,7 +253,7 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                                             Expanded(
                                               child: Text(
                                                 format__Dat(DateTime.parse(
-                                                    trips[index]
+                                                    rides[index]
                                                         .triptime
                                                         .toString())),
                                                 style: const TextStyle(
@@ -253,6 +268,8 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                                     ],
                                   ),
                                 ),
+                               
+                               
                                 const SizedBox(
                                   height: 15,
                                 ),
@@ -260,30 +277,85 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      /*  TextButton(
-                                                                onPressed: () {},
-                                                                child: Text('Join in Trip'),
-                                                                style: TextButton.styleFrom(
-                                    backgroundColor:
-                                        Color.fromARGB(255, 3, 184, 78),
-                                    foregroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30))),
-                                                              ),*/
                                       Expanded(
-                                        child: largeButton(
-                                          text: 'Join in Trip',
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
+                                        child: Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                              child: ConditionalBuilder(
+                                                condition: state is ! TripPlanLoadingState,
                                                 builder: (context) =>
-                                                    TripDetails(
-                                                        trip: trips[index],
-                                                        index: 1 + index),
+                                                    smallButton(
+                                                  text: 'Active Trip',
+                                                  onPressed: () async {
+                                                 
+                                                    Fluttertoast.showToast(
+                                                        msg: "Trip is Active",
+                                                        toastLength:
+                                                            Toast.LENGTH_LONG,
+                                                        gravity:
+                                                            ToastGravity.BOTTOM,
+                                                        timeInSecForIosWeb: 5,
+                                                        backgroundColor:
+                                                            Color.fromARGB(255,
+                                                                3, 141, 54),
+                                                        textColor: Colors.white,
+                                                        fontSize: 16.0);
+                                                  },
+                                                ),
+                                                fallback: (context) => const Center(
+                                                    child:
+                                                        CircularProgressIndicator()),
                                               ),
-                                            );
-                                          },
+                                            ),
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                            Expanded(
+                                              child: ConditionalBuilder(
+                                                condition: state
+                                                    is! TripPlanLoadingState,
+                                                builder: (context) =>
+                                                    smallButton(
+                                                        back: const Color
+                                                                .fromARGB(
+                                                            255, 117, 123, 125),
+                                                        text: 'Finish Trip',
+                                                        onPressed: () async {
+                                                        
+
+                                                          Fluttertoast.showToast(
+                                                              msg:
+                                                                  "Trip is Finish",
+                                                              toastLength: Toast
+                                                                  .LENGTH_LONG,
+                                                              gravity:
+                                                                  ToastGravity
+                                                                      .BOTTOM,
+                                                              timeInSecForIosWeb:
+                                                                  5,
+                                                              backgroundColor:
+                                                                  Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          3,
+                                                                          141,
+                                                                          54),
+                                                              textColor:
+                                                                  Colors.white,
+                                                              fontSize: 16.0);
+                                                        }),
+                                                fallback: (context) => const Center(
+                                                    child:
+                                                        CircularProgressIndicator()),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                          ],
                                         ),
                                       )
                                     ],
@@ -298,7 +370,7 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                   ],
                 );
               },
-              itemCount: trips.length,
+              itemCount: rides.length,
               separatorBuilder: (BuildContext context, int index) {
                 return const Divider(
                   color: Color.fromARGB(255, 3, 184, 78),

@@ -1,29 +1,29 @@
-import 'package:drive_share/layout/home_page.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../../../models/components/components.dart';
+import '../trip_details_page.dart';
+import '../../../../models/components/components.dart';
+import '../details/search-derails.dart';
 
-class AllAcceptsTrips extends StatefulWidget {
-  const AllAcceptsTrips({super.key});
+class AllTripsCards extends StatefulWidget {
+  const AllTripsCards({Key? key}) : super(key: key);
 
   @override
-  State<AllAcceptsTrips> createState() => _AllAcceptsTripsState();
+  State<AllTripsCards> createState() => _AllTripsCardsState();
 }
 
-class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
+class _AllTripsCardsState extends State<AllTripsCards> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TripsCubit, TripState>(
       listener: (context, state) {
-        if (TripsCubit.get(context).ListRequestsPassenger.isEmpty) {
+        if (TripsCubit.get(context).ListtTrips.isEmpty) {
           Fluttertoast.showToast(
-              msg: "لا يوجد اي طلب للرحلة ",
+              msg: "لا يوجد اي رحلة ",
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 5,
@@ -33,11 +33,11 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
         }
       },
       builder: (context, state) {
-        var requestsPassenger = TripsCubit.get(context).ListRequestsPassenger;
+        var trips = TripsCubit.get(context).ListtTrips;
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Accepts Trip'),
+            title: Text('All Trip'),
           ),
           body: ConditionalBuilder(
             condition: state is! TripPlanLoadingState,
@@ -75,7 +75,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                       ),
                                       Text(
                                         // ignore: prefer_interpolation_to_compose_strings
-                                        'Accept #' +
+                                        'Trip Details #' +
                                             (index + 1).toString(),
                                         style: const TextStyle(
                                             fontSize: 20,
@@ -95,7 +95,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                         child: Row(
                                           children: [
                                             const Text(
-                                              'First Name:',
+                                              'Car Owner:',
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold,
@@ -103,8 +103,8 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                requestsPassenger[index]
-                                                    .fname
+                                                trips[index]
+                                                    .carownerid
                                                     .toString(),
                                                 style: const TextStyle(
                                                     fontSize: 12,
@@ -122,7 +122,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                         child: Row(
                                           children: [
                                             const Text(
-                                              'Last Name :',
+                                              'Seat Number :',
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold,
@@ -130,8 +130,8 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                requestsPassenger[index]
-                                                    .lname
+                                                trips[index]
+                                                    .seatnumber
                                                     .toString(),
                                                 style: const TextStyle(
                                                     fontSize: 12,
@@ -155,7 +155,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                         child: Row(
                                           children: [
                                             const Text(
-                                              'Phone Number : ',
+                                              'Start Point  :',
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold,
@@ -163,8 +163,8 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                requestsPassenger[index]
-                                                    .phonenumber
+                                                trips[index]
+                                                    .startpoint
                                                     .toString(),
                                                 style: const TextStyle(
                                                     fontSize: 12,
@@ -182,7 +182,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                         child: Row(
                                           children: [
                                             const Text(
-                                              'Gender :',
+                                              'End Point :',
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold,
@@ -190,9 +190,70 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                requestsPassenger[index]
-                                                    .gender
+                                                trips[index]
+                                                    .endpoint
                                                     .toString(),
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w800,
+                                                    color: Colors.black38),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            const Text(
+                                              'Price :',
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black54),
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                (trips[index].rideprice != 0)
+                                                    ? '${trips[index].rideprice} JD'
+                                                    : 'Free',
+                                                style: const TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.green),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            const Text(
+                                              'Trip Time :',
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black54),
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                format__Dat(DateTime.parse(
+                                                    trips[index]
+                                                        .triptime
+                                                        .toString())),
                                                 style: const TextStyle(
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w800,
@@ -209,12 +270,44 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                   height: 15,
                                 ),
                                 Expanded(
-                                  child: largeButton(
-                                    text: 'Open WhatsApp Chat',
-                                    onPressed: () {
-                                    //  openWhatsAppChat('+962775051199'
-                                    //      .toString()); // Replace with the desired phone number
-                                    },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      /*  TextButton(
+                                                                onPressed: () {},
+                                                                child: Text('Join in Trip'),
+                                                                style: TextButton.styleFrom(
+                                    backgroundColor:
+                                        Color.fromARGB(255, 3, 184, 78),
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30))),
+                                                              ),*/
+                                      Expanded(
+                                          child: ConditionalBuilder(
+                                        condition:
+                                            state is! TripPlanLoadingState,
+                                        builder: (context) => largeButton(
+                                            text: 'Join in Trip',
+                                            onPressed: () async {
+                                             /* TripsCubit.get(context)
+                                                  .GetCarownerInfo();*/
+
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SearchDetails(carownerid: int.parse(trips[index].carownerid.toString()),
+
+                                                          trip: trips[index],
+                                                          index: 1 + index),
+                                                ),
+                                              );
+                                            }),
+                                        fallback: (context) => const Center(
+                                            child: CircularProgressIndicator()),
+                                      )),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -226,29 +319,20 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                   ],
                 );
               },
-              itemCount: requestsPassenger.length,
+              itemCount: trips.length,
               separatorBuilder: (BuildContext context, int index) {
                 return const Divider(
-                  color: Color.fromARGB(255, 3, 184, 78),
+                  color: Color.fromARGB(255, 255, 255, 255),
                   thickness: 0,
                   height: 0,
                 );
               },
             ),
-            fallback: (context) =>
+          fallback  : (context) =>
                 const Center(child: CircularProgressIndicator()),
           ),
         );
       },
     );
-  }
-}
-
-void openWhatsAppChat(String phoneNumber) async {
-  final url = 'https://wa.me/$phoneNumber';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
   }
 }

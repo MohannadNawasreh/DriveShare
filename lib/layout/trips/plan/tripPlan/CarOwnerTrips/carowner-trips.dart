@@ -2,6 +2,7 @@ import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/layout/trips/plan/tripPlan/CarOwnerTrips/AllAcceptPassenger/search-accept.dart';
 import 'package:drive_share/layout/trips/plan/tripPlan/planD/plan_trip.dart';
+import 'package:drive_share/teest.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,7 +66,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                       padding:
                           const EdgeInsets.only(left: 15, right: 15, top: 15),
                       child: SizedBox(
-                        height: 220,
+                        height: 250,
                         width: double.infinity,
                         child: Card(
                           shape: RoundedRectangleBorder(
@@ -298,24 +299,28 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                               child: ConditionalBuilder(
                                                 condition: state
                                                     is! TripPlanLoadingState,
-                                                builder: (context) => smallButton(
-                                                  back: Color.fromARGB(255, 117, 123, 125),
-                                                    text: 'All Requests of Trip',
-                                                    onPressed: () async {
-                                                      print('object');
-                                                      print(
-                                                          trips[index].tripid);
+                                                builder: (context) =>
+                                                    smallButton(
+                                                        back: const Color
+                                                                .fromARGB(
+                                                            255, 117, 123, 125),
+                                                        text:
+                                                            'All Requests of Trip',
+                                                        onPressed: () async {
+                                                          print('object');
+                                                          print(trips[index]
+                                                              .tripid);
 
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  SearchRequests(
-                                                                    tripId: trips[
-                                                                            index]
-                                                                        .tripid,
-                                                                  )));
-                                                    }),
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          SearchRequests(
+                                                                            tripId:
+                                                                                trips[index].tripid,
+                                                                          )));
+                                                        }),
                                                 fallback: (context) => const Center(
                                                     child:
                                                         CircularProgressIndicator()),
@@ -359,7 +364,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                     ],
                                   ),
                                 ),
-                                      const SizedBox(
+                                const SizedBox(
                                   height: 15,
                                 ),
                                 Expanded(
@@ -376,12 +381,25 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                               child: ConditionalBuilder(
                                                 condition: state
                                                     is! TripPlanLoadingState,
-                                                builder: (context) => smallButton(
-                                                back: Colors.red,
-                                                    text: 'Delete Trip',
-                                                    onPressed: () async {
-                                                   
-                                                    }),
+                                                builder: (context) =>
+                                                    smallButton(
+                                                        back: Colors.red,
+                                                        text: 'Delete Trip',
+                                                        onPressed: () async {
+                                                          /*  TripsCubit.get(
+                                                                  context)
+                                                              .DeleteTrip(
+                                                                  tripid: int.parse(trips[
+                                                                          index]
+                                                                      .carownerid
+                                                                      .toString()));*/
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const tessst()));
+                                                        }),
                                                 fallback: (context) => const Center(
                                                     child:
                                                         CircularProgressIndicator()),
@@ -394,12 +412,11 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                               child: ConditionalBuilder(
                                                 condition: state
                                                     is! TripPlanLoadingState,
-                                                builder: (context) => smallButton(
-                                                  back: Colors.orange,
-                                                    text: 'Edit Trip',
-                                                    onPressed: () async {
-                                                    
-                                                    }),
+                                                builder: (context) =>
+                                                    smallButton(
+                                                        back: Colors.orange,
+                                                        text: 'Edit Trip',
+                                                        onPressed: () async {}),
                                                 fallback: (context) => const Center(
                                                     child:
                                                         CircularProgressIndicator()),
@@ -421,6 +438,106 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                               );*/
                                             },
                                           ),*/
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                              child: ConditionalBuilder(
+                                                condition: state is ! TripPlanLoadingState,
+                                                builder: (context) =>
+                                                    smallButton(
+                                                  text: 'Active Trip',
+                                                  onPressed: () async {
+                                                    print(trips[index].tripid.toString()+'999999999999999999999999');
+                                                    TripsCubit.get(context)
+                                                        .ActiveTrip(
+                                                            tripid: trips[index]
+                                                                .tripid);
+                                                    Fluttertoast.showToast(
+                                                        msg: "Trip is Active",
+                                                        toastLength:
+                                                            Toast.LENGTH_LONG,
+                                                        gravity:
+                                                            ToastGravity.BOTTOM,
+                                                        timeInSecForIosWeb: 5,
+                                                        backgroundColor:
+                                                            Color.fromARGB(255,
+                                                                3, 141, 54),
+                                                        textColor: Colors.white,
+                                                        fontSize: 16.0);
+                                                  },
+                                                ),
+                                                fallback: (context) => const Center(
+                                                    child:
+                                                        CircularProgressIndicator()),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                            Expanded(
+                                              child: ConditionalBuilder(
+                                                condition: state
+                                                    is! TripPlanLoadingState,
+                                                builder: (context) =>
+                                                    smallButton(
+                                                        back: const Color
+                                                                .fromARGB(
+                                                            255, 117, 123, 125),
+                                                        text: 'Finish Trip',
+                                                        onPressed: () async {
+                                                          TripsCubit.get(
+                                                                  context)
+                                                              .FinishTrip(
+                                                                  tripid: trips[
+                                                                          index]
+                                                                      .tripid);
+
+                                                          Fluttertoast.showToast(
+                                                              msg:
+                                                                  "Trip is Finish",
+                                                              toastLength: Toast
+                                                                  .LENGTH_LONG,
+                                                              gravity:
+                                                                  ToastGravity
+                                                                      .BOTTOM,
+                                                              timeInSecForIosWeb:
+                                                                  5,
+                                                              backgroundColor:
+                                                                  Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          3,
+                                                                          141,
+                                                                          54),
+                                                              textColor:
+                                                                  Colors.white,
+                                                              fontSize: 16.0);
+                                                        }),
+                                                fallback: (context) => const Center(
+                                                    child:
+                                                        CircularProgressIndicator()),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),

@@ -5,6 +5,8 @@ class RequestsPassenger {
   String? phonenumber;
   String? username;
   String? imagefile;
+  String? gender;
+
   int? carownerid;
   int? tpid;
   int? request;
@@ -22,6 +24,7 @@ class RequestsPassenger {
       this.carownerid,
       this.tpid,
       this.request,
+      this.gender,
       this.tripid,
       this.rateid,
       this.isStarted});
@@ -38,6 +41,8 @@ class RequestsPassenger {
     request = json['request'];
     tripid = json['tripid'];
     rateid = json['rateid'];
+    gender = json['gender'];
+
     isStarted = json['isStarted'];
   }
 
@@ -55,6 +60,8 @@ class RequestsPassenger {
     data['tripid'] = this.tripid;
     data['rateid'] = this.rateid;
     data['isStarted'] = this.isStarted;
+    data['gender'] = this.gender;
+
     return data;
   }
 }

@@ -1,5 +1,5 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:drive_share/layout/trips/plan/car/car_details.dart';
+import 'package:drive_share/layout/Profile/car/car_details.dart';
 
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
@@ -10,8 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../models/Car.dart';
-import '../../../home_page.dart';
+import '../../../../../models/Car.dart';
+import '../../../../home_page.dart';
 
 class RegisterCar extends StatefulWidget {
   const RegisterCar({super.key});
