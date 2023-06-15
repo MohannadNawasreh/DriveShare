@@ -1,26 +1,27 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:drive_share/layout/Profile/car/car_details.dart';
+import 'package:drive_share/layout/Profile/car/search-car.dart';
+import 'package:drive_share/layout/home_page.dart';
 
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/layout/trips/plan/tripPlan/planD/plan_trip.dart';
+import 'package:drive_share/models/Car.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../../models/Car.dart';
-import '../../../../home_page.dart';
 
-class RegisterCar extends StatefulWidget {
-  const RegisterCar({super.key});
+class UpdateCar extends StatefulWidget {
+  const UpdateCar({super.key});
 
   @override
-  State<RegisterCar> createState() => _RegisterCarState();
+  State<UpdateCar> createState() => _UpdateCarState();
 }
 
-class _RegisterCarState extends State<RegisterCar> {
+class _UpdateCarState extends State<UpdateCar> {
   final formKey = GlobalKey<FormState>();
 
   TextEditingController carTypeController = TextEditingController();
@@ -61,7 +62,7 @@ class _RegisterCarState extends State<RegisterCar> {
       child: BlocConsumer<TripsCubit, TripState>(listener: (context, state) {
         if (state is TripPlanSuccessState) {
            Fluttertoast.showToast(
-                msg: " تم تسجيل المركبة بنجاح ",
+                msg: " تم تعديل المركبة بنجاح ",
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
                 timeInSecForIosWeb: 5,
@@ -69,22 +70,22 @@ class _RegisterCarState extends State<RegisterCar> {
                 textColor: Colors.white,
                 fontSize: 16.0);
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const HomePage()));
+              context, MaterialPageRoute(builder: (context) =>  SearchCar()));
         }
       }, builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.home),
+         /*   leading: IconButton(
+              icon: const Icon(Icons.arrow_back_outlined),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
+                  MaterialPageRoute(builder: (context) =>  SearchCar()),
                 );
               },
-            ),
+            ),*/
             backgroundColor: const Color.fromARGB(255, 3, 184, 78),
-            title: const Text("Register Car"),
+            title: const Text("Update Car"),
           ),
           body: Padding(
             padding: const EdgeInsets.all(30.0),
@@ -244,12 +245,12 @@ class _RegisterCarState extends State<RegisterCar> {
                     ConditionalBuilder(
                       condition: state is! TripPlanLoadingState,
                       builder: (context) => largeButton(
-                          text: 'Register Car',
+                          text: 'Update Car',
                           onPressed: () async {
                             print('object');
 
                             if (formKey.currentState!.validate()) {
-                              TripsCubit.get(context).CarRegister(
+                              TripsCubit.get(context).UpdateCar(
                                   cartype: carTypeController.text,
                                   carYearmodel:
                                       int.parse(carYearController.text),

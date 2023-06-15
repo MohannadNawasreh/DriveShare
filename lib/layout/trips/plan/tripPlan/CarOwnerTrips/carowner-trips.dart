@@ -23,7 +23,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
   Widget build(BuildContext context) {
     return BlocConsumer<TripsCubit, TripState>(
       listener: (context, state) {
-        if (TripsCubit.get(context).CarOwnerTrips.isEmpty) {
+        if (TripsCubit.get(context).CarOwnerTrips.isEmpty && state is TripPlanErrorState) {
           Fluttertoast.showToast(
               msg: " لا يوجد اي رحلة لك ",
               toastLength: Toast.LENGTH_LONG,
@@ -36,6 +36,8 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
       },
       builder: (context, state) {
         var trips = TripsCubit.get(context).CarOwnerTrips;
+                var user = TripsCubit.get(context).UserInfo;
+
         /*     if (trips.isEmpty) {
           return Scaffold(
             appBar: AppBar(
@@ -66,7 +68,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                       padding:
                           const EdgeInsets.only(left: 15, right: 15, top: 15),
                       child: SizedBox(
-                        height: 250,
+                        height: 300,
                         width: double.infinity,
                         child: Card(
                           shape: RoundedRectangleBorder(
@@ -119,9 +121,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                trips[index]
-                                                    .carownerid
-                                                    .toString(),
+                                                  user.fname.toString() +' '+ user.lname.toString(),
                                                 style: const TextStyle(
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w800,
@@ -386,19 +386,44 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                         back: Colors.red,
                                                         text: 'Delete Trip',
                                                         onPressed: () async {
-                                                          /*  TripsCubit.get(
-                                                                  context)
-                                                              .DeleteTrip(
-                                                                  tripid: int.parse(trips[
-                                                                          index]
-                                                                      .carownerid
-                                                                      .toString()));*/
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          const tessst()));
+
+                                                                showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Deleted User",
+                                    style: TextStyle(color: Colors.red)),
+                                content: Text("Are you sure to delete?"),
+                                actions: [
+                                  smallButton(
+                                      text: "Yes",
+                                      onPressed: () async {
+
+                                        Fluttertoast.showToast(
+                                            msg: "تم حذف الرحبة بنجاح ",
+                                            toastLength: Toast.LENGTH_LONG,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 5,
+                                            backgroundColor:
+                                                Color.fromARGB(255, 3, 184, 78),
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                   /*     Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const LoginLayout()));*/
+                                      }),
+                                  smallButton(
+                                      text: "No",
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      }),
+                                ],
+                              );
+                            },
+                          );
+                                                       
                                                         }),
                                                 fallback: (context) => const Center(
                                                     child:
@@ -554,7 +579,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
               itemCount: trips.length,
               separatorBuilder: (BuildContext context, int index) {
                 return const Divider(
-                  color: Color.fromARGB(255, 3, 184, 78),
+                  color: Color.fromARGB(255, 255, 255, 255),
                   thickness: 0,
                   height: 0,
                 );

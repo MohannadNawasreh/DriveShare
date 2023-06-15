@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:drive_share/layout/Log/login_layout.dart';
 import 'package:drive_share/layout/Profile/My-Ride/search-ride.dart';
 import 'package:drive_share/layout/Profile/edit/search-edit.dart';
+import 'package:drive_share/layout/home_page.dart';
 import 'package:drive_share/layout/trips/Find/trip_details_page.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
@@ -12,9 +14,11 @@ import 'package:drive_share/layout/Profile/car/search-car.dart';
 import 'package:drive_share/models/Passenger.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:drive_share/models/trip.dart';
+import 'package:drive_share/network/remote/cache_helper.dart';
 import 'package:drive_share/teest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'edit/edit_profile.dart';
@@ -29,20 +33,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  PassengerGp passenger = PassengerGp(
-    fname: 'fname',
-    lname: 'lname',
-    phonenumber: 'phonenumber',
-    username: 'username',
-    imagefile: 'imagefile',
-  );
-
-  String userName = "";
-  String mobileNumber = "";
-  String email = "";
-  var _controller = TextEditingController();
-  var _controller2 = TextEditingController();
-  var _controller3 = TextEditingController();
   XFile? _image;
 
   Future<void> _pickImage() async {
@@ -65,12 +55,15 @@ class _ProfileState extends State<Profile> {
             builder: (context) => Scaffold(
               appBar: AppBar(
                 backgroundColor: Color.fromARGB(255, 3, 184, 78),
-                leading: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back),
-                ),
+                   leading: IconButton(
+              icon: const Icon(Icons.arrow_back_outlined),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  HomePage()),
+                );
+              },
+            ),
                 title: Text(
                   "Profile",
                   style: TextStyle(color: Colors.white),
@@ -168,40 +161,96 @@ class _ProfileState extends State<Profile> {
                         icon2: null,
                       ),
                       ProfileMenuWidget(
-                        passenger: passenger,
+                        passenger: userInfo,
                         icon: Icons.start_rounded,
                         text: "My Ride",
                         textColor: Colors.black,
                         onPressed: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SearchMyRide()));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchMyRide()));
                         },
                         icon2: null,
                       ),
                       const Divider(),
                       ProfileMenuWidget(
-                        passenger: passenger,
+                        passenger: userInfo,
                         icon: Icons.payment,
                         text: "Become a Driver",
                         textColor: Colors.black,
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SearchCar()),
-                          );
+                          if (CacheHelper.getData(key: 'carownerid') == '') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterCar()),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchCar()),
+                            );
+                          }
                         },
                         icon2: null,
                       ),
                       ProfileMenuWidget(
-                        passenger: passenger,
+                        passenger: userInfo,
                         icon: Icons.logout,
                         text: "Logout",
-                        textColor: Colors.black,
+                        textColor: Color.fromARGB(255, 79, 78, 78),
                         onPressed: () {
                           SignOut(context);
+                        },
+                        icon2: null,
+                      ),
+                      ProfileMenuWidget(
+                        passenger: userInfo,
+                        icon: Icons.delete_forever_outlined,
+                        text: "Delete User",
+                        textColor: Colors.red,
+                        onPressed: () {
+//TripsCubit.get(context).DeleteUser();
+
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Deleted User",
+                                    style: TextStyle(color: Colors.red)),
+                                content: Text("Are you sure to delete?"),
+                                actions: [
+                                  smallButton(
+                                      text: "Yes",
+                                      onPressed: () async {
+                                        TripsCubit.get(context).DeleteUser();
+
+                                        Fluttertoast.showToast(
+                                            msg: "تم حذف حسابك بنجاح ",
+                                            toastLength: Toast.LENGTH_LONG,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 5,
+                                            backgroundColor:
+                                                Color.fromARGB(255, 3, 184, 78),
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const LoginLayout()));
+                                      }),
+                                  smallButton(
+                                      text: "No",
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      }),
+                                ],
+                              );
+                            },
+                          );
                         },
                         icon2: null,
                       ),
@@ -225,6 +274,7 @@ class ProfileMenuWidget extends StatelessWidget {
     this.textColor,
     required this.onPressed,
     required this.icon2,
+    this.backColor,
   });
 
   final PassengerGp passenger;
@@ -233,6 +283,7 @@ class ProfileMenuWidget extends StatelessWidget {
   final Color? textColor;
   final VoidCallback? onPressed;
   final IconData? icon2;
+  final Color? backColor;
 
   @override
   Widget build(BuildContext context) {

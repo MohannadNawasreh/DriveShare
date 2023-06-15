@@ -12,7 +12,7 @@ class SearchProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TripsCubit()..GetCarInfo()..GetPassengerById(),
+      create: (context) => TripsCubit()..GetPassengerById(),
       child: BlocConsumer<TripsCubit, TripState>(
         listener: (context, state) {},
         builder: (context, state) {

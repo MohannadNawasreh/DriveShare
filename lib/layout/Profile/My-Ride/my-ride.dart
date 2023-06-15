@@ -35,8 +35,7 @@ class _MyRideeState extends State<MyRidee> {
       },
       builder: (context, state) {
         var rides = TripsCubit.get(context).myRide;
-     
-      
+
         return Scaffold(
           appBar: AppBar(
             title: const Text('My Ride'),
@@ -268,8 +267,6 @@ class _MyRideeState extends State<MyRidee> {
                                     ],
                                   ),
                                 ),
-                               
-                               
                                 const SizedBox(
                                   height: 15,
                                 ),
@@ -285,26 +282,41 @@ class _MyRideeState extends State<MyRidee> {
                                             ),
                                             Expanded(
                                               child: ConditionalBuilder(
-                                                condition: state is ! TripPlanLoadingState,
+                                                condition: state
+                                                    is! UserInfoLoadingState,
                                                 builder: (context) =>
                                                     smallButton(
-                                                  text: 'Active Trip',
-                                                  onPressed: () async {
-                                                 
-                                                    Fluttertoast.showToast(
-                                                        msg: "Trip is Active",
-                                                        toastLength:
-                                                            Toast.LENGTH_LONG,
-                                                        gravity:
-                                                            ToastGravity.BOTTOM,
-                                                        timeInSecForIosWeb: 5,
-                                                        backgroundColor:
-                                                            Color.fromARGB(255,
-                                                                3, 141, 54),
-                                                        textColor: Colors.white,
-                                                        fontSize: 16.0);
-                                                  },
-                                                ),
+                                                        text: 'Active Trip',
+                                                        onPressed: () async {
+                                                          TripsCubit.get(
+                                                                  context)
+                                                              .PassengerActiveTrip(
+                                                                  tripid: int.parse(rides[
+                                                                          index]
+                                                                      .tripid
+                                                                      .toString()));
+
+                                                          Fluttertoast.showToast(
+                                                              msg:
+                                                                  "Trip is Active",
+                                                              toastLength: Toast
+                                                                  .LENGTH_LONG,
+                                                              gravity:
+                                                                  ToastGravity
+                                                                      .BOTTOM,
+                                                              timeInSecForIosWeb:
+                                                                  5,
+                                                              backgroundColor:
+                                                                  Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          3,
+                                                                          141,
+                                                                          54),
+                                                              textColor:
+                                                                  Colors.white,
+                                                              fontSize: 16.0);
+                                                        }),
                                                 fallback: (context) => const Center(
                                                     child:
                                                         CircularProgressIndicator()),
@@ -316,7 +328,7 @@ class _MyRideeState extends State<MyRidee> {
                                             Expanded(
                                               child: ConditionalBuilder(
                                                 condition: state
-                                                    is! TripPlanLoadingState,
+                                                    is! UserInfoLoadingState,
                                                 builder: (context) =>
                                                     smallButton(
                                                         back: const Color
@@ -324,7 +336,16 @@ class _MyRideeState extends State<MyRidee> {
                                                             255, 117, 123, 125),
                                                         text: 'Finish Trip',
                                                         onPressed: () async {
-                                                        
+                                                          print(rides[index]
+                                                              .tripid
+                                                              .toString()+ '  5555555555555555555   ' );
+                                                          TripsCubit.get(
+                                                                  context)
+                                                              .PassengerFinishTrip(
+                                                                  tripid: int.parse(rides[
+                                                                          index]
+                                                                      .tripid
+                                                                      .toString()));
 
                                                           Fluttertoast.showToast(
                                                               msg:
