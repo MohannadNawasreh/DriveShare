@@ -1,3 +1,4 @@
+import 'package:drive_share/layout/Profile/My-Ride/details-my-trip.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/layout/trips/plan/tripPlan/CarOwnerTrips/AllAcceptPassenger/search-accept.dart';
@@ -104,9 +105,8 @@ class _MyRideeState extends State<MyRidee> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                rides[index]
-                                                    .carownerid
-                                                    .toString(),
+                                                '${rides[index]
+                                                    .fname} ${rides[index].lname}' ,
                                                 style: const TextStyle(
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w800,
@@ -270,7 +270,26 @@ class _MyRideeState extends State<MyRidee> {
                                 const SizedBox(
                                   height: 15,
                                 ),
-                                Expanded(
+                                   Expanded(
+                                              child:
+                                                    largeButton(
+                                                       
+                                                        text: 'Details Trip',
+                                                        onPressed: () async {
+
+                                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MyRideDetails(
+                                                          trip: rides[index],
+                                                          index: 1 + index),
+                                                ),
+                                              );
+                                                        })
+                                              
+                                            ),
+                              /*  Expanded(
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -336,9 +355,8 @@ class _MyRideeState extends State<MyRidee> {
                                                             255, 117, 123, 125),
                                                         text: 'Finish Trip',
                                                         onPressed: () async {
-                                                          print(rides[index]
-                                                              .tripid
-                                                              .toString()+ '  5555555555555555555   ' );
+                                                          print('${rides[index]
+                                                              .tripid}  5555555555555555555   ' );
                                                           TripsCubit.get(
                                                                   context)
                                                               .PassengerFinishTrip(
@@ -381,7 +399,7 @@ class _MyRideeState extends State<MyRidee> {
                                       )
                                     ],
                                   ),
-                                ),
+                                ),*/
                               ],
                             ),
                           ),

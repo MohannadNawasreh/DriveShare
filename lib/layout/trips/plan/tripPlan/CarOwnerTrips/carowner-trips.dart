@@ -1,6 +1,7 @@
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/layout/trips/plan/tripPlan/CarOwnerTrips/AllAcceptPassenger/search-accept.dart';
+import 'package:drive_share/layout/trips/plan/tripPlan/CarOwnerTrips/UpdateTrip/update-trip.dart';
 import 'package:drive_share/layout/trips/plan/tripPlan/planD/plan_trip.dart';
 import 'package:drive_share/teest.dart';
 import 'package:flutter/material.dart';
@@ -441,7 +442,15 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                     smallButton(
                                                         back: Colors.orange,
                                                         text: 'Edit Trip',
-                                                        onPressed: () async {}),
+                                                        onPressed: () async {
+
+                                                           Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                     UpdateTrip(trip:trips[index])),
+                                          );
+                                                        }),
                                                 fallback: (context) => const Center(
                                                     child:
                                                         CircularProgressIndicator()),

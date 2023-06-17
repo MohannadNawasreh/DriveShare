@@ -4,6 +4,7 @@ import 'package:drive_share/http/trip_post.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/models/components/components.dart';
+import 'package:drive_share/models/myTrips.dart';
 import 'package:drive_share/models/trip.dart';
 import 'package:drive_share/network/remote/cache_helper.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 
 class TripDetails extends StatelessWidget {
-  final TripGp trip;
+  final MyRide trip;
   final int index;
   //String passengerIdString = CacheHelper.getData(key: "Passengerid").toString();
   int passengerid =
@@ -310,7 +311,7 @@ class TripDetails extends StatelessWidget {
                               text: 'Request to join the trip',
                               onPressed: () async {
                                 TripsCubit().RequestTrip(
-                                    tripid: trip.tripid,
+                                    tripid: trip.tripid! ,
                                     passengerid: passengerid);
 
                                 Fluttertoast.showToast(

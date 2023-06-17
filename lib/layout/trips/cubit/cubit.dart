@@ -208,6 +208,53 @@ class TripsCubit extends Cubit<TripState> {
     });
   }
 
+
+  void UpdateTrip ({
+    required int tripid,
+    required String startpoint,
+    required String endpoint,
+    required String descreption,
+    required int seatnumber,
+    required DateTime triptime,
+    required int rideprice,
+    required String sp1,
+    required String sp2,
+    required String sp3,
+    required String sp4,
+  }) {
+    emit(TripPlanLoadingState());
+    int CarOwnerId =
+        int.parse(CacheHelper.getData(key: 'carownerid').toString());
+
+    DioHelper.putData(
+            url: 'https://driveshare.azurewebsites.net/api/CarOwner/updatetrip',
+            data: {
+              'tripid':tripid,
+          'startpoint': startpoint,
+          'endpoint': endpoint,
+          'rideprice': rideprice,
+          'triptime': triptime.toIso8601String(),
+          'seatnumber': seatnumber,
+          'descreption': descreption,
+          'isactive': 0,
+          'carownerid': CarOwnerId,
+          'sp1': sp1,
+          'sp2': sp2,
+          'sp3': sp3,
+          'sp4': sp4,
+        })
+        .then((value) => {
+//print(value.data.toString()),
+              print('**********iiosmd'),
+              emit(TripPlanSuccessState()),
+            })
+        .catchError((onError) {
+      print(onError.toString());
+      emit(TripPlanErrorState(onError.toString()));
+    });
+  }
+  
+
   void AcceptPassenger({
     required int tripid,
     required int passngerid,
@@ -465,6 +512,9 @@ class TripsCubit extends Cubit<TripState> {
       emit(RequestErrorState(onError.toString()));
     });
   }
+  List<MyRide> TripSeaechList = [];
+    List<dynamic> TripSeaechJson = [];
+
 
   void getAllListTrips() {
     emit(TripPlanLoadingState());
@@ -473,13 +523,14 @@ class TripsCubit extends Cubit<TripState> {
                 'https://driveshare.azurewebsites.net/api/Passenger/getalltrip')
         .then((value) => {
               //print(value.data.toString()),
-              LiistTripsJson = value.data,
+              TripSeaechJson = value.data,
               // ListtTrips = json.decode(value.data.toString()),
+              print(value.data),
 
-              ListtTrips =
-                  LiistTripsJson.map((data) => TripGp.fromJson(data)).toList(),
+              TripSeaechList =
+                  TripSeaechJson.map((data) => MyRide.fromJson(data)).toList(),
 
-              print(ListtTrips[0].descreption),
+              print(TripSeaechList[0].descreption),
 
               // print(LiistTripsCub[0]),
               emit(TripPlanSuccessState())
@@ -504,13 +555,13 @@ class TripsCubit extends Cubit<TripState> {
         })
         .then((value) => {
               //print(value.data.toString()),
-              LiistTripsJson = value.data,
+              TripSeaechJson = value.data,
               // ListtTrips = json.decode(value.data.toString()),
 
-              ListtTrips =
-                  LiistTripsJson.map((data) => TripGp.fromJson(data)).toList(),
+              TripSeaechList =
+                  TripSeaechJson.map((data) => MyRide.fromJson(data)).toList(),
 
-              print(ListtTrips[0].descreption),
+              print(TripSeaechList[0].descreption),
 
               // print(LiistTripsCub[0]),
               emit(TripPlanSuccessState())
@@ -521,7 +572,7 @@ class TripsCubit extends Cubit<TripState> {
     });
   }
 
-  List<MyTrips> myRide = [];
+  List<MyRide> myRide = [];
   List<dynamic> myRideJson = [];
   void MyTrip() {
     emit(UserInfoLoadingState());
@@ -533,8 +584,9 @@ class TripsCubit extends Cubit<TripState> {
       //passengerById = value.data.map((data) => PassengerGp.fromJson(data));
 
       print(value.data);
+
       myRideJson = value.data;
-      myRide = myRideJson.map((data) => MyTrips.fromJson(data)).toList();
+      myRide = myRideJson.map((data) => MyRide.fromJson(data)).toList();
 
       // print(myRide[0].endpoint);
 
@@ -553,11 +605,11 @@ class TripsCubit extends Cubit<TripState> {
 
     DioHelper.postData(
             url: 'https://driveshare.azurewebsites.net/api/Passenger/isstart',
-            data: {'passengerid': id, 'tripid': tripid})
+            data: {'passengerid': 186, 'tripid': tripid})
         .then((value) => {
               //ListPassengerJson = value.data,
 
-              print('ActiveTrip'),
+              print(value.statusCode),
 
               // print(LiistTripsCub[0]),
               emit(UserInfoSuccessState())
