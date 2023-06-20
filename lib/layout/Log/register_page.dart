@@ -36,6 +36,7 @@ class _RegisterState extends State<Register> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController imageController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
+  String _gender = '';
 
   bool flag = true;
 
@@ -160,6 +161,34 @@ class _RegisterState extends State<Register> {
                     }),
               ),
               const SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Gender'),
+                  RadioListTile<String>(
+                    title: const Text('Male'),
+                    value: 'Male',
+                    groupValue: _gender,
+                    onChanged: (value) {
+                      setState(() {
+                        _gender = value!;
+                      });
+                    },
+                  ),
+                  RadioListTile<String>(
+                    title: const Text('Female'),
+                    value: 'Female',
+                    groupValue: _gender,
+                    onChanged: (value) {
+                      setState(() {
+                        _gender = value!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+             
+             
               SizedBox(
                 width: double.infinity,
                 child: TextFormField(
@@ -275,6 +304,7 @@ class _RegisterState extends State<Register> {
                         "IMAGEFILE": imageController.text,
                         "email": emailController.text,
                         "password": passwordController.text,
+                        "gender": _gender.toString()
                       });
                       request.headers.addAll(headers);
 
@@ -308,10 +338,10 @@ class _RegisterState extends State<Register> {
                 fallback: (context) =>
                     const Center(child: CircularProgressIndicator()),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Text(
                 _errorMessage,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.red,
                 ),
               )

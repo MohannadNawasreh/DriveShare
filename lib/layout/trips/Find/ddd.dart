@@ -60,7 +60,7 @@ class RideDetails extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(15),
                 child: SizedBox(
-                  height: 650,
+                  height: MediaQuery.of(context).size.height * 0.8,
                   width: double.infinity,
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -74,14 +74,13 @@ class RideDetails extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Row(
-                              
                               children: const [
                                 SizedBox(
                                   width: 110,
                                 ),
                                 Text(
                                   // ignore: prefer_interpolation_to_compose_strings
-                                 'Trip Details',
+                                  'Trip Details',
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -261,7 +260,7 @@ class RideDetails extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                              Expanded(
+                          Expanded(
                             child: Row(
                               children: [
                                 Expanded(
@@ -276,7 +275,7 @@ class RideDetails extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          trip.startpoint .toString(),
+                                          trip.startpoint.toString(),
                                           style: const TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w800,
@@ -317,7 +316,7 @@ class RideDetails extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                              Expanded(
+                          Expanded(
                             child: Row(
                               children: [
                                 Expanded(
@@ -349,7 +348,7 @@ class RideDetails extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       const Text(
-                                'Price :',
+                                        'Price :',
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold,
@@ -357,9 +356,9 @@ class RideDetails extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                  (trip.rideprice != 0)
-                                      ? '${trip.rideprice} JD'
-                                      : 'Free',
+                                          (trip.rideprice != 0)
+                                              ? '${trip.rideprice} JD'
+                                              : 'Free',
                                           style: const TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w800,
@@ -375,26 +374,23 @@ class RideDetails extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                               Expanded(
+                          Expanded(
                             child: Row(
                               children: [
                                 Expanded(
                                   child: Row(
                                     children: [
                                       const Text(
-                                'Trip Time :',
+                                        'Trip Time :',
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black54),
                                       ),
                                       Expanded(
-                                        child:
-                                          Text(
-                                                format__Dat(DateTime.parse(
-                                                    trip
-                                                        .triptime
-                                                        .toString())),
+                                        child: Text(
+                                          format__Dat(DateTime.parse(
+                                              trip.triptime.toString())),
                                           style: const TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w800,
@@ -404,97 +400,90 @@ class RideDetails extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                
                               ],
                             ),
                           ),
-                      
-                            Expanded(
-                          child: Row(
-                            children:  [
-                              const Expanded(
-                                child: Text(
-                                  'Description :',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black54),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                const Expanded(
+                                  child: Text(
+                                    'Description :',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black54),
+                                  ),
                                 ),
-                              ),
-                                     Expanded(
-                                       child: Text(
-                                         trip.descreption??'',
-                                         style: const TextStyle(
-                                             fontSize: 13,
-                                             fontWeight: FontWeight.w800,
-                                             color: Colors.black38),
-                                       ),
-                                     ),
-                           
-                            ],
+                                Expanded(
+                                  child: Text(
+                                    trip.descreption ?? '',
+                                    style: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.black38),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                            Expanded(
-            child: Text(
-              'SP1: ${trip.sp1??' '}    SP2: ${trip.sp3??''} \n SP3: ${trip.sp3??''}    SP4: ${trip.sp4??''}',
-              style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.black38),
-            ),
-          ),
-
+                          Expanded(
+                            child: Text(
+                              'SP1: ${trip.sp1 ?? ' '}    SP2: ${trip.sp3 ?? ''} \n SP3: ${trip.sp3 ?? ''}    SP4: ${trip.sp4 ?? ''}',
+                              style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.black38),
+                            ),
+                          ),
                           const SizedBox(
                             height: 15,
                           ),
                           Expanded(
                             child: Row(
                               children: [
-                                
-                                
                                 Expanded(
-                          child: ConditionalBuilder(
-                            condition: state is! RequestLoadingState,
-                            builder: (context) => largeButton(
-                              text: 'Request Join Trip',
-                              onPressed: () async {
-                                TripsCubit().RequestTrip(
-                                    tripid: trip.tripid! ,
-                                    passengerid: passengerid);
+                                  child: ConditionalBuilder(
+                                    condition: state is! RequestLoadingState,
+                                    builder: (context) => largeButton(
+                                      text: 'Request Join Trip',
+                                      onPressed: () async {
+                                        TripsCubit().RequestTrip(
+                                            tripid: trip.tripid!,
+                                            passengerid: passengerid);
 
-                                Fluttertoast.showToast(
-                                    msg: 'Request Sent successfully',
-                                    toastLength: Toast.LENGTH_LONG,
-                                    gravity: ToastGravity.BOTTOM,
-                                    timeInSecForIosWeb: 3,
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 3, 184, 78),
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const HomePage()),
-                                );
-                              },
-                            ),
-                            fallback: (context) => const Center(
-                                child: CircularProgressIndicator()),
-                          ),
-                        ),
-const SizedBox(width: 10),
-                        largeButton(
-                                    text: 'WhatsApp Driver',
-                                    onPressed: () {
-                                      String phoneNumber =
-                                          trip
-                                              .phonenumber
-                                              .toString();
-                                                  launch('https://wa.me/$phoneNumber');
-
-//openWhatsAppChat(phoneNumber);
-                                    },
+                                        Fluttertoast.showToast(
+                                            msg: 'Request Sent successfully',
+                                            toastLength: Toast.LENGTH_LONG,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 3,
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    255, 3, 184, 78),
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const HomePage()),
+                                        );
+                                      },
+                                    ),
+                                    fallback: (context) => const Center(
+                                        child: CircularProgressIndicator()),
                                   ),
+                                ),
+                                const SizedBox(width: 10),
+                                largeButton(
+                                  text: 'WhatsApp Driver',
+                                  onPressed: () {
+                                    String phoneNumber =
+                                        trip.phonenumber.toString();
+                                    launch('https://wa.me/$phoneNumber');
+
+                                  },
+                                ),
                               ],
                             ),
                           ),

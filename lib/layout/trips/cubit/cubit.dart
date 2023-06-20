@@ -109,7 +109,7 @@ class TripsCubit extends Cubit<TripState> {
     });
   }
 
- void UpdateCar({
+  void UpdateCar({
     // required int passengerid,
     required String cartype,
     required int carYearmodel,
@@ -123,8 +123,7 @@ class TripsCubit extends Cubit<TripState> {
     int id = int.parse(CacheHelper.getData(key: 'Passengerid').toString());
     print(id);
     DioHelper.putData(
-            url:
-                'https://driveshare.azurewebsites.net/api/CarOwner/updatecar',
+            url: 'https://driveshare.azurewebsites.net/api/CarOwner/updatecar',
             data: {
           'passengerid': id,
           'Cartype': cartype,
@@ -145,7 +144,7 @@ class TripsCubit extends Cubit<TripState> {
     });
   }
 
- void DeleteCar() {
+  void DeleteCar() {
     emit(DeleteUserLoadingState());
     int id = int.parse(CacheHelper.getData(key: 'Passengerid').toString());
     DioHelper.deleteData(
@@ -208,8 +207,7 @@ class TripsCubit extends Cubit<TripState> {
     });
   }
 
-
-  void UpdateTrip ({
+  void UpdateTrip({
     required int tripid,
     required String startpoint,
     required String endpoint,
@@ -229,7 +227,7 @@ class TripsCubit extends Cubit<TripState> {
     DioHelper.putData(
             url: 'https://driveshare.azurewebsites.net/api/CarOwner/updatetrip',
             data: {
-              'tripid':tripid,
+          'tripid': tripid,
           'startpoint': startpoint,
           'endpoint': endpoint,
           'rideprice': rideprice,
@@ -253,7 +251,6 @@ class TripsCubit extends Cubit<TripState> {
       emit(TripPlanErrorState(onError.toString()));
     });
   }
-  
 
   void AcceptPassenger({
     required int tripid,
@@ -483,10 +480,12 @@ class TripsCubit extends Cubit<TripState> {
       data: {'tripid': tripid},
     ).then((response) {
       print('DeleteTrip');
+      print(response.statusCode);
       // Handle the response as needed
       emit(TripPlanSuccessState());
     }).catchError((error) {
       print('Error: $error');
+      print('object');
       emit(TripPlanErrorState(error.toString()));
     });
   }
@@ -512,9 +511,9 @@ class TripsCubit extends Cubit<TripState> {
       emit(RequestErrorState(onError.toString()));
     });
   }
-  List<MyRide> TripSeaechList = [];
-    List<dynamic> TripSeaechJson = [];
 
+  List<MyRide> TripSeaechList = [];
+  List<dynamic> TripSeaechJson = [];
 
   void getAllListTrips() {
     emit(TripPlanLoadingState());
@@ -623,7 +622,7 @@ class TripsCubit extends Cubit<TripState> {
   void PassengerFinishTrip({
     required int tripid,
   }) {
-    emit(UserInfoLoadingState());
+    emit(TripPlanLoadingState());
     int id = int.parse(CacheHelper.getData(key: 'Passengerid').toString());
 
     DioHelper.postData(
@@ -635,11 +634,11 @@ class TripsCubit extends Cubit<TripState> {
               print('FinishTrip'),
 
               // print(LiistTripsCub[0]),
-              emit(UserInfoSuccessState())
+              emit(TripPlanSuccessState())
             })
         .catchError((onError) {
       print(onError.toString());
-      emit(UserInfoErrorState(onError.toString()));
+      emit(TripPlanErrorState(onError.toString()));
     });
   }
 
@@ -687,7 +686,7 @@ class TripsCubit extends Cubit<TripState> {
     int id = int.parse(CacheHelper.getData(key: 'Passengerid').toString());
     DioHelper.deleteData(
       url: 'https://driveshare.azurewebsites.net/api/User/deleteuser',
-      data: {'passengerid': id},
+      data: {'passengerid': 158},
     ).then((value) async {
       print(value.statusCode);
 

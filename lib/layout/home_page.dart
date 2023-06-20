@@ -4,6 +4,7 @@ import 'package:drive_share/layout/Profile/car/search-car.dart';
 import 'package:drive_share/layout/Profile/search.dart';
 import 'package:drive_share/layout/trips/plan/tripPlan/planD/loading-page.dart';
 import 'package:drive_share/models/Passenger.dart';
+import 'package:drive_share/network/remote/cache_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:drive_share/layout/trips/plan/tripPlan/planD/plan_trip.dart';
@@ -37,8 +38,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 3, 184, 78),
         leading: IconButton(
-          icon: const CircleAvatar(
-            backgroundImage: AssetImage('images/Untitled-2.png'),
+          icon:  CircleAvatar(
+            backgroundImage: AssetImage('images/user.png'),
             radius: 15,
           ),
           onPressed: () {

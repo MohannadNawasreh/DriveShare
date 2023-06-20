@@ -35,7 +35,22 @@ class _tessstState extends State<tessst> {
                 builder: (context) => largeButton(
                     text: 'Create Trip',
                     onPressed: () async {
-                      TripsCubit.get(context).GetPassengerById();
+                      var headers = {'Content-Type': 'application/json'};
+                      var request = http.Request(
+                          'DELETE',
+                          Uri.parse(
+                              'https://driveshare.azurewebsites.net/api/User/deleteuser'));
+                      request.body = json.encode({"passengerid": 158});
+                      request.headers.addAll(headers);
+
+                      http.StreamedResponse response = await request.send();
+
+                      if (response.statusCode == 200) {
+                        print(response.statusCode);
+                      } else {
+                        print(response.statusCode);
+                      }
+                      //   TripsCubit.get(context).DeleteUser();
                       /*UpdateUser(
                           phoneNumber: '44444444',
                           email: 'a',

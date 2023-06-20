@@ -1,10 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:drive_share/layout/Log/login_layout.dart';
 import 'package:drive_share/layout/Profile/My-Ride/search-ride.dart';
 import 'package:drive_share/layout/Profile/edit/search-edit.dart';
 import 'package:drive_share/layout/home_page.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'package:drive_share/layout/trips/Find/trip_details_page.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
@@ -20,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'edit/edit_profile.dart';
 
@@ -33,16 +38,46 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  XFile? _image;
+  File? _image;
+  final _imagePathKey = 'profile_image_path';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadImageFromPreferences();
+  }
+
+  Future<void> _loadImageFromPreferences() async {
+    // _prefs = await SharedPreferences.getInstance();
+    // final imagePath = _prefs.getString(_imagePathKey);
+    final imagePath = CacheHelper.getData(key: 'profile_image_path');
+
+    if (imagePath != null) {
+      setState(() {
+        _image = File(imagePath);
+      });
+    }
+  }
+  int DeletedId = int.parse(CacheHelper.getData(key: 'Passengerid').toString());
 
   Future<void> _pickImage() async {
-    final picker = ImagePicker();
+   final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = pickedImage;
-//passenger.updateUserInfo(image: pickedImage);
-    });
+    if (pickedImage != null) {
+      final Directory appDirectory = await getApplicationDocumentsDirectory();
+      final String imagePath = '${appDirectory.path}/profile_image.jpg';
+      final File imageFile = File(pickedImage.path);
+
+      // Copy the image file to the project folder
+      await imageFile.copy(imagePath).toString();
+      setState(() {
+        _image = imageFile;
+      });
+      // _prefs.setString(_imagePathKey, imageFile.path);
+      CacheHelper.saveData(key: 'profile_image_path' ,value: imageFile.path);
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +90,15 @@ class _ProfileState extends State<Profile> {
             builder: (context) => Scaffold(
               appBar: AppBar(
                 backgroundColor: Color.fromARGB(255, 3, 184, 78),
-                   leading: IconButton(
-              icon: const Icon(Icons.arrow_back_outlined),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  HomePage()),
-                );
-              },
-            ),
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_outlined),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
+                ),
                 title: Text(
                   "Profile",
                   style: TextStyle(color: Colors.white),
@@ -88,7 +123,8 @@ class _ProfileState extends State<Profile> {
                                       fit: BoxFit.cover,
                                     )
                                   : Image.asset(
-                                      "images/Untitled-2.png",
+                                      CacheHelper.getData(
+                                          key: 'profile_image_path')??'images/Untitled-2.png',
                                       fit: BoxFit.cover,
                                     ),
                             ),
@@ -225,7 +261,28 @@ class _ProfileState extends State<Profile> {
                                   smallButton(
                                       text: "Yes",
                                       onPressed: () async {
-                                        TripsCubit.get(context).DeleteUser();
+                                        print(DeletedId);
+                                        var headers = {
+                                          'Content-Type': 'application/json',
+                                          'Cookie':
+                                              'ARRAffinity=db7caaae5eca3babc5f5f4457fe724cbbbf257aeb4789bd12dc6351f9c66004b; ARRAffinitySameSite=db7caaae5eca3babc5f5f4457fe724cbbbf257aeb4789bd12dc6351f9c66004b'
+                                        };
+                                        var request = http.Request(
+                                            'DELETE',
+                                            Uri.parse(
+                                                'https://driveshare.azurewebsites.net/api/User/deleteuser'));
+                                        request.body = json
+                                            .encode({"passengerid": DeletedId});
+                                        request.headers.addAll(headers);
+
+                                        http.StreamedResponse response =
+                                            await request.send();
+
+                                        if (response.statusCode == 200) {
+                                          print(response.statusCode);
+                                        } else {
+                                          print(response.statusCode);
+                                        }
 
                                         Fluttertoast.showToast(
                                             msg: "تم حذف حسابك بنجاح ",
@@ -236,11 +293,12 @@ class _ProfileState extends State<Profile> {
                                                 Color.fromARGB(255, 3, 184, 78),
                                             textColor: Colors.white,
                                             fontSize: 16.0);
-                                        Navigator.push(
+                                        /*     Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const LoginLayout()));
+                                                    const LoginLayout()));*/
+                                        SignOut(context);
                                       }),
                                   smallButton(
                                       text: "No",

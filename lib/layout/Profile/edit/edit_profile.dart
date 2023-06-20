@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:drive_share/layout/Profile/profile.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/layout/Profile/search.dart';
 import 'package:drive_share/models/components/components.dart';
+import 'package:drive_share/network/remote/cache_helper.dart';
 import 'package:drive_share/teest.dart';
 import 'package:flutter/material.dart';
 import 'package:drive_share/models/Passenger.dart';
@@ -22,7 +25,25 @@ class _EditProfileState extends State<EditProfile> {
   var phoneController = TextEditingController();
   var emailController = TextEditingController();
   var lastNameController = TextEditingController();
+  File? _image;
 
+@override
+  void initState() {
+    super.initState();
+    _loadImageFromPreferences();
+  }
+
+  Future<void> _loadImageFromPreferences() async {
+    // _prefs = await SharedPreferences.getInstance();
+    // final imagePath = _prefs.getString(_imagePathKey);
+    final imagePath = CacheHelper.getData(key: 'profile_image_path');
+
+    if (imagePath != null) {
+      setState(() {
+        _image = File(imagePath);
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TripsCubit, TripState>(listener: (context, state) {
@@ -61,10 +82,22 @@ class _EditProfileState extends State<EditProfile> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const CircleAvatar(
-                            radius: 50,
-                            backgroundImage:
-                                AssetImage("images/Untitled-2.png"),
+                               SizedBox(
+                            height: 120,
+                            width: 120,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: _image != null
+                                  ? Image.file(
+                                      File(_image!.path),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.asset(
+                                      CacheHelper.getData(
+                                          key: 'profile_image_path')??'images/defaultuser.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
                           ),
                           const SizedBox(height: 20),
                           Row(
