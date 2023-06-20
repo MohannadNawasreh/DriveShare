@@ -109,6 +109,57 @@ class TripsCubit extends Cubit<TripState> {
     });
   }
 
+  void UpdateCar({
+    // required int passengerid,
+    required String cartype,
+    required int carYearmodel,
+    required String carmmodel,
+    required String carnumber,
+    //required String imageliecnse,
+    // required String drivelicense,
+  }) {
+    emit(TripPlanLoadingState());
+    print(CacheHelper.getData(key: 'Passengerid'));
+    int id = int.parse(CacheHelper.getData(key: 'Passengerid').toString());
+    print(id);
+    DioHelper.putData(
+            url: 'https://driveshare.azurewebsites.net/api/CarOwner/updatecar',
+            data: {
+          'passengerid': id,
+          'Cartype': cartype,
+          'Carmodel': carYearmodel,
+          'Carmmodel': carmmodel,
+          'Carnumber': carnumber,
+          'Imageliecnse': 'ii',
+          'Drivelicense': 'dd',
+        })
+        .then((value) => {
+//print(value.data.toString()),
+              print(value.statusCode),
+              emit(TripPlanSuccessState()),
+            })
+        .catchError((onError) {
+      print(onError.toString());
+      emit(TripPlanErrorState(onError.toString()));
+    });
+  }
+
+  void DeleteCar() {
+    emit(DeleteUserLoadingState());
+    int id = int.parse(CacheHelper.getData(key: 'Passengerid').toString());
+    DioHelper.deleteData(
+      url: 'https://driveshare.azurewebsites.net/api/CarOwner/deletecar',
+      data: {'passengerid': id},
+    ).then((value) async {
+      print(value.statusCode);
+
+      emit(DeleteUserSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(DeleteUserErrorState(error.toString()));
+    });
+  }
+
   void CreateTripPlan({
     required String startpoint,
     required String endpoint,
@@ -144,6 +195,51 @@ class TripsCubit extends Cubit<TripState> {
           'sp4': sp4,
           'carowner': null,
           'trippassengergps': trippassengergps
+        })
+        .then((value) => {
+//print(value.data.toString()),
+              print('**********iiosmd'),
+              emit(TripPlanSuccessState()),
+            })
+        .catchError((onError) {
+      print(onError.toString());
+      emit(TripPlanErrorState(onError.toString()));
+    });
+  }
+
+  void UpdateTrip({
+    required int tripid,
+    required String startpoint,
+    required String endpoint,
+    required String descreption,
+    required int seatnumber,
+    required DateTime triptime,
+    required int rideprice,
+    required String sp1,
+    required String sp2,
+    required String sp3,
+    required String sp4,
+  }) {
+    emit(TripPlanLoadingState());
+    int CarOwnerId =
+        int.parse(CacheHelper.getData(key: 'carownerid').toString());
+
+    DioHelper.putData(
+            url: 'https://driveshare.azurewebsites.net/api/CarOwner/updatetrip',
+            data: {
+          'tripid': tripid,
+          'startpoint': startpoint,
+          'endpoint': endpoint,
+          'rideprice': rideprice,
+          'triptime': triptime.toIso8601String(),
+          'seatnumber': seatnumber,
+          'descreption': descreption,
+          'isactive': 0,
+          'carownerid': CarOwnerId,
+          'sp1': sp1,
+          'sp2': sp2,
+          'sp3': sp3,
+          'sp4': sp4,
         })
         .then((value) => {
 //print(value.data.toString()),
@@ -384,10 +480,12 @@ class TripsCubit extends Cubit<TripState> {
       data: {'tripid': tripid},
     ).then((response) {
       print('DeleteTrip');
+      print(response.statusCode);
       // Handle the response as needed
       emit(TripPlanSuccessState());
     }).catchError((error) {
       print('Error: $error');
+      print('object');
       emit(TripPlanErrorState(error.toString()));
     });
   }
@@ -414,6 +512,9 @@ class TripsCubit extends Cubit<TripState> {
     });
   }
 
+  List<MyRide> TripSeaechList = [];
+  List<dynamic> TripSeaechJson = [];
+
   void getAllListTrips() {
     emit(TripPlanLoadingState());
     DioHelper.getData(
@@ -421,13 +522,14 @@ class TripsCubit extends Cubit<TripState> {
                 'https://driveshare.azurewebsites.net/api/Passenger/getalltrip')
         .then((value) => {
               //print(value.data.toString()),
-              LiistTripsJson = value.data,
+              TripSeaechJson = value.data,
               // ListtTrips = json.decode(value.data.toString()),
+              print(value.data),
 
-              ListtTrips =
-                  LiistTripsJson.map((data) => TripGp.fromJson(data)).toList(),
+              TripSeaechList =
+                  TripSeaechJson.map((data) => MyRide.fromJson(data)).toList(),
 
-              print(ListtTrips[0].descreption),
+              print(TripSeaechList[0].descreption),
 
               // print(LiistTripsCub[0]),
               emit(TripPlanSuccessState())
@@ -452,13 +554,13 @@ class TripsCubit extends Cubit<TripState> {
         })
         .then((value) => {
               //print(value.data.toString()),
-              LiistTripsJson = value.data,
+              TripSeaechJson = value.data,
               // ListtTrips = json.decode(value.data.toString()),
 
-              ListtTrips =
-                  LiistTripsJson.map((data) => TripGp.fromJson(data)).toList(),
+              TripSeaechList =
+                  TripSeaechJson.map((data) => MyRide.fromJson(data)).toList(),
 
-              print(ListtTrips[0].descreption),
+              print(TripSeaechList[0].descreption),
 
               // print(LiistTripsCub[0]),
               emit(TripPlanSuccessState())
@@ -469,7 +571,7 @@ class TripsCubit extends Cubit<TripState> {
     });
   }
 
-  List<MyTrips> myRide = [];
+  List<MyRide> myRide = [];
   List<dynamic> myRideJson = [];
   void MyTrip() {
     emit(UserInfoLoadingState());
@@ -481,15 +583,62 @@ class TripsCubit extends Cubit<TripState> {
       //passengerById = value.data.map((data) => PassengerGp.fromJson(data));
 
       print(value.data);
-      myRideJson = value.data;
-      myRide = myRideJson.map((data) => MyTrips.fromJson(data)).toList();
 
-     // print(myRide[0].endpoint);
+      myRideJson = value.data;
+      myRide = myRideJson.map((data) => MyRide.fromJson(data)).toList();
+
+      // print(myRide[0].endpoint);
 
       emit(UserInfoSuccessState());
     }).catchError((error) {
       print(error.toString());
       emit(UserInfoErrorState(error.toString()));
+    });
+  }
+
+  void PassengerActiveTrip({
+    required int tripid,
+  }) {
+    emit(UserInfoLoadingState());
+    int id = int.parse(CacheHelper.getData(key: 'Passengerid').toString());
+
+    DioHelper.postData(
+            url: 'https://driveshare.azurewebsites.net/api/Passenger/isstart',
+            data: {'passengerid': 186, 'tripid': tripid})
+        .then((value) => {
+              //ListPassengerJson = value.data,
+
+              print(value.statusCode),
+
+              // print(LiistTripsCub[0]),
+              emit(UserInfoSuccessState())
+            })
+        .catchError((onError) {
+      print(onError.toString());
+      emit(UserInfoErrorState(onError.toString()));
+    });
+  }
+
+  void PassengerFinishTrip({
+    required int tripid,
+  }) {
+    emit(TripPlanLoadingState());
+    int id = int.parse(CacheHelper.getData(key: 'Passengerid').toString());
+
+    DioHelper.postData(
+            url: 'https://driveshare.azurewebsites.net/api/Passenger/isfinish',
+            data: {'passengerid': id, 'tripid': tripid})
+        .then((value) => {
+              //ListPassengerJson = value.data,
+
+              print('FinishTrip'),
+
+              // print(LiistTripsCub[0]),
+              emit(TripPlanSuccessState())
+            })
+        .catchError((onError) {
+      print(onError.toString());
+      emit(TripPlanErrorState(onError.toString()));
     });
   }
 
@@ -509,7 +658,7 @@ class TripsCubit extends Cubit<TripState> {
     DioHelper.putData(
             url: 'https://driveshare.azurewebsites.net/api/User/updateuser',
             data: {
-          'passengerid': 186,
+          'passengerid': id,
           'fname': fName,
           'lname': lName,
           'phonenumber': phoneNumber,
@@ -529,6 +678,22 @@ class TripsCubit extends Cubit<TripState> {
         .catchError((onError) {
       print(onError.toString());
       emit(UpdateUserErrorState(onError.toString()));
+    });
+  }
+
+  void DeleteUser() {
+    emit(DeleteUserLoadingState());
+    int id = int.parse(CacheHelper.getData(key: 'Passengerid').toString());
+    DioHelper.deleteData(
+      url: 'https://driveshare.azurewebsites.net/api/User/deleteuser',
+      data: {'passengerid': 158},
+    ).then((value) async {
+      print(value.statusCode);
+
+      emit(DeleteUserSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(DeleteUserErrorState(error.toString()));
     });
   }
 }

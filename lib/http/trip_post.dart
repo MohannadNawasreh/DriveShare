@@ -3,7 +3,6 @@ import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'trip_http.dart';
 import '../models/trip.dart';
-import '../layout/trips/Find/details/search-derails.dart';
 
 class TripCard extends StatefulWidget {
   const TripCard({super.key});
@@ -282,7 +281,7 @@ class _TripCardState extends State<TripCard> {
                                           child: largeButton(
                                             text: 'Join in Trip',
                                             onPressed: () {
-                                              Navigator.push(
+                                           /*   Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) => SearchDetails(
@@ -290,7 +289,7 @@ class _TripCardState extends State<TripCard> {
                                                       trip: trips[index],
                                                       index: 1 + index),
                                                 ),
-                                              );
+                                              );*/
                                             },
                                           ),
                                         )

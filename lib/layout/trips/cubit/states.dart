@@ -62,3 +62,15 @@ class UpdateUserErrorState extends TripState {
   late String error;
   UpdateUserErrorState(this.error);
 }
+
+
+class DeleteUserLoadingState extends TripState {}
+
+
+class DeleteUserSuccessState extends TripState {
+}
+
+class DeleteUserErrorState extends TripState {
+  late String error;
+  DeleteUserErrorState(this.error);
+}

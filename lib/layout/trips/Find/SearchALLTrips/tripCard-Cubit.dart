@@ -1,3 +1,4 @@
+import 'package:drive_share/layout/trips/Find/ddd.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../trip_details_page.dart';
 import '../../../../models/components/components.dart';
-import '../details/search-derails.dart';
 
 class AllTripsCards extends StatefulWidget {
   const AllTripsCards({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _AllTripsCardsState extends State<AllTripsCards> {
   Widget build(BuildContext context) {
     return BlocConsumer<TripsCubit, TripState>(
       listener: (context, state) {
-        if (TripsCubit.get(context).ListtTrips.isEmpty) {
+        if (TripsCubit.get(context).TripSeaechList.isEmpty) {
           Fluttertoast.showToast(
               msg: "لا يوجد اي رحلة ",
               toastLength: Toast.LENGTH_LONG,
@@ -33,7 +33,7 @@ class _AllTripsCardsState extends State<AllTripsCards> {
         }
       },
       builder: (context, state) {
-        var trips = TripsCubit.get(context).ListtTrips;
+        var trips = TripsCubit.get(context).TripSeaechList;
 
         return Scaffold(
           appBar: AppBar(
@@ -104,7 +104,7 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                                             Expanded(
                                               child: Text(
                                                 trips[index]
-                                                    .carownerid
+                                                    .fname
                                                     .toString(),
                                                 style: const TextStyle(
                                                     fontSize: 12,
@@ -293,12 +293,11 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                                              /* TripsCubit.get(context)
                                                   .GetCarownerInfo();*/
 
-                                              Navigator.push(
+                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      SearchDetails(carownerid: int.parse(trips[index].carownerid.toString()),
-
+                                                      RideDetails(
                                                           trip: trips[index],
                                                           index: 1 + index),
                                                 ),

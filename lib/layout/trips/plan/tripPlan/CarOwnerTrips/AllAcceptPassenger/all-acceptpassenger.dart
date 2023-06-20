@@ -10,26 +10,43 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../../../models/components/components.dart';
 
 class AllAcceptsTrips extends StatefulWidget {
-  const AllAcceptsTrips({super.key});
+  const AllAcceptsTrips({Key? key}) : super(key: key);
 
   @override
   State<AllAcceptsTrips> createState() => _AllAcceptsTripsState();
 }
 
 class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
+  void openWhatsAppChat(String phoneNumber) async {
+    String whatsappUrl = "https://wa.me/";
+    if (await canLaunch(whatsappUrl)) {
+      await launch(whatsappUrl);
+    } else {
+      Fluttertoast.showToast(
+        msg: "Could not open WhatsApp",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TripsCubit, TripState>(
       listener: (context, state) {
         if (TripsCubit.get(context).ListRequestsPassenger.isEmpty) {
           Fluttertoast.showToast(
-              msg: "لا يوجد اي طلب للرحلة ",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 5,
-              backgroundColor: Color.fromARGB(255, 218, 10, 10),
-              textColor: Colors.white,
-              fontSize: 16.0);
+            msg: "لا يوجد اي طلب للرحلة ",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 5,
+            backgroundColor: Color.fromARGB(255, 218, 10, 10),
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
         }
       },
       builder: (context, state) {
@@ -54,7 +71,8 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                         width: double.infinity,
                         child: Card(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30)),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                           color: Colors.white,
                           shadowColor: Colors.black54,
                           elevation: 10,
@@ -66,21 +84,20 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                   child: Row(
                                     children: [
                                       const CircleAvatar(
-                                        backgroundImage:
-                                            AssetImage('images/Untitled-2.png'),
+                                        backgroundImage: AssetImage(
+                                            'images/Untitled-2.png'),
                                         radius: 20,
                                       ),
                                       const SizedBox(
                                         width: 80,
                                       ),
                                       Text(
-                                        // ignore: prefer_interpolation_to_compose_strings
-                                        'Accept #' +
-                                            (index + 1).toString(),
+                                        'Accept #${index + 1}',
                                         style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black54),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black54,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -97,9 +114,10 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                             const Text(
                                               'First Name:',
                                               style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black54),
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black54,
+                                              ),
                                             ),
                                             Expanded(
                                               child: Text(
@@ -107,9 +125,10 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                                     .fname
                                                     .toString(),
                                                 style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w800,
-                                                    color: Colors.black38),
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.black38,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -122,11 +141,12 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                         child: Row(
                                           children: [
                                             const Text(
-                                              'Last Name :',
+                                              'Last Name:',
                                               style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black54),
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black54,
+                                              ),
                                             ),
                                             Expanded(
                                               child: Text(
@@ -134,9 +154,10 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                                     .lname
                                                     .toString(),
                                                 style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w800,
-                                                    color: Colors.black38),
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.black38,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -155,11 +176,12 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                         child: Row(
                                           children: [
                                             const Text(
-                                              'Phone Number : ',
+                                              'Phone Number: ',
                                               style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black54),
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black54,
+                                              ),
                                             ),
                                             Expanded(
                                               child: Text(
@@ -167,9 +189,10 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                                     .phonenumber
                                                     .toString(),
                                                 style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w800,
-                                                    color: Colors.black38),
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.black38,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -182,11 +205,12 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                         child: Row(
                                           children: [
                                             const Text(
-                                              'Gender :',
+                                              'Gender:',
                                               style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black54),
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black54,
+                                              ),
                                             ),
                                             Expanded(
                                               child: Text(
@@ -194,9 +218,10 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                                     .gender
                                                     .toString(),
                                                 style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w800,
-                                                    color: Colors.black38),
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.black38,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -212,8 +237,13 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                   child: largeButton(
                                     text: 'Open WhatsApp Chat',
                                     onPressed: () {
-                                    //  openWhatsAppChat('+962775051199'
-                                    //      .toString()); // Replace with the desired phone number
+                                      String phoneNumber =
+                                          requestsPassenger[index]
+                                              .phonenumber
+                                              .toString();
+                                                  launch('https://wa.me/$phoneNumber');
+
+//openWhatsAppChat(phoneNumber);
                                     },
                                   ),
                                 ),
@@ -241,14 +271,5 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
         );
       },
     );
-  }
-}
-
-void openWhatsAppChat(String phoneNumber) async {
-  final url = 'https://wa.me/$phoneNumber';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
   }
 }
