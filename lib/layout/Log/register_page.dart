@@ -229,7 +229,7 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     validator: (value) {
-                      if (value!.isEmpty || value.length >= 12) {
+                      if (value!.isEmpty && value.length >= 12) {
                         return "mobile number cannot be empty";
                       }
                       return null;
