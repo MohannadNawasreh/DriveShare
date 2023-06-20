@@ -188,33 +188,32 @@ class _RegisterState extends State<Register> {
                 ],
               ),
               SizedBox(
-                width: double.infinity,
-                child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 3, 184, 78)),
-                        borderRadius: BorderRadius.circular(10),
+                  width: double.infinity,
+                  child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        border: UnderlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 3, 184, 78)),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        hintText: "Email",
+                        prefixIcon: const Icon(
+                          Icons.email,
+                          size: 20,
+                        ),
                       ),
-                      hintText: "Email",
-                      prefixIcon: const Icon(
-                        Icons.email,
-                        size: 20,
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Email cannot be empty";
-                      } else if (!RegExp(
-                              r"^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})?$")
-                          .hasMatch(value)) {
-                        return "Please enter a valid email address";
-                      }
-                      return null;
-                    }),
-              ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Email cannot be empty";
+                        } else if (!RegExp(
+                                r"^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})?$")
+                            .hasMatch(value)) {
+                          return "Please enter a valid email address";
+                        }
+                        return null;
+                      })),
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
@@ -237,6 +236,10 @@ class _RegisterState extends State<Register> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Password cannot be empty";
+                      } else if (!RegExp(
+                              r"^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$&*~]).{8,}$")
+                          .hasMatch(value)) {
+                        return "Password must 8 characters, numbers, and special characters";
                       }
                       return null;
                     }),
@@ -245,7 +248,7 @@ class _RegisterState extends State<Register> {
               SizedBox(
                 width: double.infinity,
                 child: TextFormField(
-                    keyboardType: TextInputType.phone,
+                    keyboardType: TextInputType.number,
                     controller: phoneController,
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(
@@ -260,8 +263,11 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     validator: (value) {
-                      if (value!.isEmpty && value.length >= 12) {
-                        return "mobile number cannot be empty";
+                      if (value!.isEmpty) {
+                        return "Phone number cannot be empty";
+                      } else if (!RegExp(r"^(77|78|79)\d{7}$")
+                          .hasMatch(value)) {
+                        return "Must be starting with 77, 78, or 79 and length is 9 digits";
                       }
                       return null;
                     }),

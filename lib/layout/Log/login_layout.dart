@@ -125,12 +125,16 @@ class _LoginLayoutState extends State<LoginLayout> {
                             size: 20,
                           ),
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Email cannot be empty";
-                          }
-                          return null;
-                        },
+                           validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Email cannot be empty";
+                        } else if (!RegExp(
+                                r"^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})?$")
+                            .hasMatch(value)) {
+                          return "Please enter a valid email address";
+                        }
+                        return null;
+                      }
                       ),
                     ),
                     const SizedBox(height: 20),

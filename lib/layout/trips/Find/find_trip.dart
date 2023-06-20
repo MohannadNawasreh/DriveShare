@@ -4,6 +4,7 @@ import 'package:drive_share/layout/trips/Find/SearchALLTrips/search_trip.dart';
 import 'package:drive_share/http/trip_post.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl/intl.dart';
 import '../../../models/trip.dart';
@@ -35,7 +36,7 @@ class _FindTripState extends State<FindTrip> {
   Set<Marker> _markers = {};
 
   // The initial camera position for the map, centered on Amman, Jordan
-  static final CameraPosition _amman = CameraPosition(
+  static final CameraPosition _amman = const CameraPosition(
     target: LatLng(31.9539, 35.9106),
     zoom: 14.4746,
   );
@@ -155,11 +156,8 @@ class _FindTripState extends State<FindTrip> {
                   GooglePlaceAutoCompleteTextField(
                     textEditingController: _startingPointController,
                     googleAPIKey: "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                    inputDecoration: InputDecoration(
+                    inputDecoration: const InputDecoration(
                       hintText: "Starting Point",
-                      errorText: _startingPointController.text.isEmpty
-                          ? 'Starting Point cannot be empty'
-                          : null,
                     ),
                     itmClick: (prediction) =>
                         onPlaceSelected(prediction, _startingPointController),
@@ -169,30 +167,14 @@ class _FindTripState extends State<FindTrip> {
                   GooglePlaceAutoCompleteTextField(
                     textEditingController: _endingPointController,
                     googleAPIKey: "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                    inputDecoration: InputDecoration(
-                      hintText: "ending Point",
-                      errorText: _endingPointController.text.isEmpty
-                          ? 'ending Point cannot be empty'
-                          : null,
+                    inputDecoration: const InputDecoration(
+                      hintText: "Ending Point",
                     ),
                     itmClick: (prediction) =>
                         onPlaceSelected(prediction, _endingPointController),
                     getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
                   ),
-                  //TextFormField to display and select the date of the trip
-                  TextFormField(
-                    controller: _dateController,
-                    decoration:
-                        InputDecoration(icon: Icon(Icons.calendar_today)),
-                    onTap: () => _selectDate(context),
-                  ),
-                  // TextFormField to display and select the time of the trip
-                  TextFormField(
-                    controller: _timeController,
-                    decoration: InputDecoration(icon: Icon(Icons.access_time)),
-                    onTap: () => _selectTime(context),
-                  ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   // ElevatedButton to submit trip details
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -202,25 +184,39 @@ class _FindTripState extends State<FindTrip> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AllTripsPassenger()));
+                                  builder: (context) =>
+                                      const AllTripsPassenger()));
                           // Submit trip details
                         },
-                        child:
-                            Text("All Trips", style: TextStyle(fontSize: 12)),
+                        child: const Text("All Trips",
+                            style: TextStyle(fontSize: 12)),
                       ),
-                      SizedBox(width: 30),
+                      const SizedBox(width: 30),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SearchBySpEpTrip(
-                                        startP: _startingPointController.text,
-                                        endP: _endingPointController.text,
-                                      )));
-                          // Submit trip details
+                          if (_startingPointController.text == '' &&
+                              _endingPointController.text == '') {
+                            Fluttertoast.showToast(
+                                msg: "Starting,Ending Points cannot be empty",
+                                toastLength: Toast.LENGTH_LONG,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 5,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          } else {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SearchBySpEpTrip(
+                                          startP: _startingPointController.text,
+                                          endP: _endingPointController.text,
+                                        )));
+                            // Submit trip details
+                          }
                         },
-                        child: Text("Search", style: TextStyle(fontSize: 12)),
+                        child: const Text("Search",
+                            style: TextStyle(fontSize: 12)),
                       ),
                     ],
                   ),
