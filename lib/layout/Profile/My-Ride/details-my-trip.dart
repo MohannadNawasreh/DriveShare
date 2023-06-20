@@ -475,7 +475,7 @@ class MyRideDetails extends StatelessWidget {
                                 ),
                                 Expanded(
                             child: largeButton(
-                              text: 'WhatsApp Driver',
+                              text: 'Drivers WhatsApp',
                               onPressed: () {
                                 String phoneNumber =
                                     trip.phonenumber.toString();

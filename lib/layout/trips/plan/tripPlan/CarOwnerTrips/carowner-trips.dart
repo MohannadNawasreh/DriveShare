@@ -311,7 +311,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                                 .fromARGB(
                                                             255, 117, 123, 125),
                                                         text:
-                                                            'All Requests of Trip',
+                                                            'All trip requests',
                                                         onPressed: () async {
                                                           print('object');
                                                           print(trips[index]
@@ -340,7 +340,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                 condition: state
                                                     is! TripPlanLoadingState,
                                                 builder: (context) => smallButton(
-                                                    text: 'All Accepts of Trip',
+                                                    text: "Accepted",
                                                     onPressed: () async {
                                                       print('object');
                                                       print(
@@ -560,11 +560,11 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                           : Colors.green,
                                                   text: trips[index].isactive ==
                                                           2
-                                                      ? 'Trip is Finish'
+                                                      ? 'Trip is Finished'
                                                       : trips[index].isactive ==
                                                               1
-                                                          ? 'Trip is Started , Click to End Trip'
-                                                          : 'Active Trip',
+                                                          ? 'Trip started , Click to End Trip'
+                                                          : 'The trip is active',
                                                   onPressed: () async {
                                                     if (trips[index].isactive ==
                                                         0) {
@@ -592,9 +592,11 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                               Colors.white,
                                                           fontSize: 16.0);
 
-                                                             Navigator.push(
-                                                                              context,
-                                                                              MaterialPageRoute(builder: (context) => const PlanTrip()));
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const PlanTrip()));
                                                     } else if (trips[index]
                                                             .isactive ==
                                                         1) {
@@ -605,7 +607,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                                       .tripid);
 
                                                       Fluttertoast.showToast(
-                                                          msg: "Trip is Finish",
+                                                          msg: "Trip is Finished",
                                                           toastLength:
                                                               Toast.LENGTH_LONG,
                                                           gravity: ToastGravity
@@ -620,13 +622,15 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                           textColor:
                                                               Colors.white,
                                                           fontSize: 16.0);
-                                                             Navigator.push(
-                                                                              context,
-                                                                              MaterialPageRoute(builder: (context) => const PlanTrip()));
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const PlanTrip()));
                                                     } else {
                                                       Fluttertoast.showToast(
                                                           msg:
-                                                              "Trip Already Finish",
+                                                              "Trip Already Finished",
                                                           toastLength:
                                                               Toast.LENGTH_LONG,
                                                           gravity: ToastGravity

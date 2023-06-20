@@ -155,8 +155,12 @@ class _FindTripState extends State<FindTrip> {
                   GooglePlaceAutoCompleteTextField(
                     textEditingController: _startingPointController,
                     googleAPIKey: "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                    inputDecoration:
-                        InputDecoration(hintText: "Starting Point"),
+                    inputDecoration: InputDecoration(
+                      hintText: "Starting Point",
+                      errorText: _startingPointController.text.isEmpty
+                          ? 'Starting Point cannot be empty'
+                          : null,
+                    ),
                     itmClick: (prediction) =>
                         onPlaceSelected(prediction, _startingPointController),
                     getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
@@ -165,7 +169,12 @@ class _FindTripState extends State<FindTrip> {
                   GooglePlaceAutoCompleteTextField(
                     textEditingController: _endingPointController,
                     googleAPIKey: "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                    inputDecoration: InputDecoration(hintText: "Ending Point"),
+                    inputDecoration: InputDecoration(
+                      hintText: "ending Point",
+                      errorText: _endingPointController.text.isEmpty
+                          ? 'ending Point cannot be empty'
+                          : null,
+                    ),
                     itmClick: (prediction) =>
                         onPlaceSelected(prediction, _endingPointController),
                     getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
@@ -196,12 +205,9 @@ class _FindTripState extends State<FindTrip> {
                                   builder: (context) => AllTripsPassenger()));
                           // Submit trip details
                         },
-                        child: Text("All Trips",
-                            style: TextStyle(fontSize: 12)),
+                        child:
+                            Text("All Trips", style: TextStyle(fontSize: 12)),
                       ),
-
-
-                      
                       SizedBox(width: 30),
                       ElevatedButton(
                         onPressed: () {
@@ -214,8 +220,7 @@ class _FindTripState extends State<FindTrip> {
                                       )));
                           // Submit trip details
                         },
-                        child:
-                            Text("Search", style: TextStyle(fontSize: 12)),
+                        child: Text("Search", style: TextStyle(fontSize: 12)),
                       ),
                     ],
                   ),

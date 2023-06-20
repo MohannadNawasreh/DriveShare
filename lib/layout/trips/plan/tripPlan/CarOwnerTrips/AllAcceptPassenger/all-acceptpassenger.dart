@@ -92,7 +92,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                         width: 80,
                                       ),
                                       Text(
-                                        'Accept #${index + 1}',
+                                        'passenger #${index + 1}',
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -235,7 +235,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                 ),
                                 Expanded(
                                   child: largeButton(
-                                    text: 'Open WhatsApp Chat',
+                                    text: 'WhatsApp',
                                     onPressed: () {
                                       String phoneNumber =
                                           requestsPassenger[index]

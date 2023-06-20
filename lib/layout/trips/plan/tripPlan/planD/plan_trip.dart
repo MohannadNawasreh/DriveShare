@@ -239,8 +239,12 @@ class _PlanTripState extends State<PlanTrip> {
                             textEditingController: _startingPointController,
                             googleAPIKey:
                                 "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                            inputDecoration: const InputDecoration(
-                                hintText: "Starting Point"),
+                            inputDecoration: InputDecoration(
+                              hintText: "Starting Point",
+                              errorText: _startingPointController.text.isEmpty
+                                  ? 'Starting Point cannot be empty'
+                                  : null,
+                            ),
                             itmClick: (prediction) => onPlaceSelected(
                                 prediction, _startingPointController),
                             getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
@@ -249,8 +253,12 @@ class _PlanTripState extends State<PlanTrip> {
                             textEditingController: _stopPointController1,
                             googleAPIKey:
                                 "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                            inputDecoration: const InputDecoration(
-                                hintText: "First checkpoint"),
+                            inputDecoration: InputDecoration(
+                              hintText: "first Point",
+                              errorText: _stopPointController1.text.isEmpty
+                                  ? 'first Point cannot be empty'
+                                  : null,
+                            ),
                             itmClick: (prediction) => onPlaceSelected(
                                 prediction, _stopPointController1),
                             getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
@@ -260,8 +268,12 @@ class _PlanTripState extends State<PlanTrip> {
                             textEditingController: _stopPointController2,
                             googleAPIKey:
                                 "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                            inputDecoration: const InputDecoration(
-                                hintText: "Second checkpoint"),
+                            inputDecoration: InputDecoration(
+                              hintText: "second Point",
+                              errorText: _stopPointController2.text.isEmpty
+                                  ? 'second Point cannot be empty'
+                                  : null,
+                            ),
                             itmClick: (prediction) => onPlaceSelected(
                                 prediction, _stopPointController2),
                             getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
@@ -270,8 +282,12 @@ class _PlanTripState extends State<PlanTrip> {
                             textEditingController: _stopPointController3,
                             googleAPIKey:
                                 "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                            inputDecoration: const InputDecoration(
-                                hintText: "Third checkpoint"),
+                            inputDecoration: InputDecoration(
+                              hintText: "third Point",
+                              errorText: _stopPointController3.text.isEmpty
+                                  ? 'third Point cannot be empty'
+                                  : null,
+                            ),
                             itmClick: (prediction) => onPlaceSelected(
                                 prediction, _stopPointController3),
                             getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
@@ -281,8 +297,12 @@ class _PlanTripState extends State<PlanTrip> {
                             textEditingController: _stopPointController4,
                             googleAPIKey:
                                 "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                            inputDecoration: const InputDecoration(
-                                hintText: "Fourth checkpoint"),
+                            inputDecoration: InputDecoration(
+                              hintText: "fourth Point",
+                              errorText: _stopPointController4.text.isEmpty
+                                  ? 'fourth Point cannot be empty'
+                                  : null,
+                            ),
                             itmClick: (prediction) => onPlaceSelected(
                                 prediction, _stopPointController4),
                             getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
@@ -292,8 +312,12 @@ class _PlanTripState extends State<PlanTrip> {
                             textEditingController: _endingPointController,
                             googleAPIKey:
                                 "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                            inputDecoration:
-                                const InputDecoration(hintText: "Ending Point"),
+                            inputDecoration: InputDecoration(
+                              hintText: "ending Point",
+                              errorText: _endingPointController.text.isEmpty
+                                  ? 'ending Point cannot be empty'
+                                  : null,
+                            ),
                             itmClick: (prediction) => onPlaceSelected(
                                 prediction, _endingPointController),
                             getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
@@ -460,7 +484,7 @@ class _PlanTripState extends State<PlanTrip> {
                               ),
                               Expanded(
                                 child: smallButton(
-                                  text: 'My TRips',
+                                  text: 'My Trips',
                                   onPressed: () {
                                     Navigator.push(
                                         context,

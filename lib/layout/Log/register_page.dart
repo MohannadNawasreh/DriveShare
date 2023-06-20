@@ -187,8 +187,6 @@ class _RegisterState extends State<Register> {
                   ),
                 ],
               ),
-             
-             
               SizedBox(
                 width: double.infinity,
                 child: TextFormField(
@@ -208,7 +206,11 @@ class _RegisterState extends State<Register> {
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "email cannot be empty";
+                        return "Email cannot be empty";
+                      } else if (!RegExp(
+                              r"^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})?$")
+                          .hasMatch(value)) {
+                        return "Please enter a valid email address";
                       }
                       return null;
                     }),
