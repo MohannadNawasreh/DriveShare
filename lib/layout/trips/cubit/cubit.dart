@@ -100,6 +100,8 @@ class TripsCubit extends Cubit<TripState> {
         })
         .then((value) => {
 //print(value.data.toString()),
+      print( CacheHelper.getData(key:'carownerid').toString()+'gggggggggg'),
+
               print(value.statusCode),
               emit(TripPlanSuccessState()),
             })
@@ -407,9 +409,9 @@ class TripsCubit extends Cubit<TripState> {
       final jsonData = json.decode(value.data) as Map<String, dynamic>;
       print(jsonData['carownerid'].toString() + 'rrrrrrrrrrrrrrr');
 
-/*if (jsonData['carownerid'] != null) {
+if (jsonData['carownerid'] != null) {
         CacheHelper.saveData(key: 'carownerid', value: jsonData['carownerid']);
-      }*/
+      }
       print(CacheHelper.getData(key: 'carownerid').toString() + '999999');
 
 /* if (jsonData['carownerid'] == 0) {

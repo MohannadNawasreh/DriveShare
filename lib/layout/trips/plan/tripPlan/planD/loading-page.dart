@@ -16,7 +16,7 @@ class LoadingPage extends StatelessWidget {
       create: (context) => TripsCubit()..CheckCarowner(),
       child: BlocConsumer<TripsCubit, TripState>(
         listener: (context, state) {
-        /*  if (CacheHelper.getData(key: 'carownerid') != null) {
+          /*  if (CacheHelper.getData(key: 'carownerid') != null) {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => PlanTrip()));
             if (CacheHelper.getData(key: 'carownerid')==null) {
@@ -27,7 +27,10 @@ class LoadingPage extends StatelessWidget {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => RegisterCar()));
           }*/
-           if (state is TripPlanSuccessState) {
+          if (state is TripPlanSuccessState) {
+            print(CacheHelper.getData(key: 'carownerid').toString() +
+                'gggggggggg');
+
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.pushReplacement(
                 context,

@@ -564,7 +564,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                       : trips[index].isactive ==
                                                               1
                                                           ? 'Trip started , Click to End Trip'
-                                                          : 'The trip is active',
+                                                          : 'Active Trip',
                                                   onPressed: () async {
                                                     if (trips[index].isactive ==
                                                         0) {

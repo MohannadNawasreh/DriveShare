@@ -502,11 +502,25 @@ class _PlanTripState extends State<PlanTrip> {
                                   child: smallButton(
                                     text: 'My Trips',
                                     onPressed: () {
-                                      Navigator.push(
+                                      print(
+                                          CacheHelper.getData(key: 'carownerid')
+                                                  .toString() +
+                                              'gggggggggg');
+
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback((_) {
+                                        Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const SearchCarOwnerTrips()));
+                                                  SearchCarOwnerTrips()),
+                                        );
+                                      });
+                                      /*  Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SearchCarOwnerTrips()));*/
                                     },
                                   ),
                                 ),
