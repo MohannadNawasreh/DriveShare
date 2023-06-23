@@ -17,18 +17,8 @@ class SearchEdit extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = TripsCubit.get(context);
-          return  const Scaffold(
-            /*      appBar: AppBar(
-              title: const Text('Test Trip'),
-            ),
-        */
+          return const Scaffold(
             body: EditProfile(),
-            /*    bottomNavigationBar: BottomNavigationBar(
-                currentIndex: cubit.currentIndex,
-                onTap: (value) {
-                  cubit.changeBottomNavBar(value);
-                },
-                items: cubit.bottomItems),*/
           );
         },
       ),

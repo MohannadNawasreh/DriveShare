@@ -1,4 +1,3 @@
-import 'package:drive_share/layout/home_page.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +84,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                     children: [
                                       const CircleAvatar(
                                         backgroundImage: AssetImage(
-                                            'images/Untitled-2.png'),
+                                            'images/user.png'),
                                         radius: 20,
                                       ),
                                       const SizedBox(
@@ -237,13 +236,7 @@ class _AllAcceptsTripsState extends State<AllAcceptsTrips> {
                                   child: largeButton(
                                     text: 'WhatsApp',
                                     onPressed: () {
-                                      String phoneNumber =
-                                          requestsPassenger[index]
-                                              .phonenumber
-                                              .toString();
-                                                  launch('https://wa.me/$phoneNumber');
-
-//openWhatsAppChat(phoneNumber);
+                                    launch('https://wa.me/${requestsPassenger[index].phonenumber.toString()}');
                                     },
                                   ),
                                 ),

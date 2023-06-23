@@ -6,7 +6,6 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../trip_details_page.dart';
 import '../../../../models/components/components.dart';
 
 class AllTripsCards extends StatefulWidget {
@@ -67,7 +66,7 @@ class _AllTripsCardsState extends State<AllTripsCards> {
                                     children: [
                                       const CircleAvatar(
                                         backgroundImage:
-                                            AssetImage('images/Untitled-2.png'),
+                                            AssetImage('images/user.png'),
                                         radius: 20,
                                       ),
                                       const SizedBox(

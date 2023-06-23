@@ -31,8 +31,8 @@ class _CarOwnerRatingState extends State<CarOwnerRating> {
               direction: Axis.horizontal,
               allowHalfRating: true,
               itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-              itemBuilder: (context, _) => Icon(
+              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) => const Icon(
               Icons.star,
               color: Colors.amber,
                 ),
@@ -42,15 +42,15 @@ class _CarOwnerRatingState extends State<CarOwnerRating> {
                },
               ),
             ),
-            SizedBox(height: 20,),
-            Container(
+            const SizedBox(height: 20,),
+            SizedBox(
             height: 100,
             child: Column(
-            children: [
-            SizedBox(
+            children: const [
+             SizedBox(
             height: 10,
             ),
-            Expanded(
+             Expanded(
               child: TextField(
               decoration: InputDecoration(labelText: 'Enter Message'),
               keyboardType: TextInputType.multiline,
@@ -61,7 +61,7 @@ class _CarOwnerRatingState extends State<CarOwnerRating> {
            ],
         ),
       ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             ElevatedButton(onPressed: (){}, child: const Text('Submit'))
           ],
         ),

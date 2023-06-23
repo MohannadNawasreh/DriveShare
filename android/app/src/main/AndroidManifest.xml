@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.drive_share">
+   <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="drive_share"
+        android:label="Drive Share"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:debuggable="false"

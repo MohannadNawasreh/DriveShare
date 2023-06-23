@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:drive_share/layout/trips/Find/SearchALLTrips/tripCard-Cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/models/Car.dart';
@@ -9,7 +8,6 @@ import 'package:drive_share/network/remote/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:drive_share/models/trip.dart';
-
 import '../../../models/RequestsPassenger.dart';
 import '../../../network/remote/dio_helper.dart';
 
@@ -26,20 +24,6 @@ class TripsCubit extends Cubit<TripState> {
     const BottomNavigationBarItem(
         icon: Icon(Icons.person_add_alt_rounded), label: 'Plan A Trip'),
   ];
-
-  /* void changeBottomNavBar(int index) {
-    currentIndex = index;
-    emit(PageBottomNav());
-  }*/
-
-  List<Widget> screens = [
-    AllTripsCards(),
-//TripCard(),
-  ];
-  List<dynamic> LiistTripsJson = [];
-  List<TripGp> ListtTrips = [];
-  List<dynamic> ListPassengerJson = [];
-  List<PassengerGp> ListPassenger = [];
 
 //--------------------------------------------------- Car Owner Controller------------------------------------------------------------------------------------
   List<TripGp> CarOwnerTrips = [];
@@ -62,8 +46,6 @@ class TripsCubit extends Cubit<TripState> {
               CarOwnerTrips =
                   CarOwnerTripsJson.map((data) => TripGp.fromJson(data))
                       .toList(),
-
-              print(CarOwnerTrips[0].descreption),
 
               emit(TripPlanSuccessState())
             })
@@ -100,7 +82,8 @@ class TripsCubit extends Cubit<TripState> {
         })
         .then((value) => {
 //print(value.data.toString()),
-      print( CacheHelper.getData(key:'carownerid').toString()+'gggggggggg'),
+              print(CacheHelper.getData(key: 'carownerid').toString() +
+                  'gggggggggg'),
 
               print(value.statusCode),
               emit(TripPlanSuccessState()),
@@ -409,7 +392,7 @@ class TripsCubit extends Cubit<TripState> {
       final jsonData = json.decode(value.data) as Map<String, dynamic>;
       print(jsonData['carownerid'].toString() + 'rrrrrrrrrrrrrrr');
 
-if (jsonData['carownerid'] != null) {
+      if (jsonData['carownerid'] != null) {
         CacheHelper.saveData(key: 'carownerid', value: jsonData['carownerid']);
       }
       print(CacheHelper.getData(key: 'carownerid').toString() + '999999');

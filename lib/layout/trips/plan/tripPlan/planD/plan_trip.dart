@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:drive_share/layout/RequestsPage.dart';
 import 'package:drive_share/layout/home_page.dart';
-import 'package:drive_share/http/trip_post.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
+import 'package:drive_share/layout/trips/plan/tripPlan/planD/loading-page.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,7 +61,7 @@ class _PlanTripState extends State<PlanTrip> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
-      firstDate: DateTime(2015, 8),
+      firstDate: DateTime(2023, 1),
       lastDate: DateTime(2101),
     );
     if (picked != null && picked != _selectedDate) {
@@ -180,13 +179,15 @@ class _PlanTripState extends State<PlanTrip> {
       child: BlocConsumer<TripsCubit, TripState>(listener: (context, state) {
         if (state is TripPlanSuccessState) {
           print('Trip created successfully');
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const LoadingPage()));
 
           Fluttertoast.showToast(
               msg: "تم انشاء الرحلة بنجاح ",
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 5,
-              backgroundColor: Color.fromARGB(255, 3, 184, 78),
+              backgroundColor: const Color.fromARGB(255, 3, 184, 78),
               textColor: Colors.white,
               fontSize: 16.0);
         } else if (state is TripPlanErrorState) {
@@ -196,7 +197,7 @@ class _PlanTripState extends State<PlanTrip> {
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 5,
-              backgroundColor: Color.fromARGB(255, 218, 10, 10),
+              backgroundColor: const Color.fromARGB(255, 218, 10, 10),
               textColor: Colors.white,
               fontSize: 16.0);
         }
@@ -243,7 +244,7 @@ class _PlanTripState extends State<PlanTrip> {
                               textEditingController: _startingPointController,
                               googleAPIKey:
                                   "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                              inputDecoration: InputDecoration(
+                              inputDecoration: const InputDecoration(
                                 hintText: "Starting Point",
                               ),
                               itmClick: (prediction) => onPlaceSelected(
@@ -255,7 +256,7 @@ class _PlanTripState extends State<PlanTrip> {
                               textEditingController: _stopPointController1,
                               googleAPIKey:
                                   "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                              inputDecoration: InputDecoration(
+                              inputDecoration: const InputDecoration(
                                 hintText: "first Point",
                               ),
                               itmClick: (prediction) => onPlaceSelected(
@@ -268,7 +269,7 @@ class _PlanTripState extends State<PlanTrip> {
                               textEditingController: _stopPointController2,
                               googleAPIKey:
                                   "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                              inputDecoration: InputDecoration(
+                              inputDecoration: const InputDecoration(
                                 hintText: "second Point",
                               ),
                               itmClick: (prediction) => onPlaceSelected(
@@ -280,7 +281,7 @@ class _PlanTripState extends State<PlanTrip> {
                               textEditingController: _stopPointController3,
                               googleAPIKey:
                                   "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                              inputDecoration: InputDecoration(
+                              inputDecoration: const InputDecoration(
                                 hintText: "third Point",
                               ),
                               itmClick: (prediction) => onPlaceSelected(
@@ -293,7 +294,7 @@ class _PlanTripState extends State<PlanTrip> {
                               textEditingController: _stopPointController4,
                               googleAPIKey:
                                   "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                              inputDecoration: InputDecoration(
+                              inputDecoration: const InputDecoration(
                                 hintText: "fourth Point",
                               ),
                               itmClick: (prediction) => onPlaceSelected(
@@ -306,7 +307,7 @@ class _PlanTripState extends State<PlanTrip> {
                               textEditingController: _endingPointController,
                               googleAPIKey:
                                   "AIzaSyBcWrxVAb6P_xbwlklNviUfBKTJskgnJCo",
-                              inputDecoration: InputDecoration(
+                              inputDecoration: const InputDecoration(
                                 hintText: "ending Point",
                               ),
                               itmClick: (prediction) => onPlaceSelected(
@@ -333,21 +334,18 @@ class _PlanTripState extends State<PlanTrip> {
                               onTap: () async {
                                 // Show date picker
                                 DateTime? selectedDate = await showDatePicker(
-                                  // ...
                                   context: context,
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime.now(),
                                   lastDate: DateTime.now()
                                       .add(const Duration(days: 365)),
                                 );
-
                                 if (selectedDate != null) {
                                   // Show time picker
                                   TimeOfDay? selectedTime =
                                       await showTimePicker(
                                     context: context,
                                     initialTime: TimeOfDay.now(),
-                                    // ...
                                   );
 
                                   if (selectedTime != null) {
@@ -359,7 +357,6 @@ class _PlanTripState extends State<PlanTrip> {
                                         selectedTime.hour,
                                         selectedTime.minute,
                                       );
-                                      // tripTimeController = selectedDateTime
                                     });
                                   }
                                 }
@@ -381,12 +378,19 @@ class _PlanTripState extends State<PlanTrip> {
                               ),
                             ),
                             // TextFormField for the description of the trip
+
                             TextFormField(
                               controller: _descriptionController,
                               decoration: const InputDecoration(
-                                  hintText: "Description"),
+                                hintText: "Description",
+                              ),
+                              keyboardType: TextInputType.multiline,
+                              maxLines:
+                                  null, // Set maxLines to null to allow multiple lines
+                              textInputAction: TextInputAction
+                                  .newline, // Show newline button on keyboard
                             ),
-                            // TextFormField for the seat number of the trip
+
                             TextFormField(
                               controller: _seatController,
                               decoration: const InputDecoration(
@@ -412,7 +416,6 @@ class _PlanTripState extends State<PlanTrip> {
                                 return null;
                               },
                             ),
-                            // ElevatedButton to submit trip details
                             Row(
                               children: [
                                 const SizedBox(
@@ -502,25 +505,15 @@ class _PlanTripState extends State<PlanTrip> {
                                   child: smallButton(
                                     text: 'My Trips',
                                     onPressed: () {
-                                      print(
-                                          CacheHelper.getData(key: 'carownerid')
-                                                  .toString() +
-                                              'gggggggggg');
-
                                       WidgetsBinding.instance
                                           .addPostFrameCallback((_) {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  SearchCarOwnerTrips()),
+                                                  const SearchCarOwnerTrips()),
                                         );
                                       });
-                                      /*  Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const SearchCarOwnerTrips()));*/
                                     },
                                   ),
                                 ),

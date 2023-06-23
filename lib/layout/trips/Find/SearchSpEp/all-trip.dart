@@ -6,7 +6,6 @@ import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AllBySpEpTrips extends StatefulWidget {
   const AllBySpEpTrips({super.key});
@@ -66,7 +65,7 @@ class _AllBySpEpTripsState extends State<AllBySpEpTrips> {
                                     children: [
                                       const CircleAvatar(
                                         backgroundImage:
-                                            AssetImage('images/Untitled-2.png'),
+                                            AssetImage('images/user.png'),
                                         radius: 20,
                                       ),
                                       const SizedBox(
@@ -270,16 +269,6 @@ class _AllBySpEpTripsState extends State<AllBySpEpTrips> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      /*  TextButton(
-                                                                onPressed: () {},
-                                                                child: Text('Join in Trip'),
-                                                                style: TextButton.styleFrom(
-                                    backgroundColor:
-                                        Color.fromARGB(255, 3, 184, 78),
-                                    foregroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30))),
-                                                              ),*/
                                       Expanded(
                                         child: largeButton(
                                           text: 'Join in Trip',
@@ -323,14 +312,5 @@ class _AllBySpEpTripsState extends State<AllBySpEpTrips> {
         );
       },
     );
-  }
-}
-
-void openWhatsAppChat(String phoneNumber) async {
-  final url = 'https://wa.me/$phoneNumber';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
   }
 }

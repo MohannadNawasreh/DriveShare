@@ -24,17 +24,7 @@ class SearchBySpEpTrip extends StatelessWidget {
         builder: (context, state) {
           var cubit = TripsCubit.get(context);
           return const Scaffold(
-            /*      appBar: AppBar(
-              title: const Text('Test Trip'),
-            ),
-        */
             body: AllBySpEpTrips(),
-            /*    bottomNavigationBar: BottomNavigationBar(
-                currentIndex: cubit.currentIndex,
-                onTap: (value) {
-                  cubit.changeBottomNavBar(value);
-                },
-                items: cubit.bottomItems),*/
           );
         },
       ),

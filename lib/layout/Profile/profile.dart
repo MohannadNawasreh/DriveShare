@@ -44,13 +44,13 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-    _loadImageFromPreferences();
+    //_loadImageFromPreferences();
   }
 
   Future<void> _loadImageFromPreferences() async {
     // _prefs = await SharedPreferences.getInstance();
     // final imagePath = _prefs.getString(_imagePathKey);
-    final imagePath = CacheHelper.getData(key: 'profile_image_path');
+    const imagePath = 'images/UserD.png';
 
     if (imagePath != null) {
       setState(() {
@@ -122,9 +122,9 @@ class _ProfileState extends State<Profile> {
                                       File(_image!.path),
                                       fit: BoxFit.cover,
                                     )
-                                  : Image.asset(
-                                      CacheHelper.getData(
-                                          key: 'profile_image_path')??'images/Untitled-2.png',
+                                  : Image.asset('images/user.png',
+                                     /* CacheHelper.getData(
+                                          key: 'profile_image_path')??'images/Untitled-2.png',*/
                                       fit: BoxFit.cover,
                                     ),
                             ),
@@ -169,7 +169,7 @@ class _ProfileState extends State<Profile> {
                       ProfileMenuWidget(
                         passenger: userInfo,
                         icon: Icons.person,
-                        text: "${userInfo.fname}",
+                        text: "Edit Profile",
                         textColor: Colors.black,
                         onPressed: () {
                           Navigator.push(

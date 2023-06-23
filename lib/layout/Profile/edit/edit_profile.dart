@@ -1,15 +1,10 @@
 import 'dart:io';
-
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:drive_share/layout/Profile/profile.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/layout/Profile/search.dart';
 import 'package:drive_share/models/components/components.dart';
-import 'package:drive_share/network/remote/cache_helper.dart';
-import 'package:drive_share/teest.dart';
 import 'package:flutter/material.dart';
-import 'package:drive_share/models/Passenger.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -34,15 +29,9 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future<void> _loadImageFromPreferences() async {
-    // _prefs = await SharedPreferences.getInstance();
-    // final imagePath = _prefs.getString(_imagePathKey);
-    final imagePath = CacheHelper.getData(key: 'profile_image_path');
+    const imagePath = 'images/user.png';
 
-    if (imagePath != null) {
-      setState(() {
-        _image = File(imagePath);
-      });
-    }
+  
   }
   @override
   Widget build(BuildContext context) {
@@ -64,7 +53,6 @@ class _EditProfileState extends State<EditProfile> {
       emailController.text = model.username.toString();
       lastNameController.text = model.lname.toString();
 
-      print(model.fname.toString() + 'ffffffffffffff');
 
       return ConditionalBuilder(
           condition: state is! UserInfoLoadingState,
@@ -92,9 +80,9 @@ class _EditProfileState extends State<EditProfile> {
                                       File(_image!.path),
                                       fit: BoxFit.cover,
                                     )
-                                  : Image.asset(
-                                      CacheHelper.getData(
-                                          key: 'profile_image_path')??'images/defaultuser.png',
+                                  : Image.asset('images/user.png',
+                                     /* CacheHelper.getData(
+                                          key: 'profile_image_path')??'images/defaultuser.png',*/
                                       fit: BoxFit.cover,
                                     ),
                             ),

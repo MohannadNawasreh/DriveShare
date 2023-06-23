@@ -1,17 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:drive_share/models/Passenger.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:drive_share/layout/Profile/car/car_details.dart';
+import 'package:drive_share/layout/home_page.dart';
 
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
-import 'package:drive_share/layout/trips/plan/tripPlan/planD/plan_trip.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../../../../models/Car.dart';
-import '../../../../home_page.dart';
 
 class RegisterCar extends StatefulWidget {
   const RegisterCar({super.key});
@@ -32,12 +33,27 @@ class _RegisterCarState extends State<RegisterCar> {
   bool _isImageSelected = false;
   bool isRegister = false;
 
+  Future<void> _uploadImage() async {
+    if (_selectedImage != null) {
+      try {
+        final passenger = await uploadFile(File(_selectedImage!.path));
+        // Handle the response from the server or perform any necessary actions
+        if (passenger != null) {
+          print('object');
+        } else {
+          print('lllllllllll');
+        }
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+  }
+
   void _selectImage() async {
-    if (_isImageSelected == true) {
+    if (_isImageSelected) {
       setState(() {
         _selectedImage = null;
         _isImageSelected = false;
-        newCar.ImageLicense = null;
         isRegister = false;
       });
     } else {
@@ -46,13 +62,12 @@ class _RegisterCarState extends State<RegisterCar> {
       setState(() {
         _selectedImage = image;
         _isImageSelected = true;
-        newCar.ImageLicense = _selectedImage;
         isRegister = true;
       });
+
+      await _uploadImage(); // Call the uploadImage method after selecting the image
     }
   }
-
-  final Car newCar = Car(CarType: '', CarYear: 0, CarModel: '', CarNumber: '');
 
   @override
   Widget build(BuildContext context) {
@@ -60,16 +75,16 @@ class _RegisterCarState extends State<RegisterCar> {
       create: (BuildContext context) => TripsCubit(),
       child: BlocConsumer<TripsCubit, TripState>(listener: (context, state) {
         if (state is TripPlanSuccessState) {
-           Fluttertoast.showToast(
-                msg: " تم تسجيل المركبة بنجاح ",
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 5,
-                backgroundColor: Color.fromARGB(255, 3, 184, 78),
-                textColor: Colors.white,
-                fontSize: 16.0);
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const HomePage()));
+          Fluttertoast.showToast(
+              msg: " تم تسجيل المركبة بنجاح ",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 5,
+              backgroundColor: Color.fromARGB(255, 3, 184, 78),
+              textColor: Colors.white,
+              fontSize: 16.0);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const HomePage()));
         }
       }, builder: (context, state) {
         return Scaffold(
@@ -128,9 +143,6 @@ class _RegisterCarState extends State<RegisterCar> {
                           }
                           return null;
                         },
-                        onSaved: (value) {
-                          carTypeController = value as TextEditingController;
-                        },
                       ),
                     ),
                     const SizedBox(
@@ -158,9 +170,6 @@ class _RegisterCarState extends State<RegisterCar> {
                             return 'Please enter Car Year';
                           }
                           return null;
-                        },
-                        onSaved: (value) {
-                          newCar.CarYear = int.parse(value.toString());
                         },
                       ),
                     ),
@@ -190,9 +199,6 @@ class _RegisterCarState extends State<RegisterCar> {
                           }
                           return null;
                         },
-                        onSaved: (value) {
-                          newCar.CarModel = value;
-                        },
                       ),
                     ),
                     const SizedBox(
@@ -221,9 +227,6 @@ class _RegisterCarState extends State<RegisterCar> {
                           }
                           return null;
                         },
-                        onSaved: (value) {
-                          newCar.CarNumber = value;
-                        },
                       ),
                     ),
                     const SizedBox(
@@ -246,7 +249,10 @@ class _RegisterCarState extends State<RegisterCar> {
                       builder: (context) => largeButton(
                           text: 'Register Car',
                           onPressed: () async {
-                            print('object');
+                      /*      final passenger =
+                                await uploadFile(File(_selectedImage!.path));
+                            print('pppppppppppppp');*/
+
 
                             if (formKey.currentState!.validate()) {
                               TripsCubit.get(context).CarRegister(
@@ -260,29 +266,6 @@ class _RegisterCarState extends State<RegisterCar> {
                       fallback: (context) =>
                           const Center(child: CircularProgressIndicator()),
                     ),
-                    /*    largeButton(
-                          text: 'Register Car',
-                          onPressed: () {
-                            if (formKey.currentState!.validate() &&
-                                _selectedImage != null) {
-                              formKey.currentState!.save();
-        
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CarDetails(
-                                            car: newCar,
-                                          )));
-                              //  createTrip();
-                              print(newCar.CarModel);
-                              print(newCar.CarNumber);
-        
-                              print(newCar.CarType);
-        
-                              print(newCar.CarYear);
-                            }
-                          },
-                        ),*/
                   ],
                 ),
               ),
@@ -292,4 +275,55 @@ class _RegisterCarState extends State<RegisterCar> {
       }),
     );
   }
+}
+
+class PassengerDTO {
+  final String imagefile;
+
+  PassengerDTO({required this.imagefile});
+
+  factory PassengerDTO.fromJson(Map<String, dynamic> json) {
+    return PassengerDTO(
+      imagefile: json['imagefile'],
+    );
+  }
+}
+
+Future<PassengerGp?> uploadFile(File file) async {
+
+  var headers = {
+  'Cookie': 'ARRAffinity=db7caaae5eca3babc5f5f4457fe724cbbbf257aeb4789bd12dc6351f9c66004b; ARRAffinitySameSite=db7caaae5eca3babc5f5f4457fe724cbbbf257aeb4789bd12dc6351f9c66004b'
+};
+var request = http.MultipartRequest('POST', Uri.parse('https://driveshare.azurewebsites.net/api/User/uploadfile'));
+  request.files.add(await http.MultipartFile.fromPath('file', file.path));
+request.headers.addAll(headers);
+
+http.StreamedResponse response = await request.send();
+  print(response.statusCode);
+
+if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+}
+else {
+  print(response.reasonPhrase);
+    print(response.statusCode);
+
+}
+
+  /*var request = http.MultipartRequest('POST',
+      Uri.parse('https://driveshare.azurewebsites.net/api/User/uploadfile'));
+  request.files.add(await http.MultipartFile.fromPath('file', file.path));
+
+  var response = await request.send();
+  print(response.statusCode);
+  if (response.statusCode == 200) {
+    var responseString = await response.stream.bytesToString();
+    var passenger = PassengerGp.fromJson(json.decode(responseString));
+    print('lllllllllllllllllllkkkkkkkkkkkkkkkkkkkkkkk');
+    return passenger;
+  } else {
+    print('lllllllllllllllllllkkkkkkkkkkkkkkkkkkkkkkk');
+
+    return null;
+  }*/
 }

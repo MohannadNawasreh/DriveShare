@@ -1,11 +1,9 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:drive_share/layout/home_page.dart';
-import 'package:drive_share/http/trip_post.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:drive_share/models/myTrips.dart';
-import 'package:drive_share/models/trip.dart';
 import 'package:drive_share/network/remote/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

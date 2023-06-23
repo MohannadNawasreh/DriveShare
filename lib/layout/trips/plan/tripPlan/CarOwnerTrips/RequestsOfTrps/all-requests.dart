@@ -1,6 +1,7 @@
 import 'package:drive_share/layout/home_page.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
+import 'package:drive_share/layout/trips/plan/tripPlan/CarOwnerTrips/search-carowner-trip.dart';
 import 'package:drive_share/layout/trips/plan/tripPlan/planD/plan_trip.dart';
 import 'package:drive_share/network/remote/cache_helper.dart';
 import 'package:flutter/material.dart';
@@ -23,14 +24,22 @@ class _AllRequestsTripsState extends State<AllRequestsTrips> {
     return BlocConsumer<TripsCubit, TripState>(
       listener: (context, state) {
         if (state is CarOwnerTripsSuccessState) {
+            Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const SearchCarOwnerTrips()),
+                                                          );
           Fluttertoast.showToast(
-              msg: "تم قبولك بالرحلة ",
+              msg: "تم قبول الطلب  ",
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 5,
               backgroundColor: Color.fromARGB(255, 3, 184, 78),
               textColor: Colors.white,
               fontSize: 16.0);
+
         } else if(state is CarOwnerTripsErrorState) {
           Fluttertoast.showToast(
               msg: "حدث خطأ ما , حاول مره اخرى ",
@@ -88,7 +97,7 @@ class _AllRequestsTripsState extends State<AllRequestsTrips> {
                                     children: [
                                       const CircleAvatar(
                                         backgroundImage:
-                                            AssetImage('images/Untitled-2.png'),
+                                            AssetImage('images/user.png'),
                                         radius: 20,
                                       ),
                                       const SizedBox(

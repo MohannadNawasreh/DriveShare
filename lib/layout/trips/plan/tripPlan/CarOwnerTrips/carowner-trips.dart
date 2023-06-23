@@ -7,7 +7,6 @@ import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/layout/trips/plan/tripPlan/CarOwnerTrips/AllAcceptPassenger/search-accept.dart';
 import 'package:drive_share/layout/trips/plan/tripPlan/CarOwnerTrips/UpdateTrip/update-trip.dart';
 import 'package:drive_share/layout/trips/plan/tripPlan/planD/plan_trip.dart';
-import 'package:drive_share/teest.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,8 +27,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
   Widget build(BuildContext context) {
     return BlocConsumer<TripsCubit, TripState>(
       listener: (context, state) {
-        if (TripsCubit.get(context).CarOwnerTrips.isEmpty &&
-            state is TripPlanErrorState) {
+        if (TripsCubit.get(context).CarOwnerTrips.isEmpty) {
           Fluttertoast.showToast(
               msg: " لا يوجد اي رحلة لك ",
               toastLength: Toast.LENGTH_LONG,
@@ -44,21 +42,6 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
         var trips = TripsCubit.get(context).CarOwnerTrips;
         var user = TripsCubit.get(context).UserInfo;
 
-        /*     if (trips.isEmpty) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Car Owner Trip'),
-            ),
-            body: Center(
-              child: largeButton(
-                  text: 'Go To Plan Tips',
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => PlanTrip()));
-                  }),
-            ),
-          );
-        }*/
         return Scaffold(
           appBar: AppBar(
             title: const Text('Car Owner Trip'),
@@ -91,7 +74,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                     children: [
                                       const CircleAvatar(
                                         backgroundImage:
-                                            AssetImage('images/Untitled-2.png'),
+                                            AssetImage('images/user.png'),
                                         radius: 20,
                                       ),
                                       const SizedBox(
@@ -313,19 +296,40 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                         text:
                                                             'All trip requests',
                                                         onPressed: () async {
-                                                          print('object');
-                                                          print(trips[index]
-                                                              .tripid);
+                                                          if (trips[index]
+                                                                  .isactive ==
+                                                              2) {
+                                                            Fluttertoast.showToast(
+                                                                msg:
+                                                                    "Trip Already Finished",
+                                                                toastLength: Toast
+                                                                    .LENGTH_LONG,
+                                                                gravity:
+                                                                    ToastGravity
+                                                                        .BOTTOM,
+                                                                timeInSecForIosWeb:
+                                                                    5,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .orange,
+                                                                textColor:
+                                                                    Colors
+                                                                        .white,
+                                                                fontSize: 16.0);
+                                                          } else {
+                                                            print('object');
+                                                            print(trips[index]
+                                                                .tripid);
 
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          SearchRequests(
-                                                                            tripId:
-                                                                                trips[index].tripid,
-                                                                          )));
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            SearchRequests(
+                                                                              tripId: trips[index].tripid,
+                                                                            )));
+                                                          }
                                                         }),
                                                 fallback: (context) => const Center(
                                                     child:
@@ -339,23 +343,24 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                               child: ConditionalBuilder(
                                                 condition: state
                                                     is! TripPlanLoadingState,
-                                                builder: (context) => smallButton(
-                                                    text: "Accepted",
-                                                    onPressed: () async {
-                                                      print('object');
-                                                      print(
-                                                          trips[index].tripid);
+                                                builder: (context) =>
+                                                    smallButton(
+                                                        text: "Accepted",
+                                                        onPressed: () async {
+                                                          print('object');
+                                                          print(trips[index]
+                                                              .tripid);
 
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  SearchAccepts(
-                                                                    tripId: trips[
-                                                                            index]
-                                                                        .tripid,
-                                                                  )));
-                                                    }),
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          SearchAccepts(
+                                                                            tripId:
+                                                                                trips[index].tripid,
+                                                                          )));
+                                                        }),
                                                 fallback: (context) => const Center(
                                                     child:
                                                         CircularProgressIndicator()),
@@ -392,97 +397,117 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                         back: Colors.red,
                                                         text: 'Delete Trip',
                                                         onPressed: () async {
-                                                          showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                (BuildContext
-                                                                    context) {
-                                                              return AlertDialog(
-                                                                title: Text(
-                                                                    "Deleted Trip",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .red)),
-                                                                content: Text(
-                                                                    "Are you sure to delete?"),
-                                                                actions: [
-                                                                  smallButton(
-                                                                      text:
-                                                                          "Yes",
-                                                                      onPressed:
-                                                                          () async {
-                                                                        var headers =
-                                                                            {
-                                                                          'Content-Type':
-                                                                              'application/json',
-                                                                          'Cookie':
-                                                                              'ARRAffinity=db7caaae5eca3babc5f5f4457fe724cbbbf257aeb4789bd12dc6351f9c66004b; ARRAffinitySameSite=db7caaae5eca3babc5f5f4457fe724cbbbf257aeb4789bd12dc6351f9c66004b'
-                                                                        };
-                                                                        var request = http.Request(
-                                                                            'DELETE',
-                                                                            Uri.parse('https://driveshare.azurewebsites.net/api/CarOwner/deletetrip'));
-                                                                        request.body =
-                                                                            json.encode({
-                                                                          "TID":
-                                                                              trips[index].tripid
-                                                                        });
-                                                                        request
-                                                                            .headers
-                                                                            .addAll(headers);
+                                                          if (trips[index]
+                                                                  .isactive ==
+                                                              2) {
+                                                            Fluttertoast.showToast(
+                                                                msg:
+                                                                    "Trip Already Finished",
+                                                                toastLength: Toast
+                                                                    .LENGTH_LONG,
+                                                                gravity:
+                                                                    ToastGravity
+                                                                        .BOTTOM,
+                                                                timeInSecForIosWeb:
+                                                                    5,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .orange,
+                                                                textColor:
+                                                                    Colors
+                                                                        .white,
+                                                                fontSize: 16.0);
+                                                          } else {
+                                                            showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return AlertDialog(
+                                                                  title: const Text(
+                                                                      "Deleted Trip",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.red)),
+                                                                  content:
+                                                                      const Text(
+                                                                          "Are you sure to delete?"),
+                                                                  actions: [
+                                                                    smallButton(
+                                                                        text:
+                                                                            "Yes",
+                                                                        onPressed:
+                                                                            () async {
+                                                                          var headers =
+                                                                              {
+                                                                            'Content-Type':
+                                                                                'application/json',
+                                                                            'Cookie':
+                                                                                'ARRAffinity=db7caaae5eca3babc5f5f4457fe724cbbbf257aeb4789bd12dc6351f9c66004b; ARRAffinitySameSite=db7caaae5eca3babc5f5f4457fe724cbbbf257aeb4789bd12dc6351f9c66004b'
+                                                                          };
+                                                                          var request = http.Request(
+                                                                              'DELETE',
+                                                                              Uri.parse('https://driveshare.azurewebsites.net/api/CarOwner/deletetrip'));
+                                                                          request.body =
+                                                                              json.encode({
+                                                                            "tripid":
+                                                                                trips[index].tripid
+                                                                          });
+                                                                          request
+                                                                              .headers
+                                                                              .addAll(headers);
 
-                                                                        http.StreamedResponse
-                                                                            response =
-                                                                            await request.send();
+                                                                          http.StreamedResponse
+                                                                              response =
+                                                                              await request.send();
 
-                                                                        if (response.statusCode ==
-                                                                            200) {
-                                                                          print(
-                                                                              response.statusCode);
+                                                                          if (response.statusCode ==
+                                                                              200) {
+                                                                            print(response.statusCode);
 
-                                                                          Fluttertoast.showToast(
-                                                                              msg: "تم حذف الرحبة بنجاح ",
-                                                                              toastLength: Toast.LENGTH_LONG,
-                                                                              gravity: ToastGravity.BOTTOM,
-                                                                              timeInSecForIosWeb: 5,
-                                                                              backgroundColor: Color.fromARGB(255, 3, 184, 78),
-                                                                              textColor: Colors.white,
-                                                                              fontSize: 16.0);
+                                                                            Fluttertoast.showToast(
+                                                                                msg: "تم حذف الرحبة بنجاح ",
+                                                                                toastLength: Toast.LENGTH_LONG,
+                                                                                gravity: ToastGravity.BOTTOM,
+                                                                                timeInSecForIosWeb: 5,
+                                                                                backgroundColor: const Color.fromARGB(255, 3, 184, 78),
+                                                                                textColor: Colors.white,
+                                                                                fontSize: 16.0);
 
-                                                                          Navigator.push(
-                                                                              context,
-                                                                              MaterialPageRoute(builder: (context) => const SearchCarOwnerTrips()));
-                                                                        } else {
-                                                                          print(
-                                                                              response.statusCode);
+                                                                            Navigator.push(context,
+                                                                                MaterialPageRoute(builder: (context) => const SearchCarOwnerTrips()));
+                                                                          } else {
+                                                                            print(response.statusCode);
 
-                                                                          Fluttertoast.showToast(
-                                                                              msg: "اعد المحاوله مره اخرى ",
-                                                                              toastLength: Toast.LENGTH_LONG,
-                                                                              gravity: ToastGravity.BOTTOM,
-                                                                              timeInSecForIosWeb: 5,
-                                                                              backgroundColor: Colors.red,
-                                                                              textColor: Colors.white,
-                                                                              fontSize: 16.0);
-                                                                        }
+                                                                            Fluttertoast.showToast(
+                                                                                msg: "اعد المحاوله مره اخرى ",
+                                                                                toastLength: Toast.LENGTH_LONG,
+                                                                                gravity: ToastGravity.BOTTOM,
+                                                                                timeInSecForIosWeb: 5,
+                                                                                backgroundColor: Colors.red,
+                                                                                textColor: Colors.white,
+                                                                                fontSize: 16.0);
+                                                                          }
 
-                                                                        /*     Navigator.push(
+                                                                          /*     Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     const LoginLayout()));*/
-                                                                      }),
-                                                                  smallButton(
-                                                                      text:
-                                                                          "No",
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.of(context)
-                                                                            .pop();
-                                                                      }),
-                                                                ],
-                                                              );
-                                                            },
-                                                          );
+                                                                        }),
+                                                                    smallButton(
+                                                                        text:
+                                                                            "No",
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.of(context)
+                                                                              .pop();
+                                                                        }),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            );
+                                                          }
                                                         }),
                                                 fallback: (context) => const Center(
                                                     child:
@@ -501,14 +526,36 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                         back: Colors.orange,
                                                         text: 'Edit Trip',
                                                         onPressed: () async {
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (context) =>
-                                                                    UpdateTrip(
-                                                                        trip: trips[
-                                                                            index])),
-                                                          );
+                                                          if (trips[index]
+                                                                  .isactive ==
+                                                              2) {
+                                                            Fluttertoast.showToast(
+                                                                msg:
+                                                                    "Trip Already Finished",
+                                                                toastLength: Toast
+                                                                    .LENGTH_LONG,
+                                                                gravity:
+                                                                    ToastGravity
+                                                                        .BOTTOM,
+                                                                timeInSecForIosWeb:
+                                                                    5,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .orange,
+                                                                textColor:
+                                                                    Colors
+                                                                        .white,
+                                                                fontSize: 16.0);
+                                                          } else {
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      UpdateTrip(
+                                                                          trip:
+                                                                              trips[index])),
+                                                            );
+                                                          }
                                                         }),
                                                 fallback: (context) => const Center(
                                                     child:
@@ -520,17 +567,6 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                             ),
                                           ],
                                         ),
-
-                                        /*     child: largeButton(
-                                            text: 'Requests of Trip',
-                                            onPressed: () {
-                                            /*  Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => RequestsPage(),
-                                              );*/
-                                            },
-                                          ),*/
                                       )
                                     ],
                                   ),
@@ -563,7 +599,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                       ? 'Trip is Finished'
                                                       : trips[index].isactive ==
                                                               1
-                                                          ? 'Trip started , Click to End Trip'
+                                                          ? 'Trip started, Click to End Trip'
                                                           : 'Active Trip',
                                                   onPressed: () async {
                                                     if (trips[index].isactive ==
@@ -576,27 +612,29 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                                   trips[index]
                                                                       .tripid);
                                                       Fluttertoast.showToast(
-                                                          msg: "Trip is Active",
-                                                          toastLength:
-                                                              Toast.LENGTH_LONG,
-                                                          gravity: ToastGravity
-                                                              .BOTTOM,
-                                                          timeInSecForIosWeb: 5,
-                                                          backgroundColor:
-                                                              Color.fromARGB(
-                                                                  255,
-                                                                  3,
-                                                                  141,
-                                                                  54),
-                                                          textColor:
-                                                              Colors.white,
-                                                          fontSize: 16.0);
+                                                        msg: 'Trip is Active',
+                                                        toastLength:
+                                                            Toast.LENGTH_LONG,
+                                                        gravity:
+                                                            ToastGravity.BOTTOM,
+                                                        timeInSecForIosWeb: 5,
+                                                        backgroundColor:
+                                                            const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                3,
+                                                                141,
+                                                                54),
+                                                        textColor: Colors.white,
+                                                        fontSize: 16.0,
+                                                      );
 
                                                       Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const PlanTrip()));
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const PlanTrip()),
+                                                      );
                                                     } else if (trips[index]
                                                             .isactive ==
                                                         1) {
@@ -605,42 +643,44 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                               tripid:
                                                                   trips[index]
                                                                       .tripid);
-
                                                       Fluttertoast.showToast(
-                                                          msg: "Trip is Finished",
-                                                          toastLength:
-                                                              Toast.LENGTH_LONG,
-                                                          gravity: ToastGravity
-                                                              .BOTTOM,
-                                                          timeInSecForIosWeb: 5,
-                                                          backgroundColor:
-                                                              Color.fromARGB(
-                                                                  255,
-                                                                  3,
-                                                                  141,
-                                                                  54),
-                                                          textColor:
-                                                              Colors.white,
-                                                          fontSize: 16.0);
+                                                        msg: 'Trip is Finished',
+                                                        toastLength:
+                                                            Toast.LENGTH_LONG,
+                                                        gravity:
+                                                            ToastGravity.BOTTOM,
+                                                        timeInSecForIosWeb: 5,
+                                                        backgroundColor:
+                                                            const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                3,
+                                                                141,
+                                                                54),
+                                                        textColor: Colors.white,
+                                                        fontSize: 16.0,
+                                                      );
+
                                                       Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const PlanTrip()));
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const PlanTrip()),
+                                                      );
                                                     } else {
                                                       Fluttertoast.showToast(
-                                                          msg:
-                                                              "Trip Already Finished",
-                                                          toastLength:
-                                                              Toast.LENGTH_LONG,
-                                                          gravity: ToastGravity
-                                                              .BOTTOM,
-                                                          timeInSecForIosWeb: 5,
-                                                          backgroundColor:
-                                                              Colors.orange,
-                                                          textColor:
-                                                              Colors.white,
-                                                          fontSize: 16.0);
+                                                        msg:
+                                                            'Trip Already Finished',
+                                                        toastLength:
+                                                            Toast.LENGTH_LONG,
+                                                        gravity:
+                                                            ToastGravity.BOTTOM,
+                                                        timeInSecForIosWeb: 5,
+                                                        backgroundColor:
+                                                            Colors.orange,
+                                                        textColor: Colors.white,
+                                                        fontSize: 16.0,
+                                                      );
                                                     }
                                                   },
                                                 ),
@@ -649,59 +689,12 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                         CircularProgressIndicator()),
                                               ),
                                             ),
-                                            /*  const SizedBox(
-                                              width: 20,
-                                            ),
-                                            Expanded(
-                                              child: ConditionalBuilder(
-                                                condition: state
-                                                    is! TripPlanLoadingState,
-                                                builder: (context) =>
-                                                    smallButton(
-                                                        back: const Color
-                                                                .fromARGB(
-                                                            255, 117, 123, 125),
-                                                        text: 'Finish Trip',
-                                                        onPressed: () async {
-                                                          TripsCubit.get(
-                                                                  context)
-                                                              .FinishTrip(
-                                                                  tripid: trips[
-                                                                          index]
-                                                                      .tripid);
-
-                                                          Fluttertoast.showToast(
-                                                              msg:
-                                                                  "Trip is Finish",
-                                                              toastLength: Toast
-                                                                  .LENGTH_LONG,
-                                                              gravity:
-                                                                  ToastGravity
-                                                                      .BOTTOM,
-                                                              timeInSecForIosWeb:
-                                                                  5,
-                                                              backgroundColor:
-                                                                  Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          3,
-                                                                          141,
-                                                                          54),
-                                                              textColor:
-                                                                  Colors.white,
-                                                              fontSize: 16.0);
-                                                        }),
-                                                fallback: (context) => const Center(
-                                                    child:
-                                                        CircularProgressIndicator()),
-                                              ),
-                                            ),*/
                                             const SizedBox(
                                               width: 10,
                                             ),
                                           ],
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),

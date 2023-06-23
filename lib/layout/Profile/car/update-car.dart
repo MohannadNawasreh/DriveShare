@@ -1,18 +1,12 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:drive_share/layout/Profile/car/car_details.dart';
 import 'package:drive_share/layout/Profile/car/search-car.dart';
-import 'package:drive_share/layout/home_page.dart';
-
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
-import 'package:drive_share/layout/trips/plan/tripPlan/planD/plan_trip.dart';
-import 'package:drive_share/models/Car.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-
 
 class UpdateCar extends StatefulWidget {
   const UpdateCar({super.key});
@@ -38,7 +32,6 @@ class _UpdateCarState extends State<UpdateCar> {
       setState(() {
         _selectedImage = null;
         _isImageSelected = false;
-        newCar.ImageLicense = null;
         isRegister = false;
       });
     } else {
@@ -47,13 +40,11 @@ class _UpdateCarState extends State<UpdateCar> {
       setState(() {
         _selectedImage = image;
         _isImageSelected = true;
-        newCar.ImageLicense = _selectedImage;
         isRegister = true;
       });
     }
   }
 
-  final Car newCar = Car(CarType: '', CarYear: 0, CarModel: '', CarNumber: '');
 
   @override
   Widget build(BuildContext context) {
@@ -61,29 +52,20 @@ class _UpdateCarState extends State<UpdateCar> {
       create: (BuildContext context) => TripsCubit(),
       child: BlocConsumer<TripsCubit, TripState>(listener: (context, state) {
         if (state is TripPlanSuccessState) {
-           Fluttertoast.showToast(
-                msg: " تم تعديل المركبة بنجاح ",
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 5,
-                backgroundColor: Color.fromARGB(255, 3, 184, 78),
-                textColor: Colors.white,
-                fontSize: 16.0);
+          Fluttertoast.showToast(
+              msg: " تم تعديل المركبة بنجاح ",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 5,
+              backgroundColor: Color.fromARGB(255, 3, 184, 78),
+              textColor: Colors.white,
+              fontSize: 16.0);
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) =>  SearchCar()));
+              context, MaterialPageRoute(builder: (context) => SearchCar()));
         }
       }, builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-         /*   leading: IconButton(
-              icon: const Icon(Icons.arrow_back_outlined),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  SearchCar()),
-                );
-              },
-            ),*/
             backgroundColor: const Color.fromARGB(255, 3, 184, 78),
             title: const Text("Update Car"),
           ),
@@ -161,7 +143,6 @@ class _UpdateCarState extends State<UpdateCar> {
                           return null;
                         },
                         onSaved: (value) {
-                          newCar.CarYear = int.parse(value.toString());
                         },
                       ),
                     ),
@@ -192,7 +173,6 @@ class _UpdateCarState extends State<UpdateCar> {
                           return null;
                         },
                         onSaved: (value) {
-                          newCar.CarModel = value;
                         },
                       ),
                     ),
@@ -223,7 +203,6 @@ class _UpdateCarState extends State<UpdateCar> {
                           return null;
                         },
                         onSaved: (value) {
-                          newCar.CarNumber = value;
                         },
                       ),
                     ),
@@ -261,29 +240,6 @@ class _UpdateCarState extends State<UpdateCar> {
                       fallback: (context) =>
                           const Center(child: CircularProgressIndicator()),
                     ),
-                    /*    largeButton(
-                          text: 'Register Car',
-                          onPressed: () {
-                            if (formKey.currentState!.validate() &&
-                                _selectedImage != null) {
-                              formKey.currentState!.save();
-        
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CarDetails(
-                                            car: newCar,
-                                          )));
-                              //  createTrip();
-                              print(newCar.CarModel);
-                              print(newCar.CarNumber);
-        
-                              print(newCar.CarType);
-        
-                              print(newCar.CarYear);
-                            }
-                          },
-                        ),*/
                   ],
                 ),
               ),

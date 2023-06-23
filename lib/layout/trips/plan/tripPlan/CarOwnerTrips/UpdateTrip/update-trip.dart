@@ -47,12 +47,18 @@ class _UpdateTripState extends State<UpdateTrip> {
   TextEditingController _seatController = TextEditingController();
   TextEditingController _priceController = TextEditingController();
 
-  DateTime tripTimeD = DateTime.now();
-
   // TextEditingControllers for the date and time of the trip
   DateTime _selectedDate = DateTime.now();
+         late DateTime tripTimeD ;
+
   // A Set of Markers to display on the map
   Set<Marker> _markers = {};
+
+   @override
+  void initState() {
+    super.initState();
+    tripTimeD = DateTime.parse(widget.trip.triptime);
+  }
 
   // The initial camera position for the map, centered on Amman, Jordan
   static final CameraPosition _amman = const CameraPosition(
@@ -60,12 +66,11 @@ class _UpdateTripState extends State<UpdateTrip> {
     zoom: 14.4746,
   );
 
-  // Function to display a DatePicker and update the selected date
-  Future<void> _selectDate(BuildContext context) async {
+ Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
-      firstDate: DateTime(2015, 8),
+      firstDate: DateTime(2023, 1),
       lastDate: DateTime(2101),
     );
     if (picked != null && picked != _selectedDate) {
@@ -95,6 +100,7 @@ class _UpdateTripState extends State<UpdateTrip> {
       });
     }
   }
+
 
   // Function to handle place selection from the GooglePlaceAutoCompleteTextField
   void onPlaceSelected(
@@ -168,12 +174,6 @@ class _UpdateTripState extends State<UpdateTrip> {
     }
   }
 
-  Future<void> CheckC() async {
-    TripsCubit.get(context).CheckCarowner();
-
-    print(CacheHelper.getData(key: 'carownerid').toString() + '   CheckC    ');
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -181,14 +181,13 @@ class _UpdateTripState extends State<UpdateTrip> {
       child: BlocConsumer<TripsCubit, TripState>(listener: (context, state) {
         if (state is TripPlanSuccessState) {
           print('Trip created successfully');
-            Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SearchCarOwnerTrips()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const SearchCarOwnerTrips()));
 
           Fluttertoast.showToast(
-              msg: "تم انشاء الرحلة بنجاح ",
+              msg: "تم تعديل الرحلة بنجاح ",
               toastLength: Toast.LENGTH_LONG,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 5,
@@ -207,18 +206,14 @@ class _UpdateTripState extends State<UpdateTrip> {
               fontSize: 16.0);
         }
       }, builder: (context, state) {
+        _priceController.text = widget.trip.rideprice.toString();
+        _seatController.text = widget.trip.seatnumber.toString();
+    //    DateTime tripTimeD = DateTime.parse(widget.trip.triptime);
+        //DateTime _selectedDate = DateTime.parse(widget.trip.triptime);
+     
+
         return Scaffold(
-          appBar: AppBar(
-              leading: IconButton(
-                icon: const Icon(Icons.home),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                  );
-                },
-              ),
-              title: const Text('Editing Trip')),
+          appBar: AppBar(title: const Text('Editing Trip')),
           body: Stack(
             children: [
               GoogleMap(
@@ -307,75 +302,77 @@ class _UpdateTripState extends State<UpdateTrip> {
                             getPlaceDetailWithLatLng: getPlaceDetailWithLatLng,
                           ),
 
-                          // TextFormField to display and select the date of the trip
-                          TextFormField(
-                            keyboardType: TextInputType.datetime,
-                            decoration: InputDecoration(
-                              border: UnderlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 3, 184, 78)),
-                                borderRadius: BorderRadius.circular(10),
+                                 TextFormField(
+                              keyboardType: TextInputType.datetime,
+                              decoration: InputDecoration(
+                                border: UnderlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 3, 184, 78)),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                prefixIcon: const Icon(
+                                  Icons.access_time,
+                                  size: 20,
+                                ),
+                                hintText: "Trip Time",
                               ),
-                              prefixIcon: const Icon(
-                                Icons.access_time,
-                                size: 20,
-                              ),
-                              hintText: "Trip Time",
-                            ),
-                            onTap: () async {
-                              // Show date picker
-                              DateTime? selectedDate = await showDatePicker(
-                                // ...
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime.now(),
-                                lastDate: DateTime.now()
-                                    .add(const Duration(days: 365)),
-                              );
-
-                              if (selectedDate != null) {
-                                // Show time picker
-                                TimeOfDay? selectedTime = await showTimePicker(
+                              onTap: () async {
+                                // Show date picker
+                                DateTime? selectedDate = await showDatePicker(
                                   context: context,
-                                  initialTime: TimeOfDay.now(),
-                                  // ...
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime.now()
+                                      .add(const Duration(days: 365)),
                                 );
+                                if (selectedDate != null) {
+                                  // Show time picker
+                                  TimeOfDay? selectedTime =
+                                      await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                  );
 
-                                if (selectedTime != null) {
-                                  setState(() {
-                                    tripTimeD = DateTime(
-                                      selectedDate.year,
-                                      selectedDate.month,
-                                      selectedDate.day,
-                                      selectedTime.hour,
-                                      selectedTime.minute,
-                                    );
-                                    // tripTimeController = selectedDateTime
-                                  });
+                                  if (selectedTime != null) {
+                                    setState(() {
+                                      tripTimeD = DateTime(
+                                        selectedDate.year,
+                                        selectedDate.month,
+                                        selectedDate.day,
+                                        selectedTime.hour,
+                                        selectedTime.minute,
+                                      );
+                                    });
+                                  }
                                 }
-                              }
-                            },
-                            readOnly: true,
-                            validator: (value) {
-                              if (tripTimeD == null) {
-                                return 'Please select trip time';
-                              }
-                              return null;
-                            },
-                            controller: TextEditingController(
-                              text: tripTimeD != null
-                                  ? DateFormat('hh:mm a | d-M-yyyy')
-                                      .format(
-                                          DateTime.parse(tripTimeD.toString()))
-                                      .toString()
-                                  : '',
+                              },
+                              readOnly: true,
+                              validator: (value) {
+                                if (tripTimeD == null) {
+                                  return 'Please select trip time';
+                                }
+                                return null;
+                              },
+                              controller: TextEditingController(
+                                text: tripTimeD != null
+                                    ? DateFormat('hh:mm a | d-M-yyyy')
+                                        .format(DateTime.parse(
+                                            tripTimeD.toString()))
+                                        .toString()
+                                    : '',
+                              ),
                             ),
-                          ),
                           // TextFormField for the description of the trip
                           TextFormField(
                             controller: _descriptionController,
-                            decoration:
-                                const InputDecoration(hintText: "Description"),
+                            decoration: const InputDecoration(
+                              hintText: "Description",
+                            ),
+                            keyboardType: TextInputType.multiline,
+                            maxLines:
+                                null, // Set maxLines to null to allow multiple lines
+                            textInputAction: TextInputAction
+                                .newline, // Show newline button on keyboard
                           ),
                           // TextFormField for the seat number of the trip
                           TextFormField(
@@ -395,38 +392,35 @@ class _UpdateTripState extends State<UpdateTrip> {
                           Row(
                             children: [
                               const SizedBox(
-                                width: 10,
+                                width: 100,
                               ),
-                              Expanded(
-                                child: ConditionalBuilder(
-                                  condition: state is! TripPlanLoadingState,
-                                  builder: (context) => smallButton(
-                                      text: 'Update Trip',
-                                      onPressed: () async {
-                                        print(widget.trip.tripid);
-                                                                                print(_startingPointController);
+                              ConditionalBuilder(
+                                condition: state is! TripPlanLoadingState,
+                                builder: (context) => largeButton(
+                                    text: 'Update Trip',
+                                    onPressed: () async {
+                                      //  print(widget.trip.tripid);
 
-                                        TripsCubit.get(context).UpdateTrip(
-                                          tripid: widget.trip.tripid,
-                                          startpoint:
-                                              _startingPointController.text,
-                                          endpoint: _endingPointController.text,
-                                          descreption:
-                                              _descriptionController.text,
-                                          seatnumber:
-                                              int.parse(_seatController.text),
-                                          triptime: tripTimeD,
-                                          rideprice:
-                                              int.parse(_priceController.text),
-                                          sp1: _stopPointController1.text,
-                                          sp2: _stopPointController2.text,
-                                          sp3: _stopPointController3.text,
-                                          sp4: _stopPointController4.text,
-                                        );
-                                      }),
-                                  fallback: (context) => const Center(
-                                      child: CircularProgressIndicator()),
-                                ),
+                                          TripsCubit.get(context).UpdateTrip(
+                                        tripid: widget.trip.tripid,
+                                        startpoint:
+                                            _startingPointController.text,
+                                        endpoint: _endingPointController.text,
+                                        descreption:
+                                            _descriptionController.text,
+                                        seatnumber:
+                                            int.parse(_seatController.text),
+                                        triptime: tripTimeD,
+                                        rideprice:
+                                            int.parse(_priceController.text),
+                                        sp1: _stopPointController1.text,
+                                        sp2: _stopPointController2.text,
+                                        sp3: _stopPointController3.text,
+                                        sp4: _stopPointController4.text,
+                                      );
+                                    }),
+                                fallback: (context) => const Center(
+                                    child: CircularProgressIndicator()),
                               ),
                               const SizedBox(
                                 width: 30,

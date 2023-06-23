@@ -1,6 +1,5 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:drive_share/layout/home_page.dart';
-import 'package:drive_share/http/trip_post.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/models/components/components.dart';
@@ -44,15 +43,7 @@ class MyRideDetails extends StatelessWidget {
       }, builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            /*         leading: IconButton(
-              icon: const Icon(Icons.arrow_back_outlined),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  SearchProfile()),
-                );
-              },
-            ),*/
+         
             title: const Text('Trip'),
           ),
           body: Column(
@@ -439,6 +430,7 @@ class MyRideDetails extends StatelessWidget {
                           const SizedBox(
                             height: 15,
                           ),
+                       
                           Expanded(
                             child: Row(
                               children: [
@@ -456,8 +448,10 @@ class MyRideDetails extends StatelessWidget {
                                         child: Text(
                                           trip.isactive == 2
                                               ? 'Ended'
-                                              : trip.isactive == 1
+                                              : trip.isactive == 1&&trip.request==1
                                                   ? 'Started'
+                                                      : trip.isactive == 0&&trip.request==1
+                                                  ? 'Accepted'
                                                   : 'Pending',
                                           style: TextStyle(
                                             fontSize: 18,
@@ -492,7 +486,7 @@ class MyRideDetails extends StatelessWidget {
                             ),
                           ),
                        
-                          Expanded(
+                      /*    Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -588,7 +582,7 @@ class MyRideDetails extends StatelessWidget {
                                 
                               ],
                             ),
-                          )
+                          )*/
                         ],
                       ),
                     ),

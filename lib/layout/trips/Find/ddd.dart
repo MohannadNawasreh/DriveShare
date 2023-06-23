@@ -1,6 +1,5 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:drive_share/layout/home_page.dart';
-import 'package:drive_share/http/trip_post.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/models/components/components.dart';
@@ -429,7 +428,7 @@ class RideDetails extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              'SP1: ${trip.sp1 ?? ' '}    SP2: ${trip.sp3 ?? ''} \n SP3: ${trip.sp3 ?? ''}    SP4: ${trip.sp4 ?? ''}',
+                              'SP1: ${trip.sp1 ?? ' '}    SP2: ${trip.sp2 ?? ''} \n SP3: ${trip.sp3 ?? ''}    SP4: ${trip.sp4 ?? ''}',
                               style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w800,
@@ -448,26 +447,39 @@ class RideDetails extends StatelessWidget {
                                     builder: (context) => largeButton(
                                       text: 'Request Join Trip',
                                       onPressed: () async {
-                                        TripsCubit().RequestTrip(
+                                        if (trip.carownerid ==
+                                            CacheHelper.getData(
+                                                key: 'carownerid')) {
+                                                   Fluttertoast.showToast(
+                                              msg: 'CarOwner can\'t Request his trip',
+                                              toastLength: Toast.LENGTH_LONG,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 3,
+                                              backgroundColor:
+                                               Colors.red,                                              textColor: Colors.white,
+                                              fontSize: 16.0);
+                                        } else {
+                                          TripsCubit().RequestTrip(
                                             tripid: trip.tripid!,
                                             passengerid: passengerid);
 
-                                        Fluttertoast.showToast(
-                                            msg: 'Request Sent successfully',
-                                            toastLength: Toast.LENGTH_LONG,
-                                            gravity: ToastGravity.BOTTOM,
-                                            timeInSecForIosWeb: 3,
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 3, 184, 78),
-                                            textColor: Colors.white,
-                                            fontSize: 16.0);
-                                        Navigator.push(
+                                          Fluttertoast.showToast(
+                                              msg: 'Request Sent successfully',
+                                              toastLength: Toast.LENGTH_LONG,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 3,
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                      255, 3, 184, 78),
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
+                                          Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   const HomePage()),
                                         );
+                                        }
                                       },
                                     ),
                                     fallback: (context) => const Center(
@@ -481,7 +493,6 @@ class RideDetails extends StatelessWidget {
                                     String phoneNumber =
                                         trip.phonenumber.toString();
                                     launch('https://wa.me/$phoneNumber');
-
                                   },
                                 ),
                               ],
