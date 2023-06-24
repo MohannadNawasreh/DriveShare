@@ -213,7 +213,7 @@ class _ProfileState extends State<Profile> {
                       ProfileMenuWidget(
                         passenger: userInfo,
                         icon: Icons.payment,
-                        text: "Become a Driver",
+                        text: "My car",
                         textColor: Colors.black,
                         onPressed: () {
                           if (CacheHelper.getData(key: 'carownerid') == '') {
