@@ -59,7 +59,7 @@ class RideDetails extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(15),
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.85,
                   width: double.infinity,
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -402,30 +402,35 @@ class RideDetails extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Expanded(
+                          SizedBox(
+                            height: 20,
+                          ),
+                           Text(
+                            'Description: ',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black54),
+                          ),
+                          SizedBox(height: 5,),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
                             child: Row(
                               children: [
-                                const Expanded(
-                                  child: Text(
-                                    'Description :',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black54),
-                                  ),
-                                ),
-                                Expanded(
+                               
+                                SingleChildScrollView(
                                   child: Text(
                                     trip.descreption ?? '',
                                     style: const TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w800,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
                                         color: Colors.black38),
                                   ),
                                 ),
                               ],
                             ),
                           ),
+                          SizedBox(height: 20),
                           Expanded(
                             child: Text(
                               'SP1: ${trip.sp1 ?? ' '}    SP2: ${trip.sp2 ?? ''} \n SP3: ${trip.sp3 ?? ''}    SP4: ${trip.sp4 ?? ''}',
