@@ -46,6 +46,16 @@ class _EditProfileState extends State<EditProfile> {
             textColor: Colors.white,
             fontSize: 16.0);
       }
+      else if (state is UpdateUserErrorState){
+         Fluttertoast.showToast(
+            msg: "حاول مره اخرى ",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 5,
+            backgroundColor:  Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
     }, builder: (context, state) {
       var model = TripsCubit.get(context).UserInfo;
       firstNameController.text = model.fname.toString();
@@ -117,7 +127,7 @@ class _EditProfileState extends State<EditProfile> {
                           const SizedBox(height: 10),
                           Text("${model.fname} ${model.lname}"),
                           const SizedBox(height: 10),
-                          Padding(
+                        /*  Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 40, vertical: 10),
                             child: TextFormField(
@@ -126,7 +136,7 @@ class _EditProfileState extends State<EditProfile> {
                                 label: Text('Phone Number'),
                               ),
                             ),
-                          ),
+                          ),*/
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 40, vertical: 10),
@@ -166,7 +176,7 @@ class _EditProfileState extends State<EditProfile> {
                                   text: 'Update User',
                                   onPressed: () async {
                                     TripsCubit.get(context).UpdateUser(
-                                      phoneNumber: phoneController.text,
+                                     phoneNumber: model.phonenumber.toString(),
                                       email: emailController.text,
                                       userName: emailController.text,
                                       fName: firstNameController.text,
