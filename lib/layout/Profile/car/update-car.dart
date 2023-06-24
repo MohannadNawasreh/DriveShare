@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:drive_share/layout/Profile/car/search-car.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
+import 'package:drive_share/models/Car.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UpdateCar extends StatefulWidget {
-  const UpdateCar({super.key});
+  final CarGp car;
+
+  const UpdateCar({super.key, required this.car});
 
   @override
   State<UpdateCar> createState() => _UpdateCarState();
@@ -98,12 +101,13 @@ class _UpdateCarState extends State<UpdateCar> {
                             borderSide: const BorderSide(
                                 color: Color.fromARGB(255, 3, 184, 78)),
                             borderRadius: BorderRadius.circular(10),
+                            
                           ),
                           prefixIcon: const Icon(
                             Icons.car_crash_rounded,
                             size: 20,
                           ),
-                          hintText: "Car Type",
+                          hintText: widget.car.cartype.toString(),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -134,7 +138,7 @@ class _UpdateCarState extends State<UpdateCar> {
                             Icons.car_crash,
                             size: 20,
                           ),
-                          hintText: "Car Year",
+                          hintText:  widget.car.carmodel.toString(),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -164,7 +168,7 @@ class _UpdateCarState extends State<UpdateCar> {
                             Icons.car_crash_rounded,
                             size: 20,
                           ),
-                          hintText: "Car Model",
+                          hintText:  widget.car.carmmodel.toString(),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -194,7 +198,7 @@ class _UpdateCarState extends State<UpdateCar> {
                             Icons.description,
                             size: 20,
                           ),
-                          hintText: "Car Number",
+                          hintText:  widget.car.carnumber.toString(),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {

@@ -397,8 +397,8 @@ class _PlanTripState extends State<PlanTrip> {
                                   hintText: "Seat Number"),
                               keyboardType: TextInputType.number,
                               validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Seat Number cannot be empty';
+                                if (value!.isEmpty || value == '0' ) {
+                                  return 'Seat Number cannot be empty or 0';
                                 }
                                 return null;
                               },
