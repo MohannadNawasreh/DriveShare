@@ -5,7 +5,6 @@
         android:label="Drive Share"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:debuggable="false"
         >
         
         <activity

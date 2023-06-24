@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:drive_share/layout/Profile/car/update-car.dart';
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
+import 'package:drive_share/models/Car.dart';
 import 'package:drive_share/models/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +21,7 @@ class _CarDetailsState extends State<CarDetails> {
     return BlocConsumer<TripsCubit, TripState>(
         listener: (context, state) {},
         builder: (context, state) {
-          var car = TripsCubit.get(context).car;
+          CarGp car = TripsCubit.get(context).car;
 
           return ConditionalBuilder(
             condition: state is! UserInfoLoadingState,
@@ -197,7 +198,7 @@ class _CarDetailsState extends State<CarDetails> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            UpdateCar()));
+                                                            UpdateCar(car: car,)));
                                               })
                                         ],
                                       ),

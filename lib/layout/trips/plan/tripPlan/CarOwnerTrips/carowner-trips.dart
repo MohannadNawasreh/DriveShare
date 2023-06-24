@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:drive_share/layout/trips/plan/tripPlan/CarOwnerTrips/search-carowner-trip.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:drive_share/layout/trips/cubit/cubit.dart';
 import 'package:drive_share/layout/trips/cubit/states.dart';
 import 'package:drive_share/layout/trips/plan/tripPlan/CarOwnerTrips/AllAcceptPassenger/search-accept.dart';
@@ -57,7 +56,7 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                       padding:
                           const EdgeInsets.only(left: 15, right: 15, top: 15),
                       child: SizedBox(
-                        height: 300,
+                        height: 500,
                         width: double.infinity,
                         child: Card(
                           shape: RoundedRectangleBorder(
@@ -91,9 +90,6 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                       ),
                                     ],
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 12,
                                 ),
                                 Expanded(
                                   child: Row(
@@ -149,9 +145,6 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                       ),
                                     ],
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
                                 ),
                                 Expanded(
                                   child: Row(
@@ -209,9 +202,6 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                       ),
                                     ],
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
                                 ),
                                 Expanded(
                                   child: Row(
@@ -271,8 +261,44 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                     ],
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 15,
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      const Expanded(
+                                        child: Text(
+                                          'Description :',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black54),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          trips[index].descreption ?? '',
+                                          style: const TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w800,
+                                              color: Colors.black38),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'SP1: ${trips[index].sp1 ?? ' '}    SP2: ${trips[index].sp2 ?? ''} \n SP3: ${trips[index].sp3 ?? ''}    SP4: ${trips[index].sp4 ?? ''}',
+                                          style: const TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w800,
+                                              color: Colors.black38),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 Expanded(
                                   child: Row(
@@ -374,9 +400,6 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                       )
                                     ],
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 15,
                                 ),
                                 Expanded(
                                   child: Row(
@@ -488,14 +511,9 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                                                 textColor: Colors.white,
                                                                                 fontSize: 16.0);
                                                                           }
-
-                                                                          /*     Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const LoginLayout()));*/
                                                                         }),
                                                                     smallButton(
+                                                                      back: Colors.grey,
                                                                         text:
                                                                             "No",
                                                                         onPressed:
@@ -504,6 +522,8 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                                                               .pop();
                                                                         }),
                                                                   ],
+                                                                  
+
                                                                 );
                                                               },
                                                             );
@@ -570,9 +590,6 @@ class _CarOwnerTripsState extends State<CarOwnerTrips> {
                                       )
                                     ],
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 15,
                                 ),
                                 Expanded(
                                   child: Row(

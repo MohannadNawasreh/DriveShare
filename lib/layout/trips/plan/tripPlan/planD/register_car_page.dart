@@ -33,7 +33,7 @@ class _RegisterCarState extends State<RegisterCar> {
   bool _isImageSelected = false;
   bool isRegister = false;
 
-  Future<void> _uploadImage() async {
+  /*Future<void> _uploadImage() async {
     if (_selectedImage != null) {
       try {
         final passenger = await uploadFile(File(_selectedImage!.path));
@@ -47,7 +47,7 @@ class _RegisterCarState extends State<RegisterCar> {
         print(e.toString());
       }
     }
-  }
+  }*/
 
   void _selectImage() async {
     if (_isImageSelected) {
@@ -65,7 +65,7 @@ class _RegisterCarState extends State<RegisterCar> {
         isRegister = true;
       });
 
-      await _uploadImage(); // Call the uploadImage method after selecting the image
+      // await _uploadImage(); // Call the uploadImage method after selecting the image
     }
   }
 
@@ -249,18 +249,29 @@ class _RegisterCarState extends State<RegisterCar> {
                       builder: (context) => largeButton(
                           text: 'Register Car',
                           onPressed: () async {
-                      /*      final passenger =
+                            /*      final passenger =
                                 await uploadFile(File(_selectedImage!.path));
                             print('pppppppppppppp');*/
 
+                            if(!_isImageSelected){
+                               Fluttertoast.showToast(
+            msg: "select Image License",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 5,
+            backgroundColor: const Color.fromARGB(255, 3, 184, 78),
+            textColor: Colors.white,
+            fontSize: 16.0);
+                            }
 
-                            if (formKey.currentState!.validate()) {
-                              TripsCubit.get(context).CarRegister(
+                            if (formKey.currentState!.validate() && _isImageSelected) {
+                                 TripsCubit.get(context).CarRegister(
                                   cartype: carTypeController.text,
                                   carYearmodel:
                                       int.parse(carYearController.text),
                                   carmmodel: carModelController.text,
                                   carnumber: carNumberController.text);
+                              print('object');
                             }
                           }),
                       fallback: (context) =>
@@ -276,7 +287,7 @@ class _RegisterCarState extends State<RegisterCar> {
     );
   }
 }
-
+/*
 class PassengerDTO {
   final String imagefile;
 
@@ -308,7 +319,7 @@ else {
   print(response.reasonPhrase);
     print(response.statusCode);
 
-}
+}*/
 
   /*var request = http.MultipartRequest('POST',
       Uri.parse('https://driveshare.azurewebsites.net/api/User/uploadfile'));
@@ -325,5 +336,5 @@ else {
     print('lllllllllllllllllllkkkkkkkkkkkkkkkkkkkkkkk');
 
     return null;
-  }*/
-}
+  }
+}*/
